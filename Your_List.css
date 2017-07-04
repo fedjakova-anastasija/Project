@@ -1,0 +1,161 @@
+html, body
+{
+    margin: 0;
+    padding: 0;
+}
+
+#content
+{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+#model
+{
+    display: table;
+    width: calc(100% - 20px);
+    position: absolute;
+    margin: 10px;
+    height: calc(100% - 20px);
+}
+
+.title
+{
+    font-size: 50px;
+    font-weight: bold;
+    width: 10%;
+    position: relative;
+}
+
+.title_list
+{
+    font-size: 30px;
+    width: 77.3%;
+    display: block;
+}
+
+.list
+{
+    display: table;
+    padding: 10px;
+    background-color: floralwhite;
+    position: absolute;
+}
+
+.board
+{
+    width: 100%;
+    height: calc(100% - 84px);
+    background-color: antiquewhite;
+    position: absolute;
+    top: 84px;
+}
+
+.close_point
+{
+    width: 60px;
+    cursor: pointer;
+}
+
+input
+{
+    padding: 11px;
+    font-size: 20px;
+}
+
+.add
+{
+    text-align: center;
+    cursor: pointer;
+}
+
+li
+{
+    list-style: none;
+}
+
+.button_new_board
+{
+    position: absolute;
+    right: 0;
+    width: 10%;
+    height: 84px;
+    cursor: pointer;
+}
+
+#board_header
+{
+    position: absolute;
+    width: 100%;
+    height: 84px;
+}
+
+#board_header_titles
+{
+    position: absolute;
+    width: 90%;
+    height: 84px;
+}
+
+.active
+{
+    background-color: #ffffff;
+}
+
+/*
+#calendar-box
+{
+    font-family: sans-serif;
+}
+
+#table-nc
+{
+    text-align: center;
+    margin: 3px;
+}
+
+#table-c
+{
+    text-align: center;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+#table-c tr, #table-c td, #table-c th
+{
+    padding: 3px;
+    border: 1px solid #dddddd !important;
+    text-align: center !important;
+}
+
+#table-c th
+{
+    font-weight: bold;
+}
+
+#table-c td:hover
+{
+    background-color: #bbc7d3;
+    cursor: pointer;
+}
+
+.today
+{
+    background-color: #ff9900;
+}
+
+.other
+{
+    background-color: #eeeeee;
+}
+
+.linked
+{
+    background-color: #6599ff;
+}
+
+.linked a
+{
+    color: white;
+}*/
