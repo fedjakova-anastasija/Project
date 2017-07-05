@@ -1,10 +1,15 @@
 'use strict';
 
 class Board {
-	constructor(title) {
+	constructor(title, id) {
+		this._id = id;
 		this._title = title;
 		this._lists = [];
 		this._img = "";
+	}
+
+	get id() {
+		return this._id;
 	}
 
 	get title() {

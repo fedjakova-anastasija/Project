@@ -2,9 +2,10 @@
 
 class BoardView {
   constructor(board, viewsFactory) {
+    this._id = board.id;
     this._element = viewsFactory.createElement("div");
 
-    this._element.id = "board" + BoardId++; //TODO: перенести счетчик в другое место
+    this._element.id = "board" + this._id; //TODO: перенести счетчик в другое место
     this._element.className = "board"; //todo: "boardView" -
 
     this._listViews = [];
@@ -18,5 +19,9 @@ class BoardView {
 
   get element() {
     return this._element;
+  }
+
+  get id() {
+    return this._id;
   }
 }

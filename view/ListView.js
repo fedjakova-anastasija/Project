@@ -2,42 +2,49 @@
 
 class ListView {
   constructor(list, viewsFactory) {
-    this._list = viewsFactory.createElement("div");
+    this._element = viewsFactory.createElement("div");
 
-    this._list.id = "list" + listId++; // счетчик!
-    this._list.className = "list";
+    this._element.id = "list" + list.id; // счетчик!
+    this._element.className = "list";
 
     this._header = viewsFactory.createElement("input");
-    this._header.className = "title_list";
+    this._header.className = "title_element";
     this._header.value = list.title;
+    this._element.appendChild(this._header);
 
     this._input = viewsFactory.createElement("input");
     this._input.className = "input_place";
     this._input.placeholder = "You should do...";
+    this._element.appendChild(this._input);
 
     this._button = viewsFactory.createElement("input");
     this._button.className = "add";
     this._button.type = "button";
     this._button.value = "add";
+    this._element.appendChild(this._button);
 
+    const listParent = this._element;
     this._button.onclick = function () {
-      let value = this._list.getElementsByClassName("input_place")[0].value;
+      //CLICK_ADD_LIST_ELEMENT id
+     /* const value = listParent.getElementsByClassName("input_place")[0].value;
+      const element = new ListElement(listParent, viewsFactory, value);
 
-      const element = ListElement(this._list, value);
-
-      element.view.addEventListener(EventType.DELETE_ELEMENT, function (event) {
-        this._list.removeChild(element.view);
+      element.element.addEventListener(EventType.DELETE_ELEMENT, function (event) {
+        listParent.removeChild(element.element);
 
         const index = list.elements.indexOf(element);
 
         list.elements.splice(index, 1);
       }, false);
+
       list.elements.push(element);
+
+      listParent.appendChild(element.element)*/
     };
   }
 
-  get list() {
-    return this._list;
+  get element() {
+    return this._element;
   }
 
   get header() {
@@ -58,14 +65,14 @@ class ListElement {
     this._liPoint = viewsFactory.createElement("li");
     this._liPoint.className = "list_element";
 
-    this._liPoint.setAttribute("id", number++);
+    this._liPoint.setAttribute("id", list.id);
 
     this._input = viewsFactory.createElement("input");
     this._input.value = value;
     list.getElementsByClassName("input_place")[0].value = "";
   }
 
-  get liPoint() {
+  get element() {
     return this._liPoint;
   }
 

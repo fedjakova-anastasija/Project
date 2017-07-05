@@ -1,7 +1,8 @@
 'use strict';
 
 class List {
-	constructor(title) {
+	constructor(title, id) {
+		this._id = id;
 		this._title = title;
 		this._elements = [];
 		this._type = "list";
@@ -10,6 +11,10 @@ class List {
 
 	get title() {
 		return this._title;
+	}
+
+	get id() {
+		return this._id;
 	}
 
 	get elements() {
