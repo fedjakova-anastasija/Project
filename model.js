@@ -9,7 +9,7 @@ let BoardId = 0;
 let TitleId = 0;
 
 //const ADD_ELEMENT = "addElement";
-const DELETE_ELEMENT = "deleteElement";
+//const DELETE_ELEMENT = "deleteElement";
 
 const aboutObj = {
   name: "12",
@@ -21,17 +21,15 @@ function createElement(tag) {
   return document.createElement(tag);
 }
 
-const model = createModel('Model');
-const title = createHeader();
+const model = itemsFactory.createModel('Model');
+const title = itemsFactory.createHeader();
 const board = itemsFactory.createBoard("1");
 
 board.lists.push(itemsFactory.createList("1"));
 board.lists.push(itemsFactory.createList("2"));
 model.boards.push(board);
 
-const modelView = createModelView(model, contentDiv);
-
-
+const modelView = viewsFactory.createModelView(model, contentDiv);
 
 modelView.addEventListener(EventType.ADD_BOARD, function (event) {
   const board = event.detail;

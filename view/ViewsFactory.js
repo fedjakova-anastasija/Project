@@ -5,10 +5,18 @@ class ViewsFactory {
 	ItemsFactory() {
 	}
 
-	createElement() {
-		const div = document.createElement("div");
-		return div;
+	createElement(tag) {
+		const element = document.createElement(tag);
+		return element;
 	}
+
+  createModelView(model) {
+    return new ModelView(model, this);
+  }
+
+  createHeaderView(model) {
+    return new HeaderView(model, this);
+  }
 
 	createBoardView(board) {
 		return new BoardView(board, this);

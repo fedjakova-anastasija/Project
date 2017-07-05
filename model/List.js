@@ -15,6 +15,7 @@ class List {
 	get elements() {
 		return this._elements;
 	}
+
 	get position() {
 		return this._position;
 	}
