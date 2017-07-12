@@ -3,10 +3,7 @@
 class ModelView {
   constructor(model, viewsFactory) {
     this._viewsFactory = viewsFactory;
-<<<<<<< HEAD
-=======
 
->>>>>>> d430978e75fd18ac767dc9519258daab07b32403
     this._element = viewsFactory.createElement("div");
     this._element.id = "model";
     this._boardsViews = [];
@@ -21,6 +18,7 @@ class ModelView {
     for (let i = 0; i < model.boards.length; ++i) {
       this.addBoardView(model.boards[i])
     }
+    this._showBoardView(this._boardsViews[0], true);
   }
 
   addBoardView (board) {
@@ -30,31 +28,29 @@ class ModelView {
 
     this._headerView.createBoardHeaderView(board);
   }
-<<<<<<< HEAD
 
-=======
-  
->>>>>>> d430978e75fd18ac767dc9519258daab07b32403
   showBoardWithId(id) {
     for (let i = 0; i < this._boardsViews.length; ++i) {
       const boardView = this._boardsViews[i];
-      if (boardView.id == id)
-      {
-        //show
-<<<<<<< HEAD
-        boardView.id.style.display = "block"
-=======
->>>>>>> d430978e75fd18ac767dc9519258daab07b32403
-      }
-      else
-      {
-        //hide
-<<<<<<< HEAD
-        boardView.id.style.display = "none"
-=======
->>>>>>> d430978e75fd18ac767dc9519258daab07b32403
-      }
+      this._showBoardView(boardView, (boardView.id == id));
     }
+  }
+
+  _showBoardView(boardView, show) {
+    boardView.redraw();
+    boardView.element.style.display = show  ? "block" : "none";
+  }
+
+  get currentBoardView() {
+    for (let i = 0; i < this._boardsViews.length; ++i) {
+      const boardView = this._boardsViews[i];
+      if (boardView.element.style.display == "block")
+      {
+        return boardView;
+      }
+
+    }
+    return null;
   }
 
   get element() {
