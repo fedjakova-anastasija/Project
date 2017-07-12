@@ -2,7 +2,10 @@
 
 class BoardView {
   constructor(board, viewsFactory) {
+<<<<<<< HEAD
     this._viewsFactory = viewsFactory;
+=======
+>>>>>>> d430978e75fd18ac767dc9519258daab07b32403
     this._id = board.id;
     this._element = viewsFactory.createElement("div");
 

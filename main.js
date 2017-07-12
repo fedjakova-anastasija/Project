@@ -2,10 +2,15 @@ function initialize() {
   const contentDiv = document.getElementById("content");
   const itemsFactory = new ItemsFactory();
   const viewsFactory = new ViewsFactory();
+<<<<<<< HEAD
 
   const model = itemsFactory.createModel('Model');
   const navigation = itemsFactory.createNavigation('ModelNav');
 
+=======
+  
+  const model = itemsFactory.createModel('Model');
+>>>>>>> d430978e75fd18ac767dc9519258daab07b32403
   window["model"] = model; //TODO: remove
   const board = itemsFactory.createBoard("1");
   board.lists.push(itemsFactory.createList("1"));
@@ -15,9 +20,12 @@ function initialize() {
   const modelView = viewsFactory.createModelView(model);
   contentDiv.appendChild(modelView.element);
 
+<<<<<<< HEAD
   const navigationView = viewsFactory.createNavigationView(navigation);
   contentDiv.appendChild(navigationView.element);
 
+=======
+>>>>>>> d430978e75fd18ac767dc9519258daab07b32403
   modelView.element.addEventListener(EventType.ADD_BOARD, function (event) {
     const board = event.detail;
     modelView.addBoardView(board);
@@ -31,6 +39,7 @@ function initialize() {
     const e = new Event(EventType.ADD_BOARD, newBoard);
     e.dispatch(modelView.element);
   }, false);
+<<<<<<< HEAD
 
   /* modelView.element.addEventListener(EventType.ADD_LIST, function (event) {
    const list = event.detail;
@@ -47,3 +56,6 @@ function initialize() {
    }, false);*/
 }
 
+=======
+}
+>>>>>>> d430978e75fd18ac767dc9519258daab07b32403

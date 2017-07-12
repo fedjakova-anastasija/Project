@@ -6,7 +6,10 @@ class ListView {
 
     this._element.id = "list" + list.id; // счетчик!
     this._element.className = "list";
+<<<<<<< HEAD
     moveElement(list, this._element);
+=======
+>>>>>>> d430978e75fd18ac767dc9519258daab07b32403
 
     this._header = viewsFactory.createElement("input");
     this._header.className = "title_element";
@@ -27,8 +30,13 @@ class ListView {
     const listParent = this._element;
     this._button.onclick = function () {
       //CLICK_ADD_LIST_ELEMENT id
+<<<<<<< HEAD
       const value = listParent.getElementsByClassName("input_place")[0].value;
       const element = new ListElementView(listParent, viewsFactory, value);
+=======
+     /* const value = listParent.getElementsByClassName("input_place")[0].value;
+      const element = new ListElement(listParent, viewsFactory, value);
+>>>>>>> d430978e75fd18ac767dc9519258daab07b32403
 
       element.element.addEventListener(EventType.DELETE_ELEMENT, function (event) {
         listParent.removeChild(element.element);
@@ -40,7 +48,11 @@ class ListView {
 
       list.elements.push(element);
 
+<<<<<<< HEAD
       listParent.appendChild(element.element)
+=======
+      listParent.appendChild(element.element)*/
+>>>>>>> d430978e75fd18ac767dc9519258daab07b32403
     };
   }
 
@@ -61,6 +73,31 @@ class ListView {
   }
 }
 
+<<<<<<< HEAD
+=======
+class ListElement {
+  constructor(list, viewsFactory, value) {
+    this._liPoint = viewsFactory.createElement("li");
+    this._liPoint.className = "list_element";
+
+    this._liPoint.setAttribute("id", list.id);
+
+    this._input = viewsFactory.createElement("input");
+    this._input.value = value;
+    list.getElementsByClassName("input_place")[0].value = "";
+  }
+
+  get element() {
+    return this._liPoint;
+  }
+
+  get input() {
+    return this._input;
+  }
+}
+
+
+>>>>>>> d430978e75fd18ac767dc9519258daab07b32403
 class buttonClose {
   constructor(item, viewsFactory, id) {
     this._button = viewsFactory.createElement("input");
