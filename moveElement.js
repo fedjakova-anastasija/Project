@@ -35,11 +35,23 @@ function moveElement(list, listView) {
       let x = parseInt(dragElement.style.left);
       let y = parseInt(dragElement.style.top);
 
-      /*const BOUNDINGS = {left: 600, right: 1200};
+     /* const BOUNDINGS_FIRST = {left: 20, right: 300};
 
-      if (x > BOUNDINGS.left && x < BOUNDINGS.right) {
-        x = BOUNDINGS.left;
+      if (x > BOUNDINGS_FIRST.left && x < BOUNDINGS_FIRST.right) {
+        x = BOUNDINGS_FIRST.left;
+      }
+
+      const BOUNDINGS_SECOND = {left: 320, right: 600};
+
+      if (x > BOUNDINGS_SECOND.left && x < BOUNDINGS_SECOND.right) {
+        x = BOUNDINGS_SECOND.left;
       }*/
+
+      const BOUNDINGS_THIRD = {left: 620, right: 900};
+
+      if (x > BOUNDINGS_THIRD.left && x < BOUNDINGS_THIRD.right) {
+        x = BOUNDINGS_THIRD.left;
+      }
 
       list.position.x = x;
       list.position.y = y;
@@ -78,8 +90,8 @@ function moveElement(list, listView) {
         newX = boundings.right;
       }
 
-      if (newX > document.documentElement.clientWidth - heightElement) {
-        newX = document.documentElement.clientWidth - heightElement;
+      if (newX > document.documentElement.clientWidth - widthElement) {
+        newX = document.documentElement.clientWidth - widthElement;
       }
 
       dragElement.style.left = newX + 'px';

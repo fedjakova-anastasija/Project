@@ -10,13 +10,17 @@ class ViewsFactory {
 		return element;
 	}
 
-  createModelView(model) {
-    return new ModelView(model, this);
-  }
+	createModelView(model) {
+		return new ModelView(model, this);
+	}
 
-  createHeaderView(model) {
-    return new HeaderView(model, this);
-  }
+	createHeaderView() {
+		return new HeaderView(this);
+	}
+
+	createBoardHeaderView(title, id) {
+		return new BoardHeaderView(title, id, this);
+	}
 
 	createBoardView(board) {
 		return new BoardView(board, this);
@@ -25,4 +29,8 @@ class ViewsFactory {
 	createListView(list) {
 		return new ListView(list, this);
 	}
+
+  createNavigationView(model) {
+    return new NavigationView(model, this);
+  }
 }

@@ -14,7 +14,7 @@ html, body
 #model
 {
     display: table;
-    width: calc(100% - 20px);
+    width: calc(70% - 20px);
     position: absolute;
     margin: 10px;
     height: calc(100% - 20px);
@@ -24,7 +24,7 @@ html, body
 {
     font-size: 50px;
     font-weight: bold;
-    width: 10%;
+    width: 15%;
     position: relative;
 }
 
@@ -41,6 +41,7 @@ html, body
     padding: 10px;
     background-color: floralwhite;
     position: absolute;
+    width: 1%;
 }
 
 .board
@@ -103,6 +104,57 @@ li
     background-color: #ffffff;
 }
 
+.input_place
+{
+    width: 68%;
+}
+
+#model_nav
+{
+    position: absolute;
+    width: calc(30% - 10px);
+    height: calc(100% - 20px);
+    right: 10px;
+    top: 10px;
+}
+
+#button_new
+{
+    width: calc(100% - 10px);
+    margin: 5px;
+}
+
+#about
+{
+    background-color: antiquewhite;
+    width: calc(100% - 10px);
+    height: 20%;
+    margin: 5px;
+}
+
+#calendar
+{
+    background-color: antiquewhite;
+    width: calc(100% - 10px);
+    height: 13%;
+    margin: 5px;
+}
+
+#navigation
+{
+    background-color: antiquewhite;
+    width: calc(100% - 10px);
+    height: 46%;
+    margin: 5px;
+}
+
+#upload
+{
+    background-color: antiquewhite;
+    width: calc(100% - 10px);
+    height: 18%;
+    margin: 5px;
+}
 /*
 #calendar-box
 {
