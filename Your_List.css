@@ -24,8 +24,18 @@ html, body
 {
     font-size: 50px;
     font-weight: bold;
+    width: 70%;
+    position: relative;
+}
+
+.title_head
+{
     width: 15%;
     position: relative;
+    display: table;
+    background-color: antiquewhite;
+    cursor: pointer;
+    padding: 2px;
 }
 
 .title_list
@@ -35,6 +45,11 @@ html, body
     display: block;
 }
 
+.title_element
+{
+    background-color: floralwhite;
+}
+
 .list
 {
     display: table;
@@ -42,6 +57,17 @@ html, body
     background-color: floralwhite;
     position: absolute;
     width: 1%;
+    cursor: pointer;
+}
+
+.note
+{
+    display: table;
+    padding: 10px;
+    background-color: #ffffff;
+    position: absolute;
+    width: 1%;
+    cursor: pointer;
 }
 
 .board
@@ -63,6 +89,8 @@ input
 {
     padding: 11px;
     font-size: 20px;
+    border: none;
+    outline: none;
 }
 
 .add
@@ -106,7 +134,17 @@ li
 
 .input_place
 {
-    width: 68%;
+    width: 70%;
+    outline: none;
+}
+
+.textarea_place
+{
+    width: 98%;
+    outline: none;
+    font-size: 20px;
+    font-family: sans-serif;
+    border-color: #ffffff;
 }
 
 #model_nav
@@ -122,6 +160,7 @@ li
 {
     width: calc(100% - 10px);
     margin: 5px;
+    cursor: pointer;
 }
 
 #about
@@ -155,6 +194,12 @@ li
     height: 18%;
     margin: 5px;
 }
+
+.image
+{
+    border: 1px solid #ffffff;
+}
+
 /*
 #calendar-box
 {

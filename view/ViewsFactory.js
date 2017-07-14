@@ -13,19 +13,11 @@ class ViewsFactory {
 	createModelView(model) {
 		return new ModelView(model, this);
 	}
-<<<<<<< HEAD
 
 	createHeaderView() {
 		return new HeaderView(this);
 	}
 
-=======
-
-	createHeaderView() {
-		return new HeaderView(this);
-	}
-
->>>>>>> d430978e75fd18ac767dc9519258daab07b32403
 	createBoardHeaderView(title, id) {
 		return new BoardHeaderView(title, id, this);
 	}
@@ -37,6 +29,18 @@ class ViewsFactory {
 	createListView(list) {
 		return new ListView(list, this);
 	}
+
+  createListElementView(list_element) {
+    return new ListElementView(list_element, this, value);
+  }
+
+  createNoteView(note) {
+    return new NoteView(note, this);
+  }
+
+  createImageView(image) {
+    return new ImageView(image, this);
+  }
 
   createNavigationView(model) {
     return new NavigationView(model, this);

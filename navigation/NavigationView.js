@@ -53,6 +53,11 @@ class NavigationView {
     this._buttonNewNote.value = "New note";
     this._navigation.appendChild(this._buttonNewNote);
 
+    this._buttonNewNote.onclick = function () {
+      const event = new Event(EventType.CLICK_ADD_NOTE);
+      event.dispatch(document);
+    };
+
     this._buttonNewMap = viewsFactory.createElement("input");
     this._buttonNewMap.id = "button_new";
     this._buttonNewMap.className = "button_new_map";
@@ -66,6 +71,11 @@ class NavigationView {
     this._buttonNewPicture.type = "button";
     this._buttonNewPicture.value = "New picture";
     this._navigation.appendChild(this._buttonNewPicture);
+
+    this._buttonNewPicture.onclick = function () {
+      const event = new Event(EventType.CLICK_ADD_IMAGE);
+      event.dispatch(document);
+    };
 
     this._buttonUpload = viewsFactory.createElement("input");
     this._buttonUpload.id = "button_new";
@@ -82,8 +92,7 @@ class NavigationView {
     this._upload.appendChild(this._buttonPrint);
   }
 
-  get
-  element() {
+  get element() {
     return this._element;
   }
 }

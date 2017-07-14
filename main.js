@@ -2,60 +2,106 @@ function initialize() {
   const contentDiv = document.getElementById("content");
   const itemsFactory = new ItemsFactory();
   const viewsFactory = new ViewsFactory();
-<<<<<<< HEAD
 
   const model = itemsFactory.createModel('Model');
   const navigation = itemsFactory.createNavigation('ModelNav');
 
-=======
-  
-  const model = itemsFactory.createModel('Model');
->>>>>>> d430978e75fd18ac767dc9519258daab07b32403
   window["model"] = model; //TODO: remove
   const board = itemsFactory.createBoard("1");
-  board.lists.push(itemsFactory.createList("1"));
-  board.lists.push(itemsFactory.createList("2"));
+  // board.lists.push(itemsFactory.createList("1"));
+  // board.lists.push(itemsFactory.createList("2"));
   model.boards.push(board);
 
   const modelView = viewsFactory.createModelView(model);
   contentDiv.appendChild(modelView.element);
 
-<<<<<<< HEAD
   const navigationView = viewsFactory.createNavigationView(navigation);
   contentDiv.appendChild(navigationView.element);
 
-=======
->>>>>>> d430978e75fd18ac767dc9519258daab07b32403
+
+  //board
   modelView.element.addEventListener(EventType.ADD_BOARD, function (event) {
     const board = event.detail;
     modelView.addBoardView(board);
   }, false);
 
   document.addEventListener(EventType.CLICK_ADD_BOARD, function (event) {
-    const newBoard = itemsFactory.createBoard("New");
-    newBoard.lists.push(itemsFactory.createList("3"));
+    let title = prompt("Title:", "");
+    if (!title) return;
+    const newBoard = itemsFactory.createBoard(title);
+    //newBoard.lists.push(itemsFactory.createList("3"));
     model.boards.push(newBoard);
 
     const e = new Event(EventType.ADD_BOARD, newBoard);
     e.dispatch(modelView.element);
   }, false);
-<<<<<<< HEAD
 
-  /* modelView.element.addEventListener(EventType.ADD_LIST, function (event) {
-   const list = event.detail;
-   modelView.addListView(list);
+
+  //list
+  modelView.element.addEventListener(EventType.ADD_LIST, function (event) {
+    const list = event.detail;
+    modelView.currentBoardView.addListView(list);
+  }, false);
+
+  document.addEventListener(EventType.CLICK_ADD_LIST, function (event) {
+    let title = prompt("Title:", "");
+    if (!title) return;
+    const newList = itemsFactory.createList(title);
+    //newList.elements.push(itemsFactory.createList("3"));
+    model.boards.push(newList);
+
+    const e = new Event(EventType.ADD_LIST, newList);
+    e.dispatch(modelView.element);
+  }, false);
+
+
+  //note
+  modelView.element.addEventListener(EventType.ADD_NOTE, function (event) {
+    const note = event.detail;
+    modelView.currentBoardView.addNoteView(note);
+  }, false);
+
+  document.addEventListener(EventType.CLICK_ADD_NOTE, function (event) {
+    let title = prompt("Title:", "");
+    if (!title) return;
+    const newNote = itemsFactory.createNote(title);
+    //newNote.elements.push(itemsFactory.createNote("3"));
+    model.boards.push(newNote);
+
+    const e = new Event(EventType.ADD_NOTE, newNote);
+    e.dispatch(modelView.element);
+  }, false);
+
+  //list_element
+  /*  modelView.element.addEventListener(EventType.ADD_LIST_ELEMENT, function (event) {
+   const list_element = event.detail;
+   modelView.currentBoardView.addListElementView(list_element);
    }, false);
 
-   document.addEventListener(EventType.CLICK_ADD_LIST, function (event) {
-   const newList = itemsFactory.createList("New");
-   newList.elements.push(itemsFactory.createList("3"));
-   model.boards.push(newList);
+   document.addEventListener(EventType.CLICK_ADD_LIST_ELEMENT, function (event) {
+   const newListElement = itemsFactory.createListElement("New");
+   model.boards.push(newListElement);
 
-   const e = new Event(EventType.ADD_LIST, newList);
+   const e = new Event(EventType.ADD_LIST_ELEMENT, newListElement);
    e.dispatch(modelView.element);
    }, false);*/
-}
 
-=======
+
+  //image
+  modelView.element.addEventListener(EventType.ADD_IMAGE, function (event) {
+    const image = event.detail;
+    modelView.currentBoardView.addImageView(image);
+  }, false);
+
+  document.addEventListener(EventType.CLICK_ADD_IMAGE, function (event) {
+    const newImage = itemsFactory.createImage();
+    model.boards.push(newImage);
+
+    const e = new Event(EventType.ADD_IMAGE, newImage);
+    e.dispatch(modelView.element);
+  }, false);
+
+  document.addEventListener(EventType.SELECT_BOARD_EVENT, function (event) {
+    modelView.showBoardWithId(event.detail);
+  }, false);
 }
->>>>>>> d430978e75fd18ac767dc9519258daab07b32403
