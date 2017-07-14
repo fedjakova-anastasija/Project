@@ -9,10 +9,9 @@ class ListElementView {
 
     this._input = viewsFactory.createElement("input");
     this._input.value = value;
-    list.getElementsByClassName("input_place")[0].value = "";
 
     const listParent = this._element;
-    const new_value = listParent.getElementsByClassName("input_place")[0].value;
+   /*onst new_value = listParent.getElementsByClassName("input_place")[0].value;
     const element = new ListElementView(listParent, viewsFactory, new_value);
 
     element.element.addEventListener(EventType.DELETE_ELEMENT, function (event) {
@@ -23,9 +22,9 @@ class ListElementView {
       list.elements.splice(index, 1);
     }, false);
 
-    list.elements.push(element);
+    list.elements.push(element);*/
 
-    listParent.appendChild(element.element)
+    //stParent.appendChild( this._elemen)
   }
 
   get element() {

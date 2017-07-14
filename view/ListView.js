@@ -19,8 +19,10 @@ class ListView {
     this._header.value = list.title;
     this._element.appendChild(this._header);
 
+    const thisPtr = this;
     this._header.onchange = function () {
-
+      const newTitle = thisPtr._header.value;
+      list.title = newTitle;
     };
 
     this._input = viewsFactory.createElement("input");
@@ -33,10 +35,11 @@ class ListView {
     this._button.type = "button";
     this._button.value = "add";
     this._element.appendChild(this._button);
-
+    
     this._button.onclick = function () {
         const event = new Event(EventType.CLICK_ADD_LIST_ELEMENT);
         event.dispatch(document);
+      thisPtr.addListElementView(list);
       };
 
     this._init(list);

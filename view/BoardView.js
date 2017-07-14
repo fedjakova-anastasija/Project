@@ -1,9 +1,10 @@
 'use strict';
 
 class BoardView {
-  constructor(board, viewsFactory) {
+  constructor(board, viewsFactory, color) {
     this._viewsFactory = viewsFactory;
 
+    this._color = color;
     this._id = board.id;
     this._element = viewsFactory.createElement("div");
 
@@ -29,12 +30,13 @@ class BoardView {
   }
 
   redraw() {
-    //TODO:
+    //this._element.removeChild
     this._listViews = [];
     this._noteViews = [];
     this._imageViews = [];
 
     this._init(this._board);
+    this.element.style.backgroundColor = this._color;
   }
 
   addListView(list) {
@@ -57,6 +59,10 @@ class BoardView {
 
   get element() {
     return this._element;
+  }
+
+  get board() {
+    return this._board;
   }
 
   get id() {

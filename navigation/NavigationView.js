@@ -68,14 +68,22 @@ class NavigationView {
     this._buttonNewPicture = viewsFactory.createElement("input");
     this._buttonNewPicture.id = "button_new";
     this._buttonNewPicture.className = "button_new_picture";
-    this._buttonNewPicture.type = "button";
+   // this._buttonNewPicture.type = "button";
     this._buttonNewPicture.value = "New picture";
+    this._buttonNewPicture.type = "file";
+    this._buttonNewPicture.accept = "image/*";
     this._navigation.appendChild(this._buttonNewPicture);
 
-    this._buttonNewPicture.onclick = function () {
-      const event = new Event(EventType.CLICK_ADD_IMAGE);
-      event.dispatch(document);
-    };
+    const thisPtr = this;
+    this._buttonNewPicture.onchange = function () {
+      const fileread = new FileReader();
+      fileread.onload = function () {
+        const dataURL = fileread.result;
+        const event = new Event(EventType.CLICK_ADD_IMAGE, dataURL);
+        event.dispatch(document);
+      };
+      fileread.readAsDataURL(thisPtr._buttonNewPicture.files[0]);
+    },
 
     this._buttonUpload = viewsFactory.createElement("input");
     this._buttonUpload.id = "button_new";
@@ -91,6 +99,7 @@ class NavigationView {
     this._buttonPrint.value = "Print this board";
     this._upload.appendChild(this._buttonPrint);
   }
+
 
   get element() {
     return this._element;

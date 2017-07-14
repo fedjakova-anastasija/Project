@@ -23,13 +23,13 @@ function initialize() {
   modelView.element.addEventListener(EventType.ADD_BOARD, function (event) {
     const board = event.detail;
     modelView.addBoardView(board);
+    modelView.showBoardWithId(board.id);
   }, false);
 
   document.addEventListener(EventType.CLICK_ADD_BOARD, function (event) {
     let title = prompt("Title:", "");
     if (!title) return;
     const newBoard = itemsFactory.createBoard(title);
-    //newBoard.lists.push(itemsFactory.createList("3"));
     model.boards.push(newBoard);
 
     const e = new Event(EventType.ADD_BOARD, newBoard);
@@ -47,8 +47,7 @@ function initialize() {
     let title = prompt("Title:", "");
     if (!title) return;
     const newList = itemsFactory.createList(title);
-    //newList.elements.push(itemsFactory.createList("3"));
-    model.boards.push(newList);
+    modelView.currentBoardView.board.lists.push(newList);
 
     const e = new Event(EventType.ADD_LIST, newList);
     e.dispatch(modelView.element);
@@ -66,7 +65,7 @@ function initialize() {
     if (!title) return;
     const newNote = itemsFactory.createNote(title);
     //newNote.elements.push(itemsFactory.createNote("3"));
-    model.boards.push(newNote);
+    modelView.currentBoardView.board.notes.push(newNote);
 
     const e = new Event(EventType.ADD_NOTE, newNote);
     e.dispatch(modelView.element);
@@ -94,8 +93,9 @@ function initialize() {
   }, false);
 
   document.addEventListener(EventType.CLICK_ADD_IMAGE, function (event) {
-    const newImage = itemsFactory.createImage();
-    model.boards.push(newImage);
+    const path = event.detail;
+    const newImage = itemsFactory.createImage(path);
+    modelView.currentBoardView.board.images.push(newImage);
 
     const e = new Event(EventType.ADD_IMAGE, newImage);
     e.dispatch(modelView.element);

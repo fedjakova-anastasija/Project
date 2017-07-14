@@ -28,11 +28,16 @@ html, body
     position: relative;
 }
 
+img
+{
+    pointer-events: none;
+}
+
 .title_head
 {
     width: 15%;
     position: relative;
-    display: table;
+    display: inline-block;
     background-color: antiquewhite;
     cursor: pointer;
     padding: 2px;

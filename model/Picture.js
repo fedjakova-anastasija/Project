@@ -1,6 +1,6 @@
 'use strict';
 
-class Image {
+class Picture {
   constructor(path, id) {
     this._id = id;
     this._path = path;

@@ -27,7 +27,7 @@ class ItemsFactory {
   }
 
   createImage(path) {
-    return new Image(path, this._imageId++);
+    return new Picture(path, this._imageId++);
   }
 
   createModel(title) {

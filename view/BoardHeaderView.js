@@ -10,9 +10,9 @@ class BoardHeaderView {
 		this._input.value = title;
 		this._input.className = "title";
 		this._input.id = "boardHeaderView" + id;
-    this._element.appendChild(this._input);
+    	this._element.appendChild(this._input);
 
-		this._input.onclick = function () {
+		this._element.onclick = function () {
 			const event = new Event(EventType.SELECT_BOARD_EVENT, id);
 			event.dispatch(document);
 		};
