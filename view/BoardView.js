@@ -28,6 +28,7 @@ class BoardView {
     }
   }
 
+<<<<<<< HEAD
   redraw() {
     //TODO:
     this._listViews = [];
@@ -38,6 +39,16 @@ class BoardView {
   }
 
   addListView(list) {
+=======
+    redraw () {
+        //TODO:
+        this._listViews = [];
+
+        this._init(this._board);
+    }
+
+  addListView (list) {
+>>>>>>> e7e974234e49b8127b3223e6a2126e3255f07d50
     const listView = this._viewsFactory.createListView(list);
     this._element.appendChild(listView.element);
     this._listViews.push(listView);

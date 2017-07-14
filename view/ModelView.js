@@ -46,7 +46,10 @@ class ModelView {
       const boardView = this._boardsViews[i];
       if (boardView.element.style.display == "block")
       {
+<<<<<<< HEAD
         //document.getElementsByClassName("title_head").style.backgroundColor = "#ffffff";
+=======
+>>>>>>> e7e974234e49b8127b3223e6a2126e3255f07d50
         return boardView;
       }
 

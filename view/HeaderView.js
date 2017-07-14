@@ -11,7 +11,11 @@ class HeaderView {
     /*this._boardHeaderTitles = this._viewsFactory.createElement("div");
     this._boardHeaderTitles.id = "board_header_titles";
 
+<<<<<<< HEAD
     this._newBoardButton = this._viewsFactory.createElement("input");
+=======
+    /*this._newBoardButton = this._viewsFactory.createElement("input");
+>>>>>>> e7e974234e49b8127b3223e6a2126e3255f07d50
 
     this._boardHeader = this._viewsFactory.createElement("div");
     this._boardHeader.id = "board_header";
@@ -29,11 +33,19 @@ class HeaderView {
       const event = new Event(EventType.CLICK_ADD_BOARD);
       event.dispatch(document);
       //addBoard();
+<<<<<<< HEAD
 
     };
 
     this._element.appendChild(this._boardHeaderTitles);
     this._element.appendChild(this._newBoardButton);*/
+=======
+
+    };*/
+
+    this._element.appendChild(this._boardHeaderTitles);
+    //this._element.appendChild(this._newBoardButton);
+>>>>>>> e7e974234e49b8127b3223e6a2126e3255f07d50
 
     this._boardHeaders = [];
   }

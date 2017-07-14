@@ -18,8 +18,11 @@ function initialize() {
   const navigationView = viewsFactory.createNavigationView(navigation);
   contentDiv.appendChild(navigationView.element);
 
+<<<<<<< HEAD
 
   //board
+=======
+>>>>>>> e7e974234e49b8127b3223e6a2126e3255f07d50
   modelView.element.addEventListener(EventType.ADD_BOARD, function (event) {
     const board = event.detail;
     modelView.addBoardView(board);
@@ -36,24 +39,33 @@ function initialize() {
     e.dispatch(modelView.element);
   }, false);
 
+<<<<<<< HEAD
 
   //list
+=======
+>>>>>>> e7e974234e49b8127b3223e6a2126e3255f07d50
   modelView.element.addEventListener(EventType.ADD_LIST, function (event) {
     const list = event.detail;
     modelView.currentBoardView.addListView(list);
   }, false);
 
   document.addEventListener(EventType.CLICK_ADD_LIST, function (event) {
+<<<<<<< HEAD
     let title = prompt("Title:", "");
     if (!title) return;
     const newList = itemsFactory.createList(title);
     //newList.elements.push(itemsFactory.createList("3"));
+=======
+    const newList = itemsFactory.createList("New");
+    newList.elements.push(itemsFactory.createList("3"));
+>>>>>>> e7e974234e49b8127b3223e6a2126e3255f07d50
     model.boards.push(newList);
 
     const e = new Event(EventType.ADD_LIST, newList);
     e.dispatch(modelView.element);
   }, false);
 
+<<<<<<< HEAD
 
   //note
   modelView.element.addEventListener(EventType.ADD_NOTE, function (event) {
@@ -101,6 +113,8 @@ function initialize() {
     e.dispatch(modelView.element);
   }, false);
 
+=======
+>>>>>>> e7e974234e49b8127b3223e6a2126e3255f07d50
   document.addEventListener(EventType.SELECT_BOARD_EVENT, function (event) {
     modelView.showBoardWithId(event.detail);
   }, false);
