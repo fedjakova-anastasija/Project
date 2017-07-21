@@ -28,11 +28,16 @@ html, body
     position: relative;
 }
 
+img
+{
+    pointer-events: none;
+}
+
 .title_head
 {
     width: 15%;
     position: relative;
-    display: table;
+    display: inline-block;
     background-color: antiquewhite;
     cursor: pointer;
     padding: 2px;
@@ -60,6 +65,12 @@ html, body
     cursor: pointer;
 }
 
+.list_element
+{
+    width: 60%;
+    border-style: inset;
+}
+
 .note
 {
     display: table;
@@ -81,8 +92,9 @@ html, body
 
 .close_point
 {
-    width: 60px;
+    width: 21%;
     cursor: pointer;
+    border-style: inset;
 }
 
 input
@@ -134,7 +146,7 @@ li
 
 .input_place
 {
-    width: 70%;
+    width: 62%;
     outline: none;
 }
 
@@ -195,10 +207,6 @@ li
     margin: 5px;
 }
 
-.image
-{
-    border: 1px solid #ffffff;
-}
 
 /*
 #calendar-box

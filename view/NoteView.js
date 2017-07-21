@@ -17,18 +17,22 @@ class NoteView {
     this._input = viewsFactory.createElement("textarea");
     this._input.className = "textarea_place";
     this._input.placeholder = "You should do...";
+    this._input.value = note.text;
     this._element.appendChild(this._input);
+
+    const thisPtr = this;
+    this._header.onchange = function () {
+      const newTitle = thisPtr._header.value;
+      note.title = newTitle;
+    };
+
+    this._input.onchange = function () {
+      const newText = thisPtr._input.value;
+      note.text = newText;
+    };
   }
 
   get element() {
     return this._element;
-  }
-
-  get header() {
-    return this._header;
-  }
-
-  get input() {
-    return this._input;
   }
 }

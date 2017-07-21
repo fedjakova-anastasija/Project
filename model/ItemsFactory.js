@@ -8,6 +8,7 @@ class ItemsFactory {
     this._boardId = 0;
     this._noteId = 0;
     this._imageId = 0;
+    this._text = ""
   }
 
   createBoard(title) {
@@ -23,11 +24,11 @@ class ItemsFactory {
   }
 
   createNote(title) {
-    return new Note(title, this._noteId++);
+    return new Note(title, this._text, this._noteId++);
   }
 
   createImage(path) {
-    return new Image(path, this._imageId++);
+    return new Picture(path, this._imageId++);
   }
 
   createModel(title) {

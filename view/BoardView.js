@@ -1,9 +1,10 @@
 'use strict';
 
 class BoardView {
-  constructor(board, viewsFactory) {
+  constructor(board, viewsFactory, color) {
     this._viewsFactory = viewsFactory;
 
+    this._color = color;
     this._id = board.id;
     this._element = viewsFactory.createElement("div");
 
@@ -28,27 +29,17 @@ class BoardView {
     }
   }
 
-<<<<<<< HEAD
   redraw() {
-    //TODO:
+    //this._element.removeChild
     this._listViews = [];
     this._noteViews = [];
     this._imageViews = [];
 
     this._init(this._board);
+    this.element.style.backgroundColor = this._color;
   }
 
   addListView(list) {
-=======
-    redraw () {
-        //TODO:
-        this._listViews = [];
-
-        this._init(this._board);
-    }
-
-  addListView (list) {
->>>>>>> e7e974234e49b8127b3223e6a2126e3255f07d50
     const listView = this._viewsFactory.createListView(list);
     this._element.appendChild(listView.element);
     this._listViews.push(listView);
@@ -68,6 +59,10 @@ class BoardView {
 
   get element() {
     return this._element;
+  }
+
+  get board() {
+    return this._board;
   }
 
   get id() {

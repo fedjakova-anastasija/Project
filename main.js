@@ -8,9 +8,11 @@ function initialize() {
 
   window["model"] = model; //TODO: remove
   const board = itemsFactory.createBoard("1");
-  // board.lists.push(itemsFactory.createList("1"));
+  //const list = itemsFactory.createList("1");
+  board.lists.push(itemsFactory.createList("1"));
   // board.lists.push(itemsFactory.createList("2"));
   model.boards.push(board);
+  //board.lists.push(list);
 
   const modelView = viewsFactory.createModelView(model);
   contentDiv.appendChild(modelView.element);
@@ -18,54 +20,41 @@ function initialize() {
   const navigationView = viewsFactory.createNavigationView(navigation);
   contentDiv.appendChild(navigationView.element);
 
-<<<<<<< HEAD
 
   //board
-=======
->>>>>>> e7e974234e49b8127b3223e6a2126e3255f07d50
   modelView.element.addEventListener(EventType.ADD_BOARD, function (event) {
     const board = event.detail;
     modelView.addBoardView(board);
+    modelView.showBoardWithId(board.id);
   }, false);
 
   document.addEventListener(EventType.CLICK_ADD_BOARD, function (event) {
     let title = prompt("Title:", "");
     if (!title) return;
     const newBoard = itemsFactory.createBoard(title);
-    //newBoard.lists.push(itemsFactory.createList("3"));
     model.boards.push(newBoard);
 
     const e = new Event(EventType.ADD_BOARD, newBoard);
     e.dispatch(modelView.element);
   }, false);
 
-<<<<<<< HEAD
 
   //list
-=======
->>>>>>> e7e974234e49b8127b3223e6a2126e3255f07d50
   modelView.element.addEventListener(EventType.ADD_LIST, function (event) {
     const list = event.detail;
     modelView.currentBoardView.addListView(list);
   }, false);
 
   document.addEventListener(EventType.CLICK_ADD_LIST, function (event) {
-<<<<<<< HEAD
     let title = prompt("Title:", "");
     if (!title) return;
     const newList = itemsFactory.createList(title);
-    //newList.elements.push(itemsFactory.createList("3"));
-=======
-    const newList = itemsFactory.createList("New");
-    newList.elements.push(itemsFactory.createList("3"));
->>>>>>> e7e974234e49b8127b3223e6a2126e3255f07d50
-    model.boards.push(newList);
+    modelView.currentBoardView.board.lists.push(newList);
 
     const e = new Event(EventType.ADD_LIST, newList);
     e.dispatch(modelView.element);
   }, false);
 
-<<<<<<< HEAD
 
   //note
   modelView.element.addEventListener(EventType.ADD_NOTE, function (event) {
@@ -78,25 +67,25 @@ function initialize() {
     if (!title) return;
     const newNote = itemsFactory.createNote(title);
     //newNote.elements.push(itemsFactory.createNote("3"));
-    model.boards.push(newNote);
+    modelView.currentBoardView.board.notes.push(newNote);
 
     const e = new Event(EventType.ADD_NOTE, newNote);
     e.dispatch(modelView.element);
   }, false);
 
   //list_element
-  /*  modelView.element.addEventListener(EventType.ADD_LIST_ELEMENT, function (event) {
-   const list_element = event.detail;
-   modelView.currentBoardView.addListElementView(list_element);
-   }, false);
+/*  modelView.element.addEventListener(EventType.ADD_LIST_ELEMENT, function (event) {
+    const list_element = event.detail;
+    modelView.currentBoardView.addListElementView(list_element);
+  }, false);
 
-   document.addEventListener(EventType.CLICK_ADD_LIST_ELEMENT, function (event) {
-   const newListElement = itemsFactory.createListElement("New");
-   model.boards.push(newListElement);
+  document.addEventListener(EventType.CLICK_ADD_LIST_ELEMENT, function (event) {
+    const newListElement = itemsFactory.createListElement();
+    list.elements.push(newListElement);
 
-   const e = new Event(EventType.ADD_LIST_ELEMENT, newListElement);
-   e.dispatch(modelView.element);
-   }, false);*/
+    const e = new Event(EventType.ADD_LIST_ELEMENT, newListElement);
+    e.dispatch(list.element);
+  }, false);*/
 
 
   //image
@@ -106,15 +95,14 @@ function initialize() {
   }, false);
 
   document.addEventListener(EventType.CLICK_ADD_IMAGE, function (event) {
-    const newImage = itemsFactory.createImage();
-    model.boards.push(newImage);
+    const path = event.detail;
+    const newImage = itemsFactory.createImage(path);
+    modelView.currentBoardView.board.images.push(newImage);
 
     const e = new Event(EventType.ADD_IMAGE, newImage);
     e.dispatch(modelView.element);
   }, false);
 
-=======
->>>>>>> e7e974234e49b8127b3223e6a2126e3255f07d50
   document.addEventListener(EventType.SELECT_BOARD_EVENT, function (event) {
     modelView.showBoardWithId(event.detail);
   }, false);

@@ -17,6 +17,10 @@ class Board {
 		return this._title;
 	}
 
+  set title(value) {
+    this._title = value;
+  }
+
 	get lists() {
 		return this._lists;
 	}

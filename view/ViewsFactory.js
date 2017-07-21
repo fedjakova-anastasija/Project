@@ -5,6 +5,10 @@ class ViewsFactory {
 	ItemsFactory() {
 	}
 
+	getRandomColor() {
+		return "#" + (Math.round(Math.random() * 0XFFFFFF)).toString(16);
+	}
+
 	createElement(tag) {
 		const element = document.createElement(tag);
 		return element;
@@ -18,12 +22,12 @@ class ViewsFactory {
 		return new HeaderView(this);
 	}
 
-	createBoardHeaderView(title, id) {
-		return new BoardHeaderView(title, id, this);
+	createBoardHeaderView(title, id, board) {
+		return new BoardHeaderView(title, id, board, this);
 	}
 
 	createBoardView(board) {
-		return new BoardView(board, this);
+		return new BoardView(board, this, this.getRandomColor());
 	}
 
 	createListView(list) {
@@ -31,7 +35,7 @@ class ViewsFactory {
 	}
 
   createListElementView(list_element) {
-    return new ListElementView(list_element, this, value);
+    return new ListElementView(list_element, this, "");
   }
 
   createNoteView(note) {

@@ -9,19 +9,19 @@ class ModelView {
     this._boardsViews = [];
 
     this._headerView = this._viewsFactory.createHeaderView();
-    this._element.appendChild( this._headerView.element);
+    this._element.appendChild(this._headerView.element);
 
     this._init(model);
   }
 
-  _init (model) {
+  _init(model) {
     for (let i = 0; i < model.boards.length; ++i) {
       this.addBoardView(model.boards[i])
     }
     this._showBoardView(this._boardsViews[0], true);
   }
 
-  addBoardView (board) {
+  addBoardView(board) {
     const boardView = this._viewsFactory.createBoardView(board);
     this._element.appendChild(boardView.element);
     this._boardsViews.push(boardView);
@@ -37,19 +37,15 @@ class ModelView {
   }
 
   _showBoardView(boardView, show) {
-    boardView.redraw();
-    boardView.element.style.display = show  ? "block" : "none";
+    //boardView.redraw();
+    boardView.element.style.display = show ? "block" : "none";
   }
 
   get currentBoardView() {
     for (let i = 0; i < this._boardsViews.length; ++i) {
       const boardView = this._boardsViews[i];
-      if (boardView.element.style.display == "block")
-      {
-<<<<<<< HEAD
-        //document.getElementsByClassName("title_head").style.backgroundColor = "#ffffff";
-=======
->>>>>>> e7e974234e49b8127b3223e6a2126e3255f07d50
+      if (boardView.element.style.display == "block") {
+        //document.getElementsByClassName("title_head").
         return boardView;
       }
 
