@@ -37,16 +37,16 @@ class ListView {
     this._element.appendChild(this._button);
 
     this._button.onclick = function () {
-      const event = new Event(EventType.CLICK_ADD_LIST_ELEMENT);
+      const value = thisPtr._input.value;
+      const event = new Event(EventType.CLICK_ADD_LIST_ELEMENT, {list, value});
       event.dispatch(document);
-      thisPtr.addListElementView(list);
-
-      /*const listParent = this._element;
-      const new_value = this.getElementsByClassName("input_place")[0].value;
-      const element = new ListElementView(listParent, viewsFactory, new_value);*/
-
-      //list.elements.push(element);
+      thisPtr._input.value = "";
     };
+
+    document.addEventListener(EventType.ADD_LIST_ELEMENT, function (event) {
+      const listElement = event.detail;
+      thisPtr.addListElementView(listElement);
+    }, false);
 
     this._init(list);
   }
@@ -57,8 +57,8 @@ class ListView {
     }
   }
 
-  addListElementView(list_element) {
-    const listElementView = this._viewsFactory.createListElementView(list_element, list_element.id, list_element.value);
+  addListElementView(listElement) {
+    const listElementView = this._viewsFactory.createListElementView(listElement, listElement.id, listElement.value);
     this._element.appendChild(listElementView.element);
     this._listElementViews.push(listElementView);
   }

@@ -1,8 +1,10 @@
 'use strict';
 
 class ListElementView {
-  constructor(listElement, viewsFactory, value, id) {
+  constructor(listElement, viewsFactory, id) {
     this._viewsFactory = viewsFactory;
+
+    const text = listElement.text;
 
     this._id = listElement.id;
     this._element = viewsFactory.createElement("li");
@@ -10,7 +12,7 @@ class ListElementView {
     this._element.setAttribute("id", this._element.id);
 
     this._input = viewsFactory.createElement("input");
-    this._input.value = value;
+    this._input.value = text;
     this._input.className = "list_element";
     this._element.appendChild(this._input);
 
@@ -33,7 +35,9 @@ class ListElementView {
     this._check.id = "checkbox";
 
     this._check.onclick = function () {
-      document.getElementById('checkbox').setAttribute('checked', 'checked');
+      //document.getElementById('checkbox').setAttribute('checked', 'checked');
+      //listElement.checked = !listElement.checked;
+      //text-decoration: line-through;
     };
 
     this._element.appendChild(this._check);

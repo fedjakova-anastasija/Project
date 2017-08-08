@@ -1,16 +1,17 @@
 'use strict';
 
 class ListElement {
-  constructor(id) {
+  constructor(text, id) {
+    this._text = text;
     this._id = id;
-    this._position = {x: 0, y: 0};
+    this._checked = false;
   }
 
   get id() {
     return this._id;
   }
 
-  get position() {
-    return this._position;
+  get text() {
+    return this._text;
   }
 }
