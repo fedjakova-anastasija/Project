@@ -19,8 +19,8 @@ class ItemsFactory {
     return new List(title, this._listId++);
   }
 
-  createListElement() {
-    return new ListElement(this._listElementId++);
+  createListElement(text) {
+    return new ListElement(text, this._listElementId++);
   }
 
   createNote(title) {

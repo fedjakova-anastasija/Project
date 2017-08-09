@@ -78,14 +78,15 @@ function initialize() {
     const list_element = event.detail;
     modelView.currentBoardView.addListElementView(list_element);
   }, false);
-
+*/
   document.addEventListener(EventType.CLICK_ADD_LIST_ELEMENT, function (event) {
-    const newListElement = itemsFactory.createListElement();
-    list.elements.push(newListElement);
+    const metainfo = event.detail;
+    const newListElement = itemsFactory.createListElement(metainfo.value);
+    metainfo.list.elements.push(newListElement);
 
     const e = new Event(EventType.ADD_LIST_ELEMENT, newListElement);
-    e.dispatch(list.element);
-  }, false);*/
+    e.dispatch(document);
+  }, false);
 
 
   //image

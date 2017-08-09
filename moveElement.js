@@ -1,9 +1,9 @@
-function moveElement(list, listView) {
-  listView.onmousedown = function (e) {
+function moveElement(element, elementView) {
+  elementView.onmousedown = function (e) {
 
     let dragElement = e.target;
 
-    if (!dragElement.classList.contains(listView.className)) {
+    if (!dragElement.classList.contains(elementView.className)) {
       return;
     }
 
@@ -35,7 +35,7 @@ function moveElement(list, listView) {
       let x = parseInt(dragElement.style.left);
       let y = parseInt(dragElement.style.top);
 
-     /* const BOUNDINGS_FIRST = {left: 20, right: 300};
+      const BOUNDINGS_FIRST = {left: 20, right: 300};
 
       if (x > BOUNDINGS_FIRST.left && x < BOUNDINGS_FIRST.right) {
         x = BOUNDINGS_FIRST.left;
@@ -45,7 +45,7 @@ function moveElement(list, listView) {
 
       if (x > BOUNDINGS_SECOND.left && x < BOUNDINGS_SECOND.right) {
         x = BOUNDINGS_SECOND.left;
-      }*/
+      }
 
       const BOUNDINGS_THIRD = {left: 620, right: 900};
 
@@ -53,8 +53,8 @@ function moveElement(list, listView) {
         x = BOUNDINGS_THIRD.left;
       }
 
-      list.position.x = x;
-      list.position.y = y;
+      element.position.x = x;
+      element.position.y = y;
 
       dragElement.style.left = x + "px";
       dragElement.style.top = y + "px";

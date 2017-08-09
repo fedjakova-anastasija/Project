@@ -7,16 +7,26 @@ class BoardHeaderView {
     this._element = viewsFactory.createElement("div");
     this._element.className = "title_head";
 
-    this._input = viewsFactory.createElement("input");
+    this._title = viewsFactory.createElement("input");
     //this._element.type = "button";
-    this._input.value = board.title;
-    this._input.className = "title";
-    this._input.id = "boardHeaderView" + id;
-    this._element.appendChild(this._input);
+    this._title.value = board.title;
+    this._title.className = "title";
+    this._title.id = "boardHeaderView" + id;
+    this._element.appendChild(this._title);
+
+    this._close = viewsFactory.createElement("input");
+    this._close.type = "button";
+    this._close.value = "x";
+    this._close.className = "close_board";
+    this._element.appendChild(this._close);
+
+    this._close.onclick = function () {
+        alert("Are you sure?");
+    };
 
     const thisPtr = this;
-    this._input.onchange = function () {
-      const newTitle = thisPtr._input.value;
+    this._element.onchange = function () {
+      const newTitle = thisPtr._element.value;
       board.title = newTitle;
     };
 

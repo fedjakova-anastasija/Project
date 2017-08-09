@@ -1,8 +1,10 @@
 'use strict';
 
 class ListElementView {
-  constructor(listElement, viewsFactory, value, id) {
+  constructor(listElement, viewsFactory, id) {
     this._viewsFactory = viewsFactory;
+
+    const text = listElement.text;
 
     this._id = listElement.id;
     this._element = viewsFactory.createElement("li");
@@ -10,9 +12,15 @@ class ListElementView {
     this._element.setAttribute("id", this._element.id);
 
     this._input = viewsFactory.createElement("input");
-    this._input.value = value;
+    this._input.value = listElement.text;
     this._input.className = "list_element";
     this._element.appendChild(this._input);
+
+    const thisPtr = this;
+    this._input.onchange = function () {
+      const newText = thisPtr._input.value;
+      listElement.text = newText;
+    };
 
     this._button = viewsFactory.createElement("input");
     this._button.type = "button";
@@ -20,7 +28,7 @@ class ListElementView {
     this._button.className = "close_point";
 
     this._button.onclick = function () {
-      var event = new Event(EventType.DELETE_ELEMENT, {
+      const event = new Event(EventType.DELETE_ELEMENT, {
         detail: id
       });
       event.dispatch(document);
@@ -31,10 +39,23 @@ class ListElementView {
     this._check = viewsFactory.createElement("input");
     this._check.type = "checkbox";
     this._check.id = "checkbox";
+    //this._check.className = "not_checked";
+
+    const element = this._element;
+    let k = 0;
 
     this._check.onclick = function () {
-      document.getElementById('checkbox').setAttribute('checked', 'checked');
+      if (k % 2) {
+        element.classList.remove('check');
+
+        listElement._checked = !listElement._checked;
+        //text-decoration: line-through;
+      } else {
+        element.classList.add('check');
+      }
+      k++;
     };
+
 
     this._element.appendChild(this._check);
   }

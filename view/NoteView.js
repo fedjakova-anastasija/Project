@@ -8,6 +8,12 @@ class NoteView {
 
     moveElement(note, this._element);
 
+    this._close = viewsFactory.createElement("input");
+    this._close.type = "button";
+    this._close.value = "x";
+    this._close.className = "close";
+    this._element.appendChild(this._close);
+
     this._header = viewsFactory.createElement("input");
     this._header.className = "title_element";
     this._header.value = note.title;

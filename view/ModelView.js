@@ -37,7 +37,7 @@ class ModelView {
   }
 
   _showBoardView(boardView, show) {
-    //boardView.redraw();
+    boardView.redraw();
     boardView.element.style.display = show ? "block" : "none";
   }
 

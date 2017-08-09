@@ -34,8 +34,8 @@ class ViewsFactory {
 		return new ListView(list, this);
 	}
 
-  createListElementView(list_element) {
-    return new ListElementView(list_element, this, "");
+  createListElementView(listElement) {
+    return new ListElementView(listElement, this);
   }
 
   createNoteView(note) {

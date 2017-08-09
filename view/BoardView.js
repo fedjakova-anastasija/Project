@@ -11,6 +11,39 @@ class BoardView {
     this._element.id = "board" + this._id; //TODO: перенести счетчик в другое место
     this._element.className = "board"; //todo: "boardView" -
 
+
+    let parent = this._element;
+    let lastClickedElement = null;
+
+    this._element.onclick = function (event) {
+      let target = event.target;
+
+      if (target.tagName != "DIV") return;
+
+      if (event.ctrlKey) {
+        toggleSelect(target);
+      } else {
+        selectSingle(target);
+      }
+
+      lastClickedElement = target;
+    };
+
+    function toggleSelect(selectedElement) {
+      selectedElement.classList.toggle('selected_border');
+    }
+
+    function deselectAll() {
+      for (let i = 0; i < parent.children.length; i++) {
+        parent.children[i].classList.remove('selected_border');
+      }
+    }
+
+    function selectSingle(selectedElement) {
+      deselectAll();
+      selectedElement.classList.add('selected_border');
+    }
+
     this._board = board;
     this.redraw();
   }
@@ -30,7 +63,13 @@ class BoardView {
   }
 
   redraw() {
-    //this._element.removeChild
+    function removeChildren(element) {
+      while (element.lastChild) {
+        element.removeChild(element.lastChild);
+      }
+    }
+    removeChildren(this._element);
+
     this._listViews = [];
     this._noteViews = [];
     this._imageViews = [];

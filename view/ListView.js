@@ -9,10 +9,15 @@ class ListView {
 
     this._element.id = "list" + list.id; // счетчик!
     this._element.className = "list";
-
     this._listElementViews = [];
 
     moveElement(list, this._element);
+
+    this._close = viewsFactory.createElement("input");
+    this._close.type = "button";
+    this._close.value = "x";
+    this._close.className = "close";
+    this._element.appendChild(this._close);
 
     this._header = viewsFactory.createElement("input");
     this._header.className = "title_element";
@@ -37,16 +42,27 @@ class ListView {
     this._element.appendChild(this._button);
 
     this._button.onclick = function () {
-      const event = new Event(EventType.CLICK_ADD_LIST_ELEMENT);
-      event.dispatch(document);
-      thisPtr.addListElementView(list);
+      const value = thisPtr._input.value;
+      if (value === '') {
+        alert("Please, write something.");
+      } else {
+        const event = new Event(EventType.CLICK_ADD_LIST_ELEMENT, {list, value});
+        event.dispatch(document);
+        thisPtr._input.value = "";
 
-      /*const listParent = this._element;
-      const new_value = this.getElementsByClassName("input_place")[0].value;
-      const element = new ListElementView(listParent, viewsFactory, new_value);*/
-
-      //list.elements.push(element);
+        /*const element = new ListElementView(list, value);
+        element.view.addEventListener(EventType.DELETE_ELEMENT, function(event) {
+          list.removeChild(list);
+          const index = list.elements.indexOf(element);
+          list.elements.splice(index, 1);
+        }, false);*/
+      }
     };
+
+    document.addEventListener(EventType.ADD_LIST_ELEMENT, function (event) {
+      const listElement = event.detail;
+      thisPtr.addListElementView(listElement);
+    }, false);
 
     this._init(list);
   }
@@ -57,8 +73,8 @@ class ListView {
     }
   }
 
-  addListElementView(list_element) {
-    const listElementView = this._viewsFactory.createListElementView(list_element, list_element.id, list_element.value);
+  addListElementView(listElement) {
+    const listElementView = this._viewsFactory.createListElementView(listElement, listElement.id, listElement.value);
     this._element.appendChild(listElementView.element);
     this._listElementViews.push(listElementView);
   }
