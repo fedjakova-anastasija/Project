@@ -38,13 +38,30 @@ class ModelView {
 
   _showBoardView(boardView, show) {
     boardView.redraw();
-    boardView.element.style.display = show ? "block" : "none";
+   // boardView.element.style.display = show ? "block" : "none";
+      if (show)
+      {
+		  this._element.appendChild(boardView.element);
+      }
+      else
+      {
+		  if (this._element.contains(boardView.element)) {
+			  this._element.removeChild(boardView.element);
+		  }
+
+      }
+
+    if (show)
+    {
+		window.currentBoard = boardView;
+    }
   }
 
   get currentBoardView() {
     for (let i = 0; i < this._boardsViews.length; ++i) {
       const boardView = this._boardsViews[i];
-      if (boardView.element.style.display == "block") {
+      if (this._element.contains(boardView.element)) {
+     // if (boardView.element.style.display == "block") {
         //document.getElementsByClassName("title_head").
         return boardView;
       }

@@ -10,7 +10,6 @@ class NoteView {
 
     this._close = viewsFactory.createElement("input");
     this._close.type = "button";
-    this._close.value = "x";
     this._close.className = "close";
     this._element.appendChild(this._close);
 

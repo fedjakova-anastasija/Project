@@ -1,12 +1,11 @@
 function moveElement(element, elementView) {
   elementView.onmousedown = function (e) {
-
     let dragElement = e.target;
 
-    if (!dragElement.classList.contains(elementView.className)) {
-      return;
+    if (elementView != dragElement && elementView.contains(dragElement))
+    {
+       return;
     }
-
     let coords;
     let shiftX;
     let shiftY;
@@ -35,22 +34,25 @@ function moveElement(element, elementView) {
       let x = parseInt(dragElement.style.left);
       let y = parseInt(dragElement.style.top);
 
-      const BOUNDINGS_FIRST = {left: 20, right: 300};
+      console.log(window.currentBoard);
+      const WIDTH = window.currentBoard.element.getBoundingClientRect().width;
+      const N = 3;
+      const PADDING = 20;
 
-      if (x > BOUNDINGS_FIRST.left && x < BOUNDINGS_FIRST.right) {
-        x = BOUNDINGS_FIRST.left;
+      const columns = [];
+      const COL_W = Math.floor((WIDTH - PADDING * (N + 1)) / N);
+
+      let left = PADDING;
+      for (let i = 0; i < N; ++i)
+      {
+        columns.push({left, right: left + COL_W});
+		left += PADDING + COL_W;
       }
-
-      const BOUNDINGS_SECOND = {left: 320, right: 600};
-
-      if (x > BOUNDINGS_SECOND.left && x < BOUNDINGS_SECOND.right) {
-        x = BOUNDINGS_SECOND.left;
-      }
-
-      const BOUNDINGS_THIRD = {left: 620, right: 900};
-
-      if (x > BOUNDINGS_THIRD.left && x < BOUNDINGS_THIRD.right) {
-        x = BOUNDINGS_THIRD.left;
+      for (const column of columns)
+      {
+		  if (x > column.left && x < column.right) {
+			  x = column.left;
+		  }
       }
 
       element.position.x = x;

@@ -10,15 +10,15 @@ class HeaderView {
 
     this._boardHeaders = [];
 
-    this._element.onclick = function () {
-      const event = new Event(EventType.SELECT_BOARD_EVENT, id);
-      event.dispatch(document);
-    };
-
     let parent = this._element;
     let lastClickedElement = null;
 
-    this._element.onclick = function (event) {
+    document.addEventListener(EventType.SELECT_BOARD_EVENT, function (event) {
+        //modelView.showBoardWithId(event.detail);
+        const id = event.detail;
+    }, false);
+
+   /* this._element.onclick = function (event) {
       let target = event.target;
 
       if (target.tagName != "INPUT") return;
@@ -26,7 +26,7 @@ class HeaderView {
       selectSingle(target);
 
       lastClickedElement = target;
-    };
+    };*/
 
     function deselectAll() {
       for (let i = 0; i < parent.children.length; i++) {

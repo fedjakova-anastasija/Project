@@ -12,7 +12,7 @@ class BoardView {
     this._element.className = "board"; //todo: "boardView" -
 
 
-    let parent = this._element;
+    const parent = this._element;
     let lastClickedElement = null;
 
     this._element.onclick = function (event) {
@@ -41,6 +41,10 @@ class BoardView {
 
     function selectSingle(selectedElement) {
       deselectAll();
+      if (selectedElement == parent)
+      {
+        return;
+      }
       selectedElement.classList.add('selected_border');
     }
 
