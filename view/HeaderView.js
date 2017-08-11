@@ -18,7 +18,11 @@ class HeaderView {
         const id = event.detail;
     }, false);
 
+<<<<<<< HEAD
     this._element.onclick = function (event) {
+=======
+   /* this._element.onclick = function (event) {
+>>>>>>> e94cd34be215468503d0c56f2dd880ef12e0b8c1
       let target = event.target;
 
       if (target.tagName != "INPUT") return;
@@ -26,7 +30,7 @@ class HeaderView {
       selectSingle(target);
 
       lastClickedElement = target;
-    };
+    };*/
 
     function deselectAll() {
       for (let i = 0; i < parent.children.length; i++) {

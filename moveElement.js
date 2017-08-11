@@ -2,10 +2,18 @@ function moveElement(element, elementView) {
   elementView.onmousedown = function (e) {
     let dragElement = e.target;
 
+<<<<<<< HEAD
     if (elementView != dragElement && elementView.contains(dragElement)) {
       return;
     }
 
+=======
+    if (elementView != dragElement && elementView.contains(dragElement))
+    {
+       return;
+    }
+    let coords;
+>>>>>>> e94cd34be215468503d0c56f2dd880ef12e0b8c1
     let shiftX;
     let shiftY;
 
@@ -41,6 +49,7 @@ function moveElement(element, elementView) {
       const COL_W = Math.floor((WIDTH - PADDING * (N + 1)) / N);
 
       let left = PADDING;
+<<<<<<< HEAD
       for (let i = 0; i < N; ++i) {
         columns.push({left, right: left + COL_W});
         left += PADDING + COL_W;
@@ -49,6 +58,18 @@ function moveElement(element, elementView) {
         if (x > column.left && x < column.right) {
           x = column.left;
         }
+=======
+      for (let i = 0; i < N; ++i)
+      {
+        columns.push({left, right: left + COL_W});
+		left += PADDING + COL_W;
+      }
+      for (const column of columns)
+      {
+		  if (x > column.left && x < column.right) {
+			  x = column.left;
+		  }
+>>>>>>> e94cd34be215468503d0c56f2dd880ef12e0b8c1
       }
 
       const boundings = dragElement.parentNode.getBoundingClientRect();
