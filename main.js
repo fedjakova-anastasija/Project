@@ -78,12 +78,17 @@ function initialize() {
     const newListElement = itemsFactory.createListElement(metainfo.value);
     metainfo.list.elements.push(newListElement);
 
-    const e = new Event(EventType.ADD_LIST_ELEMENT, newListElement);
+    const e = new Event(EventType.ADD_LIST_ELEMENT, {element: newListElement, listId:  metainfo.list.id});
     e.dispatch(document);
   }, false);
 
+	document.addEventListener(EventType.ADD_LIST_ELEMENT, function (event) {
+      const listElement = event.detail.element;
+      const listView = modelView.currentBoardView.getListViewById(event.detail.listId);
+      listView.addListElementView(listElement);
+	}, false);
 
-  //image
+	//image
   modelView.element.addEventListener(EventType.ADD_IMAGE, function (event) {
     const image = event.detail;
     modelView.currentBoardView.addImageView(image);

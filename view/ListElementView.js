@@ -30,7 +30,7 @@ class ListElementView {
 
     this._button.onclick = function () {
       const event = new Event(EventType.DELETE_LIST_ELEMENT, listElement.id);
-      event.dispatch(document);
+      event.dispatch(thisPtr._element);
     };
 
     this._element.appendChild(this._button);

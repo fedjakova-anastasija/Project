@@ -9,16 +9,27 @@ class ModelView {
     this._boardsViews = [];
 
     this._headerView = this._viewsFactory.createHeaderView();
+
     this._element.appendChild(this._headerView.element);
 
     const thisPtr = this;
 
     document.addEventListener(EventType.DELETE_BOARD, function (event) {
+      //TODO: if model.boards.length == 1 -> cleardBoard()
       const id = event.detail;
       const view = thisPtr._getBoardViewById(id);
       thisPtr._element.removeChild(view.element);
       const index = model.boards.indexOf(view.board);
-      model.boards.splice(index, 1);
+		model.boards.splice(index, 1);
+		thisPtr._boardsViews.splice(index, 1);
+
+		//TODO:  _headerView.removeBoardHEaderViewWithId(id);
+
+		if (model.boards.length > 0)
+        {
+			thisPtr.showBoardWithId(model.boards[index - 1].id);
+        }
+
     }, false);
 
     this._init(model);

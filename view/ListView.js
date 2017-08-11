@@ -5,6 +5,8 @@ class ListView {
     this._viewsFactory = viewsFactory;
     this._list = list;
 
+    this._viewId = Math.random();
+
     this._id = list.id;
     this._element = viewsFactory.createElement("div");
 
@@ -58,20 +60,15 @@ class ListView {
       }
     };
 
-    document.addEventListener(EventType.ADD_LIST_ELEMENT, function (event) {
-      const listElement = event.detail;
-      thisPtr.addListElementView(listElement);
-    }, false);
-
-    document.addEventListener(EventType.DELETE_LIST_ELEMENT, function (event) {
-      const id = event.detail;
-      const view = thisPtr._getListElementViewById(id);
-      thisPtr._element.removeChild(view.element);
-      const index = list.elements.indexOf(view.listElement);
-      list.elements.splice(index, 1);
-    }, false);
-
     this._init(list);
+  }
+
+  _onDeleteListElement(event) {
+	  const id = event.detail;
+	  const view = this._getListElementViewById(id);
+	  this._element.removeChild(view.element);
+	  const index = this._list.elements.indexOf(view.listElement);
+	  this._list.elements.splice(index, 1);
   }
 
   _getListElementViewById(id) {
@@ -98,6 +95,7 @@ class ListView {
     this._element.appendChild(listElementView.element);
 
     this._listElementViews.push(listElementView);
+	listElementView.element.addEventListener(EventType.DELETE_LIST_ELEMENT, this._onDeleteListElement.bind(this))
   }
 
   get element() {

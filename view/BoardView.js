@@ -4,6 +4,9 @@ class BoardView {
   constructor(board, viewsFactory, color) {
     this._viewsFactory = viewsFactory;
 
+    this._listViews = [];
+    this._noteViews = [];
+    this._imageViews = [];
     this._color = color;
     this._id = board.id;
     this._element = viewsFactory.createElement("div");
@@ -52,10 +55,11 @@ class BoardView {
 
     document.addEventListener(EventType.DELETE_LIST, function(event) {
       const id = event.detail;
-      const view = thisPtr._getListViewById(id);
+      const view = thisPtr.getListViewById(id);
       thisPtr._element.removeChild(view.element);
       const index = board.lists.indexOf(view.list);
-      board.lists.splice(index, 1);
+		board.lists.splice(index, 1);
+		thisPtr._listViews.splice(index, 1);
     }, false);
 
     document.addEventListener(EventType.DELETE_NOTE, function(event) {
@@ -64,6 +68,7 @@ class BoardView {
       thisPtr._element.removeChild(view.element);
       const index = board.notes.indexOf(view.note);
       board.notes.splice(index, 1);
+		thisPtr._noteViews.splice(index, 1);
     }, false);
 
     document.addEventListener(EventType.DELETE_IMAGE, function(event) {
@@ -71,6 +76,7 @@ class BoardView {
       const view = thisPtr._getImageViewById(id);
       thisPtr._element.removeChild(view.element);
       const index = board.images.indexOf(view.image);
+		thisPtr._imageViews.splice(index, 1);
       board.images.splice(index, 1);
     }, false);
 
@@ -93,13 +99,19 @@ class BoardView {
   }
 
   redraw() {
-    function removeChildren(element) {
+    for (const listView of this._listViews)
+    {
+      this._element.removeChild(listView.element);
+    }
+
+    //TODO: delete images & notes
+    /*function removeChildren(element) {
       while (element.lastChild) {
         element.removeChild(element.lastChild);
       }
     }
 
-    removeChildren(this._element);
+    removeChildren(this._element);*/
 
     this._listViews = [];
     this._noteViews = [];
@@ -125,9 +137,11 @@ class BoardView {
     const imageView = this._viewsFactory.createImageView(image);
     this._element.appendChild(imageView.element);
     this._imageViews.push(imageView);
+
+    //TODO: addEventListener imageView.element
   }
 
-  _getListViewById(id) {
+  getListViewById(id) {
     for (const view of this._listViews)
     {
       if (view.id == id)
