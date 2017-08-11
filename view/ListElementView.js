@@ -29,11 +29,7 @@ class ListElementView {
     this._button.className = "close_point";
 
     this._button.onclick = function () {
-<<<<<<< HEAD
       const event = new Event(EventType.DELETE_LIST_ELEMENT, listElement.id);
-=======
-      const event = new Event(EventType.DELETE_ELEMENT, listElement.id);
->>>>>>> e94cd34be215468503d0c56f2dd880ef12e0b8c1
       event.dispatch(document);
     };
 

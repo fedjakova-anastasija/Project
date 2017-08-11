@@ -11,10 +11,6 @@ class BoardView {
     this._element.id = "board" + this._id; //TODO: перенести счетчик в другое место
     this._element.className = "board"; //todo: "boardView" -
 
-<<<<<<< HEAD
-=======
-
->>>>>>> e94cd34be215468503d0c56f2dd880ef12e0b8c1
     const parent = this._element;
     let lastClickedElement = null;
 
@@ -46,12 +42,7 @@ class BoardView {
 
     function selectSingle(selectedElement) {
       deselectAll();
-<<<<<<< HEAD
       if (selectedElement == parent) {
-=======
-      if (selectedElement == parent)
-      {
->>>>>>> e94cd34be215468503d0c56f2dd880ef12e0b8c1
         return;
       }
       selectedElement.classList.add('selected_border');

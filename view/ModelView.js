@@ -48,7 +48,6 @@ class ModelView {
 
   _showBoardView(boardView, show) {
     boardView.redraw();
-<<<<<<< HEAD
     // boardView.element.style.display = show ? "block" : "none";
     if (show) {
       this._element.appendChild(boardView.element);
@@ -71,36 +70,13 @@ class ModelView {
       }
     }
     return null;
-=======
-   // boardView.element.style.display = show ? "block" : "none";
-      if (show)
-      {
-		  this._element.appendChild(boardView.element);
-      }
-      else
-      {
-		  if (this._element.contains(boardView.element)) {
-			  this._element.removeChild(boardView.element);
-		  }
-
-      }
-
-    if (show)
-    {
-		window.currentBoard = boardView;
-    }
->>>>>>> e94cd34be215468503d0c56f2dd880ef12e0b8c1
   }
 
   get currentBoardView() {
     for (let i = 0; i < this._boardsViews.length; ++i) {
       const boardView = this._boardsViews[i];
       if (this._element.contains(boardView.element)) {
-<<<<<<< HEAD
         // if (boardView.element.style.display == "block") {
-=======
-     // if (boardView.element.style.display == "block") {
->>>>>>> e94cd34be215468503d0c56f2dd880ef12e0b8c1
         //document.getElementsByClassName("title_head").
         return boardView;
       }

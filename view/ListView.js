@@ -19,9 +19,6 @@ class ListView {
     this._close.type = "button";
     this._close.className = "close";
     this._element.appendChild(this._close);
-	  this._close.onclick = function () {
-
-	  }
 
     this._close.onclick = function () {
       const event = new Event(EventType.DELETE_LIST, list.id);
@@ -66,37 +63,20 @@ class ListView {
       thisPtr.addListElementView(listElement);
     }, false);
 
-<<<<<<< HEAD
     document.addEventListener(EventType.DELETE_LIST_ELEMENT, function (event) {
       const id = event.detail;
       const view = thisPtr._getListElementViewById(id);
       thisPtr._element.removeChild(view.element);
       const index = list.elements.indexOf(view.listElement);
       list.elements.splice(index, 1);
-=======
-    document.addEventListener(EventType.DELETE_ELEMENT, function(event) {
-        const id = event.detail;
-        const view = thisPtr._getViewById(id);
-		thisPtr._element.removeChild(view.element);
-        const index = list.elements.indexOf(view.listElement);
-        list.elements.splice(index, 1);
->>>>>>> e94cd34be215468503d0c56f2dd880ef12e0b8c1
     }, false);
 
     this._init(list);
   }
 
-<<<<<<< HEAD
   _getListElementViewById(id) {
     for (const view of this._listElementViews) {
       if (view.id == id) {
-=======
-  _getViewById(id) {
-    for (const view of this._listElementViews)
-    {
-      if (view.id == id)
-      {
->>>>>>> e94cd34be215468503d0c56f2dd880ef12e0b8c1
         return view;
       }
     }
@@ -107,16 +87,10 @@ class ListView {
     for (let i = 0; i < list.elements.length; ++i) {
       this.addListElementView(list.elements[i])
     }
-<<<<<<< HEAD
 
     this._element.style.position = 'absolute';
     this._element.style.left = list.position.x + 10 + 'px';
     this._element.style.top = list.position.y + 10 + 'px';
-=======
-	  this._element.style.left = list.position.x + 'px';
-	  this._element.style.top = list.position.y + 'px';
-	  this._element.style.position = 'fixed';
->>>>>>> e94cd34be215468503d0c56f2dd880ef12e0b8c1
   }
 
   addListElementView(listElement) {
