@@ -38,7 +38,6 @@ function initialize() {
     e.dispatch(modelView.element);
   }, false);
 
-
   //list
   modelView.element.addEventListener(EventType.ADD_LIST, function (event) {
     const list = event.detail;
@@ -54,7 +53,6 @@ function initialize() {
     const e = new Event(EventType.ADD_LIST, newList);
     e.dispatch(modelView.element);
   }, false);
-
 
   //note
   modelView.element.addEventListener(EventType.ADD_NOTE, function (event) {
@@ -74,11 +72,7 @@ function initialize() {
   }, false);
 
   //list_element
-/*  modelView.element.addEventListener(EventType.ADD_LIST_ELEMENT, function (event) {
-    const list_element = event.detail;
-    modelView.currentBoardView.addListElementView(list_element);
-  }, false);
-*/
+
   document.addEventListener(EventType.CLICK_ADD_LIST_ELEMENT, function (event) {
     const metainfo = event.detail;
     const newListElement = itemsFactory.createListElement(metainfo.value);

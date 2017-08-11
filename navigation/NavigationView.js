@@ -92,12 +92,21 @@ class NavigationView {
     this._buttonUpload.value = "Upload this board";
     this._upload.appendChild(this._buttonUpload);
 
+    this._buttonUpload.onclick = function () {
+      const newWindow = window.open("");
+    };
+
     this._buttonPrint = viewsFactory.createElement("input");
     this._buttonPrint.id = "button_new";
     this._buttonPrint.className = "button_print";
     this._buttonPrint.type = "button";
     this._buttonPrint.value = "Print this board";
+    this._buttonPrint.href="http://ya.ru";
     this._upload.appendChild(this._buttonPrint);
+
+    this._buttonPrint.onclick = function () {
+      const newWindow = window.print();
+    };
   }
 
 

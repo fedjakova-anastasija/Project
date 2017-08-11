@@ -6,13 +6,24 @@ class NoteView {
     this._element.id = "note" + note.id;
     this._element.className = "note";
 
+    this._element.style.position = 'absolute';
+    this._element.style.left = note.position.x + 'px';
+    this._element.style.top = note.position.y + 'px';
+
+    this._note = note;
+    this._id = note.id;
+
     moveElement(note, this._element);
 
     this._close = viewsFactory.createElement("input");
     this._close.type = "button";
-    this._close.value = "x";
     this._close.className = "close";
     this._element.appendChild(this._close);
+
+    this._close.onclick = function () {
+      const event = new Event(EventType.DELETE_NOTE, note.id);
+      event.dispatch(document);
+    };
 
     this._header = viewsFactory.createElement("input");
     this._header.className = "title_element";
@@ -40,5 +51,13 @@ class NoteView {
 
   get element() {
     return this._element;
+  }
+
+  get id() {
+    return this._id;
+  }
+
+  get note() {
+    return this._note;
   }
 }

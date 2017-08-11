@@ -2,6 +2,7 @@
 
 class ListElementView {
   constructor(listElement, viewsFactory, id) {
+    this._listElement = listElement;
     this._viewsFactory = viewsFactory;
 
     const text = listElement.text;
@@ -28,9 +29,7 @@ class ListElementView {
     this._button.className = "close_point";
 
     this._button.onclick = function () {
-      const event = new Event(EventType.DELETE_ELEMENT, {
-        detail: id
-      });
+      const event = new Event(EventType.DELETE_LIST_ELEMENT, listElement.id);
       event.dispatch(document);
     };
 
@@ -82,5 +81,9 @@ class ListElementView {
 
   get id() {
     return this._id;
+  }
+
+  get listElement() {
+      return this._listElement;
   }
 }

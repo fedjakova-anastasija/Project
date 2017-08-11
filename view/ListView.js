@@ -3,21 +3,27 @@
 class ListView {
   constructor(list, viewsFactory) {
     this._viewsFactory = viewsFactory;
+    this._list = list;
 
     this._id = list.id;
     this._element = viewsFactory.createElement("div");
 
     this._element.id = "list" + list.id; // счетчик!
     this._element.className = "list";
+
     this._listElementViews = [];
 
     moveElement(list, this._element);
 
     this._close = viewsFactory.createElement("input");
     this._close.type = "button";
-    this._close.value = "x";
     this._close.className = "close";
     this._element.appendChild(this._close);
+
+    this._close.onclick = function () {
+      const event = new Event(EventType.DELETE_LIST, list.id);
+      event.dispatch(document);
+    };
 
     this._header = viewsFactory.createElement("input");
     this._header.className = "title_element";
@@ -49,13 +55,6 @@ class ListView {
         const event = new Event(EventType.CLICK_ADD_LIST_ELEMENT, {list, value});
         event.dispatch(document);
         thisPtr._input.value = "";
-
-        /*const element = new ListElementView(list, value);
-        element.view.addEventListener(EventType.DELETE_ELEMENT, function(event) {
-          list.removeChild(list);
-          const index = list.elements.indexOf(element);
-          list.elements.splice(index, 1);
-        }, false);*/
       }
     };
 
@@ -64,18 +63,40 @@ class ListView {
       thisPtr.addListElementView(listElement);
     }, false);
 
+    document.addEventListener(EventType.DELETE_LIST_ELEMENT, function (event) {
+      const id = event.detail;
+      const view = thisPtr._getListElementViewById(id);
+      thisPtr._element.removeChild(view.element);
+      const index = list.elements.indexOf(view.listElement);
+      list.elements.splice(index, 1);
+    }, false);
+
     this._init(list);
+  }
+
+  _getListElementViewById(id) {
+    for (const view of this._listElementViews) {
+      if (view.id == id) {
+        return view;
+      }
+    }
+    return null;
   }
 
   _init(list) {
     for (let i = 0; i < list.elements.length; ++i) {
       this.addListElementView(list.elements[i])
     }
+
+    this._element.style.position = 'absolute';
+    this._element.style.left = list.position.x + 10 + 'px';
+    this._element.style.top = list.position.y + 10 + 'px';
   }
 
   addListElementView(listElement) {
     const listElementView = this._viewsFactory.createListElementView(listElement, listElement.id, listElement.value);
     this._element.appendChild(listElementView.element);
+
     this._listElementViews.push(listElementView);
   }
 
@@ -85,5 +106,9 @@ class ListView {
 
   get id() {
     return this._id;
+  }
+
+  get list() {
+    return this._list;
   }
 }

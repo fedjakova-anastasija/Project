@@ -1,13 +1,11 @@
 function moveElement(element, elementView) {
   elementView.onmousedown = function (e) {
-
     let dragElement = e.target;
 
-    if (!dragElement.classList.contains(elementView.className)) {
+    if (elementView != dragElement && elementView.contains(dragElement)) {
       return;
     }
 
-    let coords;
     let shiftX;
     let shiftY;
 
@@ -22,7 +20,6 @@ function moveElement(element, elementView) {
     };
 
     function startDrag(clientX, clientY) {
-
       shiftX = clientX - dragElement.getBoundingClientRect().left;
       shiftY = clientY - dragElement.getBoundingClientRect().top;
 
@@ -35,26 +32,29 @@ function moveElement(element, elementView) {
       let x = parseInt(dragElement.style.left);
       let y = parseInt(dragElement.style.top);
 
-      const BOUNDINGS_FIRST = {left: 20, right: 300};
+      console.log(window.currentBoard);
+      const WIDTH = window.currentBoard.element.getBoundingClientRect().width;
+      const N = 3;
+      const PADDING = 20;
 
-      if (x > BOUNDINGS_FIRST.left && x < BOUNDINGS_FIRST.right) {
-        x = BOUNDINGS_FIRST.left;
+      const columns = [];
+      const COL_W = Math.floor((WIDTH - PADDING * (N + 1)) / N);
+
+      let left = PADDING;
+      for (let i = 0; i < N; ++i) {
+        columns.push({left, right: left + COL_W});
+        left += PADDING + COL_W;
+      }
+      for (const column of columns) {
+        if (x > column.left && x < column.right) {
+          x = column.left;
+        }
       }
 
-      const BOUNDINGS_SECOND = {left: 320, right: 600};
+      const boundings = dragElement.parentNode.getBoundingClientRect();
 
-      if (x > BOUNDINGS_SECOND.left && x < BOUNDINGS_SECOND.right) {
-        x = BOUNDINGS_SECOND.left;
-      }
-
-      const BOUNDINGS_THIRD = {left: 620, right: 900};
-
-      if (x > BOUNDINGS_THIRD.left && x < BOUNDINGS_THIRD.right) {
-        x = BOUNDINGS_THIRD.left;
-      }
-
-      element.position.x = x;
-      element.position.y = y;
+      element.position.x = x - boundings.left;
+      element.position.y = y - boundings.top;
 
       dragElement.style.left = x + "px";
       dragElement.style.top = y + "px";
@@ -70,24 +70,25 @@ function moveElement(element, elementView) {
       const boundings = dragElement.parentNode.getBoundingClientRect();
       const heightElement = dragElement.offsetHeight;
       const widthElement = dragElement.offsetWidth;
+      const PADDING = 10;
 
       // нижняя граница
-      if (newY > boundings.bottom - heightElement) {
-        newY = Math.min(newY, boundings.bottom - heightElement);
+      if (newY > boundings.bottom - heightElement - PADDING) {
+        newY = Math.min(newY, boundings.bottom - PADDING - heightElement);
       }
 
       // верхняя граница
-      if (newY < boundings.top) {
-        newY = Math.max(newY, boundings.top);
+      if (newY < boundings.top + PADDING) {
+        newY = Math.max(newY, boundings.top + PADDING);
       }
 
       // границы по горизонтали
-      if (newX < boundings.left) {
-        newX = boundings.left;
+      if (newX < boundings.left + PADDING) {
+        newX = boundings.left + PADDING;
       }
 
-     if (newX > boundings.right) {
-        newX = boundings.right;
+      if ((newX + widthElement) > boundings.right) {
+        newX = boundings.right - widthElement - PADDING;
       }
 
       if (newX > document.documentElement.clientWidth - widthElement) {

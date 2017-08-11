@@ -10,13 +10,13 @@ class HeaderView {
 
     this._boardHeaders = [];
 
-    this._element.onclick = function () {
-      const event = new Event(EventType.SELECT_BOARD_EVENT, id);
-      event.dispatch(document);
-    };
-
     let parent = this._element;
     let lastClickedElement = null;
+
+    document.addEventListener(EventType.SELECT_BOARD_EVENT, function (event) {
+        //modelView.showBoardWithId(event.detail);
+        const id = event.detail;
+    }, false);
 
     this._element.onclick = function (event) {
       let target = event.target;
@@ -45,7 +45,6 @@ class HeaderView {
     this._element.appendChild(boardHeaderView.element);
     this._boardHeaders.push(boardHeaderView);
   }
-
 
   get element() {
     return this._element;
