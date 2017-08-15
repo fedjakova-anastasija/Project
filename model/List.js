@@ -6,7 +6,7 @@ class List {
     this._title = title;
     this._elements = [];
     this._type = "list";
-    this._position = {x: 0, y: 0};
+    this._position = {x: 10, y: 10};
   }
 
   get id() {

@@ -99,7 +99,4 @@ function initialize() {
     e.dispatch(modelView.element);
   }, false);
 
-  document.addEventListener(EventType.SELECT_BOARD_EVENT, function (event) {
-    modelView.showBoardWithId(event.detail);
-  }, false);
 }

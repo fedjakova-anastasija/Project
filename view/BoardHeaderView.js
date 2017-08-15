@@ -16,11 +16,6 @@ class BoardHeaderView {
     this._title.className = "title";
     this._element.appendChild(this._title);
 
-    let titleId = this._element.id;
-    this._element.onclick = function (id) {
-        thisPtr._element.classList.add("selected");
-    };
-
     this._close = viewsFactory.createElement("input");
     this._close.type = "button";
     this._close.value = "x";
@@ -32,20 +27,31 @@ class BoardHeaderView {
 
       if (result) {
         const event = new Event(EventType.DELETE_BOARD, board.id);
-        event.dispatch(document);
+        event.dispatch(thisPtr._element);
       }
     };
 
     const thisPtr = this;
     this._element.onchange = function () {
-      const newTitle = thisPtr._element.value;
+      const newTitle = thisPtr._title.value;
       board.title = newTitle;
     };
 
     this._title.onclick = function () {
       const event = new Event(EventType.SELECT_BOARD_EVENT, id);
-      event.dispatch(document);
+      event.dispatch(thisPtr._element);
     };
+  }
+
+  set selected(value) {
+	  if (value)
+	  {
+		  this.element.classList.add("selected");
+	  }
+	  else
+	  {
+		  this.element.classList.remove("selected");
+	  }
   }
 
   get element() {

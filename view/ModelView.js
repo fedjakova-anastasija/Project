@@ -9,13 +9,16 @@ class ModelView {
 
     this._boardsViews = [];
 
+    const thisPtr = this;
+
     this._headerView = this._viewsFactory.createHeaderView();
+    this._headerView.element.addEventListener(EventType.SELECT_BOARD_EVENT, function (event) {
+        thisPtr.showBoardWithId(event.detail);
+    }, false);
 
     this._element.appendChild(this._headerView.element);
 
-    const thisPtr = this;
-
-    document.addEventListener(EventType.DELETE_BOARD, function (event) {
+    this._headerView.element.addEventListener(EventType.DELETE_BOARD, function (event) {
       //TODO: if model.boards.length == 1 -> clearBoard()
       if (model.boards.length == 1) {
         function removeChildren(element) {
@@ -27,15 +30,21 @@ class ModelView {
       } else {
         const id = event.detail;
         const view = thisPtr._getBoardViewById(id);
-        thisPtr._element.removeChild(view.element);
         const index = model.boards.indexOf(view.board);
         model.boards.splice(index, 1);
         thisPtr._boardsViews.splice(index, 1);
 
         //TODO:  _headerView.removeBoardHeaderViewWithId(id);
+		  thisPtr._headerView.removeHeader(id);
 
-        if (model.boards.length > 0) {
-          thisPtr.showBoardWithId(model.boards[index - 1].id);
+        if (thisPtr._element.contains(view.element))
+        {
+            thisPtr._element.removeChild(view.element);
+			if (model.boards.length > 0)
+			{
+			  const nextIndex = index == 0 ? 0 : index - 1;
+			  thisPtr.showBoardWithId(model.boards[nextIndex].id);
+			}
         }
       }
     }, false);
@@ -63,6 +72,7 @@ class ModelView {
       const boardView = this._boardsViews[i];
       this._showBoardView(boardView, (boardView.id == id));
     }
+    this._headerView.selectHeader(id);
   }
 
   _showBoardView(boardView, show) {
@@ -74,10 +84,6 @@ class ModelView {
       if (this._element.contains(boardView.element)) {
         this._element.removeChild(boardView.element);
       }
-    }
-
-    if (show) {
-      window.currentBoard = boardView;
     }
   }
 

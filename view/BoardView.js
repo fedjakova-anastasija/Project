@@ -20,10 +20,10 @@ class BoardView {
     const parent = this._element;
     let lastClickedElement = null;
 
-    this._element.onclick = function () {
+    /*this._element.onclick = function () {
       const event = new Event(EventType.SELECT_BOARD_EVENT, id);
       event.dispatch(document);
-    };
+    };*/
 
     this._element.onclick = function (event) {
       let target = event.target;

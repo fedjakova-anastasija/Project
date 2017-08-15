@@ -1,6 +1,7 @@
 function moveElement(element, elementView) {
   elementView.onmousedown = function (e) {
-    let dragElement = e.target;
+    const dragElement = e.target;
+	const parentView = dragElement.parentNode;
 
     if (elementView != dragElement && elementView.contains(dragElement)) {
       return;
@@ -23,7 +24,8 @@ function moveElement(element, elementView) {
       shiftX = clientX - dragElement.getBoundingClientRect().left;
       shiftY = clientY - dragElement.getBoundingClientRect().top;
 
-      dragElement.style.position = 'fixed';
+		//dragElement.style.position = 'fixed';
+		dragElement.style.position = 'absolute';
 
       moveAt(clientX, clientY);
     }
@@ -32,7 +34,7 @@ function moveElement(element, elementView) {
       let x = parseInt(dragElement.style.left);
       let y = parseInt(dragElement.style.top);
 
-      const WIDTH = window.currentBoard.element.getBoundingClientRect().width;
+      const WIDTH = parentView.getBoundingClientRect().width;
       const N = 3;
       const PADDING = 20;
 
@@ -52,8 +54,8 @@ function moveElement(element, elementView) {
 
       const boundings = dragElement.parentNode.getBoundingClientRect();
 
-      element.position.x = x - boundings.left;
-      element.position.y = y - boundings.top;
+      element.position.x = x;// - boundings.left;
+      element.position.y = y;//- boundings.top;
 
       dragElement.style.left = x + "px";
       dragElement.style.top = y + "px";
@@ -94,8 +96,11 @@ function moveElement(element, elementView) {
         newX = document.documentElement.clientWidth - widthElement;
       }
 
-      dragElement.style.left = newX + 'px';
-      dragElement.style.top = newY + 'px';
+      const left = parentView.getBoundingClientRect().left;
+      const top = parentView.getBoundingClientRect().top  - parentView.scrollTop;
+
+      dragElement.style.left = newX - left + 'px';
+      dragElement.style.top = newY - top + 'px';
     }
 
     return false;

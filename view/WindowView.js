@@ -1,6 +1,6 @@
 'use strict';
 
-class ImageView {
+class WindowView {
   constructor(image, viewsFactory) {
     this._element = viewsFactory.createElement("div");
 
