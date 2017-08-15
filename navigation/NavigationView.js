@@ -3,6 +3,7 @@
 class NavigationView {
   constructor(model, viewsFactory) {
     this._viewsFactory = viewsFactory;
+
     this._element = viewsFactory.createElement("div");
     this._element.id = "model_nav";
 
@@ -68,7 +69,6 @@ class NavigationView {
     this._buttonNewPicture = viewsFactory.createElement("input");
     this._buttonNewPicture.id = "button_new";
     this._buttonNewPicture.className = "button_new_picture";
-   // this._buttonNewPicture.type = "button";
     this._buttonNewPicture.value = "New picture";
     this._buttonNewPicture.type = "file";
     this._buttonNewPicture.accept = "image/*";
@@ -92,23 +92,30 @@ class NavigationView {
     this._buttonUpload.value = "Upload this board";
     this._upload.appendChild(this._buttonUpload);
 
-    this._buttonUpload.onclick = function () {
-      const newWindow = window.open("");
+    const thisP = this._buttonUpload;
+    //const newWindow = window.open("");
+    function OpenModal() {
+      thisP.onclick = function () {
+        event.preventDefault();
+        setTimeout(function () {
+          this._image.classList.add('opacity_visible');
+        }, 50);
+        this._image.classList.add('open_block');
+      }
     };
+    OpenModal();
 
     this._buttonPrint = viewsFactory.createElement("input");
     this._buttonPrint.id = "button_new";
     this._buttonPrint.className = "button_print";
     this._buttonPrint.type = "button";
     this._buttonPrint.value = "Print this board";
-    this._buttonPrint.href="http://ya.ru";
     this._upload.appendChild(this._buttonPrint);
 
     this._buttonPrint.onclick = function () {
       const newWindow = window.print();
     };
   }
-
 
   get element() {
     return this._element;

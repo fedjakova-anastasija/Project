@@ -4,10 +4,16 @@ class BoardView {
   constructor(board, viewsFactory, color) {
     this._viewsFactory = viewsFactory;
 
+    this._board = board;
+
+    this._listViews = [];
+    this._noteViews = [];
+    this._imageViews = [];
+
     this._color = color;
     this._id = board.id;
-    this._element = viewsFactory.createElement("div");
 
+    this._element = viewsFactory.createElement("div");
     this._element.id = "board" + this._id; //TODO: перенести счетчик в другое место
     this._element.className = "board"; //todo: "boardView" -
 
@@ -23,7 +29,6 @@ class BoardView {
       let target = event.target;
 
       if (target.tagName != "DIV") return;
-
 
       selectSingle(target);
 
@@ -48,33 +53,11 @@ class BoardView {
       selectedElement.classList.add('selected_border');
     }
 
-    const thisPtr = this;
+    function intersect(a, b) {
+      return Math.max(a.left, b.left) < Math.min(a.right, b.right) &&
+        Math.max(a.top, b.top) < Math.min(a.bottom, b.bottom);
+    }
 
-    document.addEventListener(EventType.DELETE_LIST, function(event) {
-      const id = event.detail;
-      const view = thisPtr._getListViewById(id);
-      thisPtr._element.removeChild(view.element);
-      const index = board.lists.indexOf(view.list);
-      board.lists.splice(index, 1);
-    }, false);
-
-    document.addEventListener(EventType.DELETE_NOTE, function(event) {
-      const id = event.detail;
-      const view = thisPtr._getNoteViewById(id);
-      thisPtr._element.removeChild(view.element);
-      const index = board.notes.indexOf(view.note);
-      board.notes.splice(index, 1);
-    }, false);
-
-    document.addEventListener(EventType.DELETE_IMAGE, function(event) {
-      const id = event.detail;
-      const view = thisPtr._getImageViewById(id);
-      thisPtr._element.removeChild(view.element);
-      const index = board.images.indexOf(view.image);
-      board.images.splice(index, 1);
-    }, false);
-
-    this._board = board;
     this.redraw();
   }
 
@@ -93,13 +76,17 @@ class BoardView {
   }
 
   redraw() {
-    function removeChildren(element) {
-      while (element.lastChild) {
-        element.removeChild(element.lastChild);
-      }
+    for (const listView of this._listViews) {
+      this._element.removeChild(listView.element);
     }
 
-    removeChildren(this._element);
+    for (const noteView of this._noteViews) {
+      this._element.removeChild(noteView.element);
+    }
+
+    for (const imageView of this._imageViews) {
+      this._element.removeChild(imageView.element);
+    }
 
     this._listViews = [];
     this._noteViews = [];
@@ -113,25 +100,56 @@ class BoardView {
     const listView = this._viewsFactory.createListView(list);
     this._element.appendChild(listView.element);
     this._listViews.push(listView);
+
+    listView.element.addEventListener(EventType.DELETE_LIST, this._onDeleteList.bind(this));
   }
 
   addNoteView(note) {
     const noteView = this._viewsFactory.createNoteView(note);
     this._element.appendChild(noteView.element);
     this._noteViews.push(noteView);
+
+    noteView.element.addEventListener(EventType.DELETE_NOTE, this._onDeleteNote.bind(this));
   }
 
   addImageView(image) {
     const imageView = this._viewsFactory.createImageView(image);
     this._element.appendChild(imageView.element);
     this._imageViews.push(imageView);
+
+    imageView.element.addEventListener(EventType.DELETE_IMAGE, this._onDeleteImage.bind(this));
+  }
+
+  _onDeleteList(event) {
+    const id = event.detail;
+    const view = this._getListViewById(id);
+    this._element.removeChild(view.element);
+    const index = this._board.lists.indexOf(view.list);
+    this._board.lists.splice(index, 1);
+    this._listViews.splice(index, 1);
+  }
+
+  _onDeleteNote(event) {
+    const id = event.detail;
+    const view = this._getNoteViewById(id);
+    this._element.removeChild(view.element);
+    const index = this._board.notes.indexOf(view.note);
+    this._board.notes.splice(index, 1);
+    this._noteViews.splice(index, 1);
+  }
+
+  _onDeleteImage(event) {
+    const id = event.detail;
+    const view = this._getImageViewById(id);
+    this._element.removeChild(view.element);
+    const index = this._board.images.indexOf(view.image);
+    this._board.images.splice(index, 1);
+    this._imageViews.splice(index, 1);
   }
 
   _getListViewById(id) {
-    for (const view of this._listViews)
-    {
-      if (view.id == id)
-      {
+    for (const view of this._listViews) {
+      if (view.id == id) {
         return view;
       }
     }
@@ -139,10 +157,8 @@ class BoardView {
   }
 
   _getNoteViewById(id) {
-    for (const view of this._noteViews)
-    {
-      if (view.id == id)
-      {
+    for (const view of this._noteViews) {
+      if (view.id == id) {
         return view;
       }
     }
@@ -150,10 +166,8 @@ class BoardView {
   }
 
   _getImageViewById(id) {
-    for (const view of this._imageViews)
-    {
-      if (view.id == id)
-      {
+    for (const view of this._imageViews) {
+      if (view.id == id) {
         return view;
       }
     }

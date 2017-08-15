@@ -5,11 +5,21 @@ class ListView {
     this._viewsFactory = viewsFactory;
     this._list = list;
 
+    this._viewId = Math.random();
+
     this._id = list.id;
     this._element = viewsFactory.createElement("div");
 
     this._element.id = "list" + list.id; // счетчик!
     this._element.className = "list";
+
+    /*const element = this._element;
+
+    element.addEventListener('click', function(ev) {
+      if (ev.target.tagName === 'LI') {
+        ev.target.classList.toggle('checked');
+      }
+    }, false);*/
 
     this._listElementViews = [];
 
@@ -22,7 +32,7 @@ class ListView {
 
     this._close.onclick = function () {
       const event = new Event(EventType.DELETE_LIST, list.id);
-      event.dispatch(document);
+      event.dispatch(thisPtr._element);
     };
 
     this._header = viewsFactory.createElement("input");
@@ -47,6 +57,21 @@ class ListView {
     this._button.value = "add";
     this._element.appendChild(this._button);
 
+    this._input.onkeyup = function (e) {
+      e = e || window.event;
+      if (e.keyCode === 13) {
+        const value = thisPtr._input.value;
+        if (value === '') {
+          alert("Please, write something.");
+        } else {
+          const event = new Event(EventType.CLICK_ADD_LIST_ELEMENT, {list, value});
+          event.dispatch(document);
+          thisPtr._input.value = "";
+        }
+      }
+      return false;
+    };
+
     this._button.onclick = function () {
       const value = thisPtr._input.value;
       if (value === '') {
@@ -58,20 +83,15 @@ class ListView {
       }
     };
 
-    document.addEventListener(EventType.ADD_LIST_ELEMENT, function (event) {
-      const listElement = event.detail;
-      thisPtr.addListElementView(listElement);
-    }, false);
-
-    document.addEventListener(EventType.DELETE_LIST_ELEMENT, function (event) {
-      const id = event.detail;
-      const view = thisPtr._getListElementViewById(id);
-      thisPtr._element.removeChild(view.element);
-      const index = list.elements.indexOf(view.listElement);
-      list.elements.splice(index, 1);
-    }, false);
-
     this._init(list);
+  }
+
+  _onDeleteListElement(event) {
+    const id = event.detail;
+    const view = this._getListElementViewById(id);
+    this._element.removeChild(view.element);
+    const index = this._list.elements.indexOf(view.listElement);
+    this._list.elements.splice(index, 1);
   }
 
   _getListElementViewById(id) {
@@ -89,15 +109,16 @@ class ListView {
     }
 
     this._element.style.position = 'absolute';
-    this._element.style.left = list.position.x + 10 + 'px';
-    this._element.style.top = list.position.y + 10 + 'px';
+    this._element.style.left = list.position.x + 'px';
+    this._element.style.top = list.position.y + 'px';
   }
 
   addListElementView(listElement) {
     const listElementView = this._viewsFactory.createListElementView(listElement, listElement.id, listElement.value);
-    this._element.appendChild(listElementView.element);
-
+    this._element.insertBefore(listElementView.element, this._input);
     this._listElementViews.push(listElementView);
+
+    listElementView.element.addEventListener(EventType.DELETE_LIST_ELEMENT, this._onDeleteListElement.bind(this))
   }
 
   get element() {

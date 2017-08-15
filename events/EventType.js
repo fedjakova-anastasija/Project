@@ -15,7 +15,6 @@ EventType = {
 
   SELECT_BOARD_EVENT: "selectBoardEvent",
 
-  //ADD_ELEMENT: "addElementEvent",
   DELETE_BOARD: "deleteBoardEvent",
   DELETE_LIST_ELEMENT: "deleteListElementEvent",
   DELETE_LIST: "deleteListEvent",

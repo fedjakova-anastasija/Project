@@ -4,18 +4,22 @@ class BoardHeaderView {
   constructor(title, id, board, viewsFactory) {
     this._viewsFactory = viewsFactory;
 
-    this._element = viewsFactory.createElement("div");
-    this._element.className = "title_head";
-
-    this._title = viewsFactory.createElement("input");
-    //this._element.type = "button";
-    this._title.value = board.title;
-    this._title.className = "title";
-    this._title.id = "boardHeaderView" + id;
-    this._element.appendChild(this._title);
-
     this._board = board;
     this._id = board.id;
+
+    this._element = viewsFactory.createElement("div");
+    this._element.className = "title_head";
+    this._element.id = "boardHeaderView" + id;
+
+    this._title = viewsFactory.createElement("input");
+    this._title.value = board.title;
+    this._title.className = "title";
+    this._element.appendChild(this._title);
+
+    let titleId = this._element.id;
+    this._element.onclick = function (id) {
+        thisPtr._element.classList.add("selected");
+    };
 
     this._close = viewsFactory.createElement("input");
     this._close.type = "button";
@@ -50,6 +54,10 @@ class BoardHeaderView {
 
   get board() {
     return this._board;
+  }
+
+  get title() {
+    return this._title;
   }
 
   get id() {

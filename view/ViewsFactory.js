@@ -2,37 +2,37 @@
 
 class ViewsFactory {
 
-	ItemsFactory() {
-	}
+  ItemsFactory() {
+  }
 
-	getRandomColor() {
-		return "#" + (Math.round(Math.random() * 0XFFFFFF)).toString(16);
-	}
+  getRandomColor() {
+    return "#" + (Math.round(Math.random() * 0XFFFFFF)).toString(16);
+  }
 
-	createElement(tag) {
-		const element = document.createElement(tag);
-		return element;
-	}
+  createElement(tag) {
+    const element = document.createElement(tag);
+    return element;
+  }
 
-	createModelView(model) {
-		return new ModelView(model, this);
-	}
+  createModelView(model) {
+    return new ModelView(model, this);
+  }
 
-	createHeaderView() {
-		return new HeaderView(this);
-	}
+  createHeaderView() {
+    return new HeaderView(this);
+  }
 
-	createBoardHeaderView(title, id, board) {
-		return new BoardHeaderView(title, id, board, this);
-	}
+  createBoardHeaderView(title, id, board) {
+    return new BoardHeaderView(title, id, board, this);
+  }
 
-	createBoardView(board) {
-		return new BoardView(board, this, this.getRandomColor());
-	}
+  createBoardView(board) {
+    return new BoardView(board, this, this.getRandomColor());
+  }
 
-	createListView(list) {
-		return new ListView(list, this);
-	}
+  createListView(list) {
+    return new ListView(list, this);
+  }
 
   createListElementView(listElement) {
     return new ListElementView(listElement, this);

@@ -7,15 +7,15 @@ class ListElement {
     this._checked = false;
   }
 
-  get id() {
-    return this._id;
-  }
-
   get text() {
     return this._text;
   }
 
   set text(value) {
     this._text = value;
+  }
+
+  get id() {
+    return this._id;
   }
 }

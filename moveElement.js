@@ -32,7 +32,6 @@ function moveElement(element, elementView) {
       let x = parseInt(dragElement.style.left);
       let y = parseInt(dragElement.style.top);
 
-      console.log(window.currentBoard);
       const WIDTH = window.currentBoard.element.getBoundingClientRect().width;
       const N = 3;
       const PADDING = 20;

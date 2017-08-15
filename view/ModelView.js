@@ -6,19 +6,38 @@ class ModelView {
 
     this._element = viewsFactory.createElement("div");
     this._element.id = "model";
+
     this._boardsViews = [];
 
     this._headerView = this._viewsFactory.createHeaderView();
+
     this._element.appendChild(this._headerView.element);
 
     const thisPtr = this;
 
     document.addEventListener(EventType.DELETE_BOARD, function (event) {
-      const id = event.detail;
-      const view = thisPtr._getBoardViewById(id);
-      thisPtr._element.removeChild(view.element);
-      const index = model.boards.indexOf(view.board);
-      model.boards.splice(index, 1);
+      //TODO: if model.boards.length == 1 -> clearBoard()
+      if (model.boards.length == 1) {
+        function removeChildren(element) {
+          while (element.lastChild) {
+            element.removeChild(element.lastChild);
+          }
+        }
+       // removeChildren();
+      } else {
+        const id = event.detail;
+        const view = thisPtr._getBoardViewById(id);
+        thisPtr._element.removeChild(view.element);
+        const index = model.boards.indexOf(view.board);
+        model.boards.splice(index, 1);
+        thisPtr._boardsViews.splice(index, 1);
+
+        //TODO:  _headerView.removeBoardHeaderViewWithId(id);
+
+        if (model.boards.length > 0) {
+          thisPtr.showBoardWithId(model.boards[index - 1].id);
+        }
+      }
     }, false);
 
     this._init(model);
@@ -48,7 +67,6 @@ class ModelView {
 
   _showBoardView(boardView, show) {
     boardView.redraw();
-    // boardView.element.style.display = show ? "block" : "none";
     if (show) {
       this._element.appendChild(boardView.element);
     }
@@ -76,8 +94,6 @@ class ModelView {
     for (let i = 0; i < this._boardsViews.length; ++i) {
       const boardView = this._boardsViews[i];
       if (this._element.contains(boardView.element)) {
-        // if (boardView.element.style.display == "block") {
-        //document.getElementsByClassName("title_head").
         return boardView;
       }
     }

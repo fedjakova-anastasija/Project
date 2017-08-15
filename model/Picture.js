@@ -8,12 +8,12 @@ class Picture {
     this._position = {x: 0, y: 0};
   }
 
-  get path() {
-    return this._path;
-  }
-
   get id() {
     return this._id;
+  }
+
+  get path() {
+    return this._path;
   }
 
   get position() {

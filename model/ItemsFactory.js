@@ -3,9 +3,9 @@
 class ItemsFactory {
 
   constructor() {
+    this._boardId = 0;
     this._listId = 0;
     this._listElementId = 0;
-    this._boardId = 0;
     this._noteId = 0;
     this._imageId = 0;
     this._text = ""

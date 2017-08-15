@@ -8,11 +8,8 @@ function initialize() {
 
   window["model"] = model; //TODO: remove
   const board = itemsFactory.createBoard("1");
-  //const list = itemsFactory.createList("1");
   board.lists.push(itemsFactory.createList("1"));
-  // board.lists.push(itemsFactory.createList("2"));
   model.boards.push(board);
-  //board.lists.push(list);
 
   const modelView = viewsFactory.createModelView(model);
   contentDiv.appendChild(modelView.element);
@@ -72,16 +69,20 @@ function initialize() {
   }, false);
 
   //list_element
-
   document.addEventListener(EventType.CLICK_ADD_LIST_ELEMENT, function (event) {
     const metainfo = event.detail;
     const newListElement = itemsFactory.createListElement(metainfo.value);
     metainfo.list.elements.push(newListElement);
 
-    const e = new Event(EventType.ADD_LIST_ELEMENT, newListElement);
+    const e = new Event(EventType.ADD_LIST_ELEMENT, {element: newListElement, listId: metainfo.list.id});
     e.dispatch(document);
   }, false);
 
+  document.addEventListener(EventType.ADD_LIST_ELEMENT, function (event) {
+    const listElement = event.detail.element;
+    const listView = modelView.currentBoardView._getListViewById(event.detail.listId);
+    listView.addListElementView(listElement);
+  }, false);
 
   //image
   modelView.element.addEventListener(EventType.ADD_IMAGE, function (event) {

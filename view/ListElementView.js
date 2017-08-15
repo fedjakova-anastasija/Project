@@ -8,6 +8,7 @@ class ListElementView {
     const text = listElement.text;
 
     this._id = listElement.id;
+
     this._element = viewsFactory.createElement("li");
     this._element.id = "listElement" + listElement.id; // счетчик!
     this._element.setAttribute("id", this._element.id);
@@ -16,11 +17,33 @@ class ListElementView {
     this._input.value = listElement.text;
     this._input.className = "list_element";
     this._element.appendChild(this._input);
+    this._input.onkeyup = function (e) {
+      e = e || window.event;
+      if (e.keyCode === 46) {
+        const event = new Event(EventType.DELETE_LIST_ELEMENT, listElement.id);
+        event.dispatch(thisPtr._element);
+      }
+    };
 
     const thisPtr = this;
     this._input.onchange = function () {
       const newText = thisPtr._input.value;
       listElement.text = newText;
+    };
+
+    const element = this._element;
+    element.onclick = function () {
+      if (element.classList.contains('checked')) {
+        element.classList.remove("checked");
+        thisPtr._input.classList.remove("line_through");
+
+        listElement._checked = !listElement._checked;
+      } else {
+        element.classList.add("checked");
+        thisPtr._input.classList.add("line_through");
+
+        listElement._checked = !listElement._checked;
+      }
     };
 
     this._button = viewsFactory.createElement("input");
@@ -30,50 +53,11 @@ class ListElementView {
 
     this._button.onclick = function () {
       const event = new Event(EventType.DELETE_LIST_ELEMENT, listElement.id);
-      event.dispatch(document);
+      event.dispatch(thisPtr._element);
     };
 
     this._element.appendChild(this._button);
-
-    this._check = viewsFactory.createElement("input");
-    this._check.type = "checkbox";
-    this._check.id = "checkbox";
-    //this._check.className = "not_checked";
-
-    const element = this._element;
-    let k = 0;
-
-    this._check.onclick = function () {
-      if (k % 2) {
-        element.classList.remove('check');
-
-        listElement._checked = !listElement._checked;
-        //text-decoration: line-through;
-      } else {
-        element.classList.add('check');
-      }
-      k++;
-    };
-
-
-    this._element.appendChild(this._check);
   }
-
-  /*const listParent = this._element;
-   const new_value = listParent.getElementsByClassName("input_place")[0].value;
-   const element = new ListElementView(listParent, viewsFactory, new_value);
-
-   element.element.addEventListener(EventType.DELETE_ELEMENT, function (event) {
-   listParent.removeChild(element.element);
-
-   const index = listElement.elements.indexOf(element);
-
-   listElement.elements.splice(index, 1);
-   }, false);
-
-   listElement.elements.push(element);
-
-   listParent.appendChild(this._element)*/
 
   get element() {
     return this._element;
@@ -84,6 +68,6 @@ class ListElementView {
   }
 
   get listElement() {
-      return this._listElement;
+    return this._listElement;
   }
 }

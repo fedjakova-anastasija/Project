@@ -9,6 +9,10 @@ class Note {
     this._position = {x: 0, y: 0};
   }
 
+  get id() {
+    return this._id;
+  }
+
   get title() {
     return this._title;
   }
@@ -23,10 +27,6 @@ class Note {
 
   set text(value) {
     this._text = value;
-  }
-
-  get id() {
-    return this._id;
   }
 
   get position() {

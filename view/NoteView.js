@@ -22,7 +22,7 @@ class NoteView {
 
     this._close.onclick = function () {
       const event = new Event(EventType.DELETE_NOTE, note.id);
-      event.dispatch(document);
+      event.dispatch(thisPtr._element);
     };
 
     this._header = viewsFactory.createElement("input");
