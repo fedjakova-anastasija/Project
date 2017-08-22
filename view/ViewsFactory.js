@@ -46,7 +46,7 @@ class ViewsFactory {
     return new ImageView(image, this);
   }
 
-  createNavigationView(model) {
-    return new NavigationView(model, this);
+  createNavigationView() {
+    return new NavigationView(this);
   }
 }

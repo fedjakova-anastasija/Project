@@ -72,21 +72,15 @@ class BoardView {
 
   redraw() {
     for (const listView of this._listViews) {
-      if (this._board.lists.length != 0) {
-        this._element.removeChild(listView.element);
-      }
+      this._element.removeChild(listView.element);
     }
 
     for (const noteView of this._noteViews) {
-      if (this._board.notes.length != 0) {
-        this._element.removeChild(noteView.element);
-      }
+      this._element.removeChild(noteView.element);
     }
 
     for (const imageView of this._imageViews) {
-      if (this._board.images.length != 0) {
-        this._element.removeChild(imageView.element);
-      }
+       this._element.removeChild(imageView.element);
     }
 
     this._listViews = [];

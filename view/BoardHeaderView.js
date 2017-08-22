@@ -26,31 +26,10 @@ class BoardHeaderView {
 
 
     this._close.onclick = function () {
-      if (model.boards.length == 1) {
-        const countOfLists = thisPtr._board.lists.length;
-        const countOfNotes = thisPtr._board.notes.length;
-        const countOfImages = thisPtr._board.images.length;
-
-        function clearBoard(element) {
-          while (element.lastChild) {
-            element.removeChild(element.lastChild);
-          }
-          thisPtr._board.lists.splice(0, countOfLists);
-          thisPtr._board.notes.splice(0, countOfNotes);
-          thisPtr._board.images.splice(0, countOfImages);
-        }
-
-        if ((countOfLists != 0) || (countOfNotes != 0) || (countOfImages != 0)) {
-          clearBoard(document.getElementById("board0"));
-        } else {
-          alert("Your board is already empty.")
-        }
-      } else {
-        const result = confirm("Are you sure?");
-        if (result) {
-          const event = new Event(EventType.DELETE_BOARD, board.id);
-          event.dispatch(thisPtr._element);
-        }
+      const result = confirm("Are you sure?");
+      if (result) {
+        const event = new Event(EventType.DELETE_BOARD, board.id);
+        event.dispatch(thisPtr._element);
       }
     };
 

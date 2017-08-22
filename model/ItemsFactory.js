@@ -8,7 +8,6 @@ class ItemsFactory {
     this._listElementId = 0;
     this._noteId = 0;
     this._imageId = 0;
-    this._text = ""
   }
 
   createBoard(title) {
@@ -23,8 +22,8 @@ class ItemsFactory {
     return new ListElement(text, this._listElementId++);
   }
 
-  createNote(title) {
-    return new Note(title, this._text, this._noteId++);
+  createNote(title, text = "") {
+    return new Note(title, text, this._noteId++);
   }
 
   createImage(path) {
@@ -37,10 +36,6 @@ class ItemsFactory {
 
   createHeader() {
     return new Header();
-  }
-
-  createNavigation(title) {
-    return new Navigation(title);
   }
 }
 

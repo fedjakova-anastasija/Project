@@ -64,8 +64,8 @@ class ImageView {
           let width = imageView.getBoundingClientRect().width;
           let height = imageView.getBoundingClientRect().height;
 
-          let MAX_WIDTH = 200;
-          let MAX_HEIGHT = 200;
+          let MAX_WIDTH = 400;
+          let MAX_HEIGHT = 400;
 
           if (width > height) {
             if (width > MAX_WIDTH) {
@@ -94,8 +94,8 @@ class ImageView {
       let width = imageView.getBoundingClientRect().width;
       let height = imageView.getBoundingClientRect().height;
 
-      let MAX_WIDTH = 200;
-      let MAX_HEIGHT = 200;
+		let MAX_WIDTH = 400;
+		let MAX_HEIGHT = 400;
 
       if (width > height) {
         if (width > MAX_WIDTH) {
@@ -109,8 +109,12 @@ class ImageView {
         }
       }
 
-      imageView.width = width;
-      imageView.height = height;
+      imageView.width = Math.floor(width);
+      imageView.height = Math.floor(height);
+
+      thisPtr._element.style.width = Math.floor(width) + "px";
+      thisPtr._element.style.height = Math.floor(height) + "px";
+      console.log(  thisPtr._element);
     };
 
     this._element.appendChild(imageView);

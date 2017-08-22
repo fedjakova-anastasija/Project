@@ -1,7 +1,7 @@
 'use strict';
 
 class NavigationView {
-  constructor(model, viewsFactory) {
+  constructor(viewsFactory) {
     this._viewsFactory = viewsFactory;
 
     this._element = viewsFactory.createElement("div");
@@ -31,12 +31,12 @@ class NavigationView {
     this._navigation.appendChild(this._buttonNewBoard);
 
     this._buttonNewBoard.onclick = function () {
-      if (document.getElementById("board_header").childNodes.length != 4) {
+      //if (document.getElementById("board_header").childNodes.length != 4) {
         const event = new Event(EventType.CLICK_ADD_BOARD);
         event.dispatch(document);
-      } else {
+      /*} else {
         alert("Sorry, you have too much to do.")
-      }
+      }*/
     };
 
     this._buttonNewList = viewsFactory.createElement("input");
@@ -68,7 +68,7 @@ class NavigationView {
     this._buttonNewMap.className = "button_new_map";
     this._buttonNewMap.type = "button";
     this._buttonNewMap.value = "New map";
-    this._navigation.appendChild(this._buttonNewMap);
+    //this._navigation.appendChild(this._buttonNewMap);
 
     this._buttonNewPicture = viewsFactory.createElement("input");
     this._buttonNewPicture.id = "button_new";
@@ -104,7 +104,11 @@ class NavigationView {
     this._upload.appendChild(this._buttonPrint);
 
     this._buttonPrint.onclick = function () {
-      const newWindow = window.print();
+      const printedWindow = window.open("printed.html", "_blank");
+		printedWindow.onload = function() {
+			printedWindow.model = window.model;
+		}
+      //const newWindow = window.print();
     };
   }
 

@@ -4,17 +4,25 @@ function initialize() {
   const viewsFactory = new ViewsFactory();
 
   const model = itemsFactory.createModel('Model');
-  const navigation = itemsFactory.createNavigation('ModelNav');
 
   window["model"] = model; //TODO: remove
-  const board = itemsFactory.createBoard("1");
-  board.lists.push(itemsFactory.createList("1"));
-  model.boards.push(board);
+    const board = itemsFactory.createBoard("Покупки");
+	const board2 = itemsFactory.createBoard("Дела");
+	const board3 = itemsFactory.createBoard("Картинки");
+	board.lists.push(itemsFactory.createList("Продукты"));
+  board.lists[0].elements.push(itemsFactory.createListElement("Молоко"));
+  board.lists[0].elements.push(itemsFactory.createListElement("Колбаса"));
+  const note = itemsFactory.createNote("Не забыть", "Позвонить Ивану Петровичу");
+	note.position.x = 680;
+  board.notes.push(note);
+	model.boards.push(board);
+	model.boards.push(board2);
+	model.boards.push(board3);
 
   const modelView = viewsFactory.createModelView(model);
   contentDiv.appendChild(modelView.element);
 
-  const navigationView = viewsFactory.createNavigationView(navigation);
+  const navigationView = viewsFactory.createNavigationView();
   contentDiv.appendChild(navigationView.element);
 
 
