@@ -13,14 +13,14 @@ class ImageView {
     this._image = image;
     this._id = image.id;
 
-    this._close = viewsFactory.createElement("input");
-    this._close.type = "button";
-    this._close.className = "close";
-    this._element.appendChild(this._close);
+    this._delete = viewsFactory.createElement("input");
+    this._delete.type = "button";
+    this._delete.className = "close";
+    this._element.appendChild(this._delete);
 
     const thisPtr = this;
 
-    this._close.onclick = function () {
+    this._delete.onclick = function () {
       const event = new Event(EventType.DELETE_IMAGE, image.id);
       event.dispatch(thisPtr._element);
     };
@@ -34,19 +34,61 @@ class ImageView {
     let imageView = new Image();
     imageView.src = image.path;
 
+    this._window = viewsFactory.createElement("div");
+    this._window.className = "window";
+    this._window.id = "modal";
+    this._element.appendChild(this._window);
 
-    this._loupe.onclick = function () {
-      let width = imageView.getBoundingClientRect().width;
-      let height = imageView.getBoundingClientRect().height;
-
-      if (width == 200) {
-        imageView.width = 300;
-        imageView.height = 300;
-      } else {
-        imageView.width = 200;
-        imageView.height = 200;
+    const showModalWindow = this._window;
+    function OpenModal() {
+      thisPtr._loupe.onclick =  function(event) {
+        event.preventDefault();
+        setTimeout(function() {
+          showModalWindow.classList.add('opacity_visible');
+          thisPtr._delete.style.display = "none";
+          thisPtr._loupe.style.display = "none";
+          imageView.classList.add("window_img");
+        }, 500);
+        showModalWindow.classList.add('open_block');
       }
-    };
+    }
+    function CloseModal() {
+      thisPtr._window.addEventListener("click", function (event) {
+        event.preventDefault();
+        setTimeout(function () {
+          showModalWindow.classList.remove('opacity_visible');
+          imageView.classList.remove("window_img");
+          thisPtr._delete.style.display = "block";
+          thisPtr._loupe.style.display = "block";
+          imageView.style.transition = "1s";
+          let width = imageView.getBoundingClientRect().width;
+          let height = imageView.getBoundingClientRect().height;
+
+          let MAX_WIDTH = 200;
+          let MAX_HEIGHT = 200;
+
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+
+          imageView.width = width;
+          imageView.height = height;
+        }, 50);
+        setTimeout(function () {
+          showModalWindow.classList.remove('open_block');
+        }, 500);
+      }, false);
+    }
+    OpenModal();
+    CloseModal();
 
     imageView.onload = function () {
       let width = imageView.getBoundingClientRect().width;

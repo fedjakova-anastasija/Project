@@ -10,16 +10,8 @@ class ListView {
     this._id = list.id;
     this._element = viewsFactory.createElement("div");
 
-    this._element.id = "list" + list.id; // счетчик!
+    this._element.id = "list" + list.id;
     this._element.className = "list";
-
-    /*const element = this._element;
-
-    element.addEventListener('click', function(ev) {
-      if (ev.target.tagName === 'LI') {
-        ev.target.classList.toggle('checked');
-      }
-    }, false);*/
 
     this._listElementViews = [];
 
@@ -92,6 +84,7 @@ class ListView {
     this._element.removeChild(view.element);
     const index = this._list.elements.indexOf(view.listElement);
     this._list.elements.splice(index, 1);
+    this._listElementViews.splice(index, 1);
   }
 
   _getListElementViewById(id) {

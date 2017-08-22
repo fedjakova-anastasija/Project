@@ -6,7 +6,7 @@ class Note {
     this._title = title;
     this._text = text;
     this._type = "note";
-    this._position = {x: 0, y: 0};
+    this._position = {x: 10, y: 10};
   }
 
   get id() {

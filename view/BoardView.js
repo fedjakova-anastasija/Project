@@ -1,7 +1,7 @@
 'use strict';
 
 class BoardView {
-  constructor(board, viewsFactory, color) {
+  constructor(board, viewsFactory/*, color*/) {
     this._viewsFactory = viewsFactory;
 
     this._board = board;
@@ -10,20 +10,15 @@ class BoardView {
     this._noteViews = [];
     this._imageViews = [];
 
-    this._color = color;
+    /*this._color = color;*/
     this._id = board.id;
 
     this._element = viewsFactory.createElement("div");
-    this._element.id = "board" + this._id; //TODO: перенести счетчик в другое место
-    this._element.className = "board"; //todo: "boardView" -
+    this._element.id = "board" + this._id;
+    this._element.className = "board";
 
     const parent = this._element;
     let lastClickedElement = null;
-
-    /*this._element.onclick = function () {
-      const event = new Event(EventType.SELECT_BOARD_EVENT, id);
-      event.dispatch(document);
-    };*/
 
     this._element.onclick = function (event) {
       let target = event.target;
@@ -77,15 +72,21 @@ class BoardView {
 
   redraw() {
     for (const listView of this._listViews) {
-      this._element.removeChild(listView.element);
+      if (this._board.lists.length != 0) {
+        this._element.removeChild(listView.element);
+      }
     }
 
     for (const noteView of this._noteViews) {
-      this._element.removeChild(noteView.element);
+      if (this._board.notes.length != 0) {
+        this._element.removeChild(noteView.element);
+      }
     }
 
     for (const imageView of this._imageViews) {
-      this._element.removeChild(imageView.element);
+      if (this._board.images.length != 0) {
+        this._element.removeChild(imageView.element);
+      }
     }
 
     this._listViews = [];
@@ -93,7 +94,7 @@ class BoardView {
     this._imageViews = [];
 
     this._init(this._board);
-    this.element.style.backgroundColor = this._color;
+    //this.element.style.backgroundColor = this._color;
   }
 
   addListView(list) {

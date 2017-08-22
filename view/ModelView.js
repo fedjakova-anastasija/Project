@@ -13,41 +13,28 @@ class ModelView {
 
     this._headerView = this._viewsFactory.createHeaderView();
     this._headerView.element.addEventListener(EventType.SELECT_BOARD_EVENT, function (event) {
-        thisPtr.showBoardWithId(event.detail);
+      thisPtr.showBoardWithId(event.detail);
     }, false);
 
     this._element.appendChild(this._headerView.element);
 
     this._headerView.element.addEventListener(EventType.DELETE_BOARD, function (event) {
-      //TODO: if model.boards.length == 1 -> clearBoard()
-      if (model.boards.length == 1) {
-        function removeChildren(element) {
-          while (element.lastChild) {
-            element.removeChild(element.lastChild);
-          }
-        }
-       // removeChildren();
-      } else {
         const id = event.detail;
         const view = thisPtr._getBoardViewById(id);
         const index = model.boards.indexOf(view.board);
         model.boards.splice(index, 1);
         thisPtr._boardsViews.splice(index, 1);
 
-        //TODO:  _headerView.removeBoardHeaderViewWithId(id);
-		  thisPtr._headerView.removeHeader(id);
+        thisPtr._headerView.removeHeader(id);
 
-        if (thisPtr._element.contains(view.element))
-        {
-            thisPtr._element.removeChild(view.element);
-			if (model.boards.length > 0)
-			{
-			  const nextIndex = index == 0 ? 0 : index - 1;
-			  thisPtr.showBoardWithId(model.boards[nextIndex].id);
-			}
+        if (thisPtr._element.contains(view.element)) {
+          thisPtr._element.removeChild(view.element);
+          if (model.boards.length > 0) {
+            const nextIndex = index == 0 ? 0 : index - 1;
+            thisPtr.showBoardWithId(model.boards[nextIndex].id);
+          }
         }
-      }
-    }, false);
+      },false);
 
     this._init(model);
   }

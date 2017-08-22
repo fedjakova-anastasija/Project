@@ -25,25 +25,24 @@ class HeaderView {
 
     const thisPtr = this;
     boardHeaderView.element.addEventListener(EventType.SELECT_BOARD_EVENT, function (e) {
-		const event = new Event(EventType.SELECT_BOARD_EVENT, e.detail);
-		event.dispatch(thisPtr._element);
+      const event = new Event(EventType.SELECT_BOARD_EVENT, e.detail);
+      event.dispatch(thisPtr._element);
     }, false);
 
     boardHeaderView.element.addEventListener(EventType.DELETE_BOARD, function (e) {
-        const event = new Event(EventType.DELETE_BOARD, e.detail);
-        event.dispatch(thisPtr._element);
+      const event = new Event(EventType.DELETE_BOARD, e.detail);
+      event.dispatch(thisPtr._element);
     }, false);
   }
 
   removeHeader(id) {
-	  for (let i = 0; i < this._boardHeaders.length; ++i) {
-		  const view = this._boardHeaders[i];
-		  if (view.id == id)
-          {
-            this._element.removeChild(view.element);
-            this._boardHeaders.splice(i, 1);
-          }
-	  }
+    for (let i = 0; i < this._boardHeaders.length; ++i) {
+      const view = this._boardHeaders[i];
+      if (view.id == id) {
+        this._element.removeChild(view.element);
+        this._boardHeaders.splice(i, 1);
+      }
+    }
   }
 
   get element() {

@@ -5,7 +5,7 @@ class Picture {
     this._id = id;
     this._path = path;
     this._type = "image";
-    this._position = {x: 0, y: 0};
+    this._position = {x: 10, y: 10};
   }
 
   get id() {

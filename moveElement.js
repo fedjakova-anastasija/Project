@@ -35,7 +35,7 @@ function moveElement(element, elementView) {
       let y = parseInt(dragElement.style.top);
 
       const WIDTH = parentView.getBoundingClientRect().width;
-      const N = 3;
+      const N = 2;
       const PADDING = 20;
 
       const columns = [];
@@ -54,8 +54,8 @@ function moveElement(element, elementView) {
 
       const boundings = dragElement.parentNode.getBoundingClientRect();
 
-      element.position.x = x;// - boundings.left;
-      element.position.y = y;//- boundings.top;
+      element.position.x = x;
+      element.position.y = y;
 
       dragElement.style.left = x + "px";
       dragElement.style.top = y + "px";

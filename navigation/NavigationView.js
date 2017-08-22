@@ -31,8 +31,12 @@ class NavigationView {
     this._navigation.appendChild(this._buttonNewBoard);
 
     this._buttonNewBoard.onclick = function () {
-      const event = new Event(EventType.CLICK_ADD_BOARD);
-      event.dispatch(document);
+      if (document.getElementById("board_header").childNodes.length != 4) {
+        const event = new Event(EventType.CLICK_ADD_BOARD);
+        event.dispatch(document);
+      } else {
+        alert("Sorry, you have too much to do.")
+      }
     };
 
     this._buttonNewList = viewsFactory.createElement("input");
@@ -85,25 +89,12 @@ class NavigationView {
       fileread.readAsDataURL(thisPtr._buttonNewPicture.files[0]);
     };
 
-    this._buttonUpload = viewsFactory.createElement("input");
+    /*this._buttonUpload = viewsFactory.createElement("input");
     this._buttonUpload.id = "button_new";
     this._buttonUpload.className = "button_upload";
     this._buttonUpload.type = "button";
     this._buttonUpload.value = "Upload this board";
-    this._upload.appendChild(this._buttonUpload);
-
-    const thisP = this._buttonUpload;
-    //const newWindow = window.open("");
-    function OpenModal() {
-      thisP.onclick = function () {
-        event.preventDefault();
-        setTimeout(function () {
-          this._image.classList.add('opacity_visible');
-        }, 50);
-        this._image.classList.add('open_block');
-      }
-    };
-    OpenModal();
+    this._upload.appendChild(this._buttonUpload);*/
 
     this._buttonPrint = viewsFactory.createElement("input");
     this._buttonPrint.id = "button_new";

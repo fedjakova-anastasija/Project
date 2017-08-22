@@ -13,6 +13,8 @@ class ListElementView {
     this._element.id = "listElement" + listElement.id; // счетчик!
     this._element.setAttribute("id", this._element.id);
 
+    moveElement(listElement, this._element);
+
     this._input = viewsFactory.createElement("input");
     this._input.value = listElement.text;
     this._input.className = "list_element";
