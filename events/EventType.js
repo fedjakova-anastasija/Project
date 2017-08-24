@@ -19,5 +19,7 @@ EventType = {
   DELETE_LIST_ELEMENT: "deleteListElementEvent",
   DELETE_LIST: "deleteListEvent",
   DELETE_NOTE: "deleteNoteEvent",
-  DELETE_IMAGE: "deleteImageEvent"
+  DELETE_IMAGE: "deleteImageEvent",
+
+    CHECKED: "checked",
 };

@@ -35,17 +35,17 @@ class ListElementView {
 
     const element = this._element;
     element.onclick = function () {
-      if (element.classList.contains('checked')) {
+      if (listElement.checked) {
         element.classList.remove("checked");
         thisPtr._input.classList.remove("line_through");
-
-        listElement._checked = !listElement._checked;
       } else {
         element.classList.add("checked");
         thisPtr._input.classList.add("line_through");
-
-        listElement._checked = !listElement._checked;
       }
+	  listElement.checked = !listElement.checked;
+
+		const event = new Event(EventType.CHECKED, listElement.id);
+		event.dispatch(thisPtr._element);
     };
 
     this._delete = viewsFactory.createElement("input");

@@ -1,6 +1,5 @@
 function initialize() {
-  const model = window.opener.model;
-  const boards = model.boards;
+  const boards = window.opener.printedBoards;
   for (const board of boards) {
     const boardView = createBoardView(board);
     document.body.appendChild(boardView);
@@ -39,12 +38,11 @@ function createListView(list) {
 
   const elements = list.elements;
   for (const element of elements) {
-    const elementView = createListElementView(element);
-    if (elementView.classList.contains('checked')) {
-      listView.insertBefore(elementView, elements);
-    } else {
-      listView.appendChild(elementView);
-    }
+     // if (!element.checked) {
+          const elementView = createListElementView(element);
+          listView.appendChild(elementView);
+          //add class list element.checked
+     // }
   }
   return listView;
 }
@@ -66,6 +64,12 @@ function createNoteView(note) {
 function createImageView(image) {
   const imageView = document.createElement("DIV");
   imageView.className = "image";
-  imageView.innerHTML = image.path;
+
+	let imageV = new Image();
+	imageV.src = image.path;
+
+	imageV.onload = function () {
+		imageView.appendChild(imageV)
+	}
   return imageView;
 }

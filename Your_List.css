@@ -282,7 +282,7 @@ img
 .board
 {
     width: 100%;
-    height: calc(98% - 84px);
+    height: calc(100% - 95px);
     position: absolute;
     top: 88px;
     overflow: overlay;

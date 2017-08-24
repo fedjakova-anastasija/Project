@@ -1,7 +1,7 @@
 'use strict';
 
 class NavigationView {
-  constructor(viewsFactory) {
+  constructor(modelView, viewsFactory) {
     this._viewsFactory = viewsFactory;
 
     this._element = viewsFactory.createElement("div");
@@ -90,10 +90,8 @@ class NavigationView {
     this._ul.appendChild(this._buttonPrintAll);
 
     this._buttonPrintAll.onclick = function () {
-      const printedWindow = window.open("printed_all.html", "_blank");
-      printedWindow.onload = function () {
-        printedWindow.model = window.model;
-      }
+		window.open("printed.html", "_blank");
+        window.printedBoards = window.model.boards;
       //const newWindow = window.print();
     };
 
@@ -104,9 +102,21 @@ class NavigationView {
     this._ul.appendChild(this._buttonPrint);
 
     this._buttonPrint.onclick = function () {
-      const printedWindow = window.open("printed.html", "_blank");
-      printedWindow.onload = function () {
-        printedWindow.model = window.model;
+      window.open("printed.html", "_blank");
+      const currentBoardView = modelView.currentBoardView;
+      const id = currentBoardView.id;
+      const boards = window.model.boards;
+      let curentBoard = null;
+      for (const board of boards)
+      {
+        if (board.id == id)
+        {
+            curentBoard = board;
+        }
+      }
+      if (curentBoard)
+      {
+          window.printedBoards = [curentBoard];
       }
       //const newWindow = window.print();
     };

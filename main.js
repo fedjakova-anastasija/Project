@@ -25,7 +25,7 @@ function initialize() {
   const modelView = viewsFactory.createModelView(model);
   contentDiv.appendChild(modelView.element);
 
-  const navigationView = viewsFactory.createNavigationView();
+  const navigationView = viewsFactory.createNavigationView(modelView);
   contentDiv.appendChild(navigationView.element);
 
 

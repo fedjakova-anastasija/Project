@@ -7,6 +7,14 @@ class ListElement {
     this._checked = false;
   }
 
+  get checked() {
+      return this._checked;
+  }
+
+  set checked(value) {
+      this._checked = value;
+  }
+
   get text() {
     return this._text;
   }

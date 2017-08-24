@@ -39,16 +39,19 @@ class ListView {
       list.title = newTitle;
     };
 
+    this._addItemContainer = viewsFactory.createElement("div");
+    this._element.appendChild(this._addItemContainer);
+
     this._input = viewsFactory.createElement("input");
     this._input.className = "input_place";
     this._input.placeholder = "Добавить...";
-    this._element.appendChild(this._input);
+    this._addItemContainer.appendChild(this._input);
 
     this._button = viewsFactory.createElement("input");
     this._button.className = "add";
     this._button.type = "button";
     this._button.value = "+";
-    this._element.appendChild(this._button);
+    this._addItemContainer.appendChild(this._button);
 
     this._input.onkeyup = function (e) {
       e = e || window.event;
@@ -88,6 +91,33 @@ class ListView {
     this._listElementViews.splice(index, 1);
   }
 
+  _onCheckedListElement(event) {
+	  const id = event.detail;
+	  const view = this._getListElementViewById(id);
+	  const listElement = view.listElement;
+	  const index = this._list.elements.indexOf(listElement);
+	  this._list.elements.splice(index, 1);
+	  this._listElementViews.splice(index, 1);
+	  if (listElement.checked)
+      {
+		  this._list.elements.push(view.listElement);
+		  this._listElementViews.push(view);
+
+		  this._element.appendChild(view.element);
+		  this._element.appendChild(this._addItemContainer);
+      }
+      else
+      {
+		  this._list.elements.splice(0, 0, listElement);
+
+		  const firstElement = this._listElementViews[0];
+		  this._element.insertBefore(view.element, firstElement.element);
+
+		  this._listElementViews.splice(0, 0, view);
+      }
+
+  }
+
   _getListElementViewById(id) {
     for (const view of this._listElementViews) {
       if (view.id == id) {
@@ -109,10 +139,23 @@ class ListView {
 
   addListElementView(listElement) {
     const listElementView = this._viewsFactory.createListElementView(listElement, listElement.id, listElement.value);
-    this._element.insertBefore(listElementView.element, this._input);
+    const firstCheckedElement = this._getFirstCheckedElement();
+    this._element.insertBefore(listElementView.element, firstCheckedElement);
     this._listElementViews.push(listElementView);
 
-    listElementView.element.addEventListener(EventType.DELETE_LIST_ELEMENT, this._onDeleteListElement.bind(this))
+	  listElementView.element.addEventListener(EventType.DELETE_LIST_ELEMENT, this._onDeleteListElement.bind(this))
+	  listElementView.element.addEventListener(EventType.CHECKED, this._onCheckedListElement.bind(this))
+  }
+
+  _getFirstCheckedElement() {
+    const elements =  this._list.elements;
+    for (const element of elements) {
+        if (element.checked) {
+          const view = this._getListElementViewById(element.id)
+          return view ? view.element : this._addItemContainer;
+        }
+    }
+    return this._addItemContainer;
   }
 
   get element() {
