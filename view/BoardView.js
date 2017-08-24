@@ -80,7 +80,7 @@ class BoardView {
     }
 
     for (const imageView of this._imageViews) {
-       this._element.removeChild(imageView.element);
+      this._element.removeChild(imageView.element);
     }
 
     this._listViews = [];
@@ -94,6 +94,13 @@ class BoardView {
   addListView(list) {
     const listView = this._viewsFactory.createListView(list);
     this._element.appendChild(listView.element);
+    /*if (this._element.children.length == 1) {
+      listView.element.style.left = list.position.x + 'px';
+    } else {
+      if (this._element.children.length != 0) {
+        listView.element.style.left = list.position.x + 200 + 'px';
+      }
+    }*/
     this._listViews.push(listView);
 
     listView.element.addEventListener(EventType.DELETE_LIST, this._onDeleteList.bind(this));

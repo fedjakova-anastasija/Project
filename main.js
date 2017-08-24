@@ -5,19 +5,22 @@ function initialize() {
 
   const model = itemsFactory.createModel('Model');
 
-  window["model"] = model; //TODO: remove
-    const board = itemsFactory.createBoard("Покупки");
-	const board2 = itemsFactory.createBoard("Дела");
-	const board3 = itemsFactory.createBoard("Картинки");
-	board.lists.push(itemsFactory.createList("Продукты"));
+  window["model"] = model;
+  const board = itemsFactory.createBoard("Покупки");
+  const board2 = itemsFactory.createBoard("Дела");
+  const board3 = itemsFactory.createBoard("Картинки");
+
+  const list = itemsFactory.createList("Продукты");
+  board.lists.push(list);
   board.lists[0].elements.push(itemsFactory.createListElement("Молоко"));
   board.lists[0].elements.push(itemsFactory.createListElement("Колбаса"));
-  const note = itemsFactory.createNote("Не забыть", "Позвонить Ивану Петровичу");
-	note.position.x = 680;
+  const note = itemsFactory.createNote("Не забыть", "Позвонить маме");
+
+  note.position.x = 450;
   board.notes.push(note);
-	model.boards.push(board);
-	model.boards.push(board2);
-	model.boards.push(board3);
+  model.boards.push(board);
+  model.boards.push(board2);
+  model.boards.push(board3);
 
   const modelView = viewsFactory.createModelView(model);
   contentDiv.appendChild(modelView.element);
@@ -34,7 +37,7 @@ function initialize() {
   }, false);
 
   document.addEventListener(EventType.CLICK_ADD_BOARD, function (event) {
-    let title = prompt("Title:", "");
+    let title = prompt("Введите заголовок доски, пожалуйста:", "");
     if (!title) return;
     const newBoard = itemsFactory.createBoard(title);
     model.boards.push(newBoard);
@@ -50,7 +53,7 @@ function initialize() {
   }, false);
 
   document.addEventListener(EventType.CLICK_ADD_LIST, function (event) {
-    let title = prompt("Title:", "");
+    let title = prompt("Введите заголовок списка, пожалуйста:", "");
     if (!title) return;
     const newList = itemsFactory.createList(title);
     modelView.currentBoardView.board.lists.push(newList);
@@ -66,7 +69,7 @@ function initialize() {
   }, false);
 
   document.addEventListener(EventType.CLICK_ADD_NOTE, function (event) {
-    let title = prompt("Title:", "");
+    let title = prompt("Введите заголовок заметки, пожалуйста:", "");
     if (!title) return;
     const newNote = itemsFactory.createNote(title);
     //newNote.elements.push(itemsFactory.createNote("3"));

@@ -15,7 +15,8 @@ class ImageView {
 
     this._delete = viewsFactory.createElement("input");
     this._delete.type = "button";
-    this._delete.className = "close";
+    this._delete.className = "delete_image";
+    this._delete.value = "x";
     this._element.appendChild(this._delete);
 
     const thisPtr = this;
@@ -29,10 +30,12 @@ class ImageView {
     this._loupe.type = "button";
     this._loupe.className = "loupe";
     this._loupe.id = "loupe_id";
+    this._loupe.value = "+";
     this._element.appendChild(this._loupe);
 
     let imageView = new Image();
     imageView.src = image.path;
+    imageView.style.borderRadius = '20px';
 
     this._window = viewsFactory.createElement("div");
     this._window.className = "window";
@@ -40,32 +43,38 @@ class ImageView {
     this._element.appendChild(this._window);
 
     const showModalWindow = this._window;
+
     function OpenModal() {
-      thisPtr._loupe.onclick =  function(event) {
+      thisPtr._loupe.onclick = function (event) {
         event.preventDefault();
-        setTimeout(function() {
+        setTimeout(function () {
+
           showModalWindow.classList.add('opacity_visible');
           thisPtr._delete.style.display = "none";
           thisPtr._loupe.style.display = "none";
           imageView.classList.add("window_img");
+          thisPtr._element.style.boxShadow = "0 0 0 rgba(0, 0, 0, 0)";
+          thisPtr._element.style.backgroundColor = "hsla(0, 0%, 100%, 0)";
         }, 500);
         showModalWindow.classList.add('open_block');
       }
     }
+
     function CloseModal() {
       thisPtr._window.addEventListener("click", function (event) {
         event.preventDefault();
         setTimeout(function () {
+          imageView.style.transition = "1s";
           showModalWindow.classList.remove('opacity_visible');
           imageView.classList.remove("window_img");
           thisPtr._delete.style.display = "block";
           thisPtr._loupe.style.display = "block";
-          imageView.style.transition = "1s";
+          thisPtr._element.style.boxShadow = "0 0.8em 2em rgba(0, 0, 0, 0.6)";
           let width = imageView.getBoundingClientRect().width;
           let height = imageView.getBoundingClientRect().height;
 
-          let MAX_WIDTH = 400;
-          let MAX_HEIGHT = 400;
+          let MAX_WIDTH = 343;
+          let MAX_HEIGHT = 216;
 
           if (width > height) {
             if (width > MAX_WIDTH) {
@@ -87,6 +96,7 @@ class ImageView {
         }, 500);
       }, false);
     }
+
     OpenModal();
     CloseModal();
 
@@ -94,8 +104,8 @@ class ImageView {
       let width = imageView.getBoundingClientRect().width;
       let height = imageView.getBoundingClientRect().height;
 
-		let MAX_WIDTH = 400;
-		let MAX_HEIGHT = 400;
+      let MAX_WIDTH = 343;
+      let MAX_HEIGHT = 216;
 
       if (width > height) {
         if (width > MAX_WIDTH) {
@@ -114,7 +124,7 @@ class ImageView {
 
       thisPtr._element.style.width = Math.floor(width) + "px";
       thisPtr._element.style.height = Math.floor(height) + "px";
-      console.log(  thisPtr._element);
+      console.log(thisPtr._element);
     };
 
     this._element.appendChild(imageView);

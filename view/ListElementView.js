@@ -13,7 +13,7 @@ class ListElementView {
     this._element.id = "listElement" + listElement.id; // счетчик!
     this._element.setAttribute("id", this._element.id);
 
-    moveElement(listElement, this._element);
+    //moveElement(listElement, this._element);
 
     this._input = viewsFactory.createElement("input");
     this._input.value = listElement.text;
@@ -48,17 +48,17 @@ class ListElementView {
       }
     };
 
-    this._button = viewsFactory.createElement("input");
-    this._button.type = "button";
-    this._button.value = "x";
-    this._button.className = "close_point";
+    this._delete = viewsFactory.createElement("input");
+    this._delete.type = "delete";
+    this._delete.value = "x";
+    this._delete.className = "delete_element";
 
-    this._button.onclick = function () {
+    this._delete.onclick = function () {
       const event = new Event(EventType.DELETE_LIST_ELEMENT, listElement.id);
       event.dispatch(thisPtr._element);
     };
 
-    this._element.appendChild(this._button);
+    this._element.appendChild(this._delete);
   }
 
   get element() {

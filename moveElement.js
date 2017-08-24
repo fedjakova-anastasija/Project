@@ -35,8 +35,8 @@ function moveElement(element, elementView) {
       let y = parseInt(dragElement.style.top);
 
       const WIDTH = parentView.getBoundingClientRect().width;
-      const N = 2;
-      const PADDING = 20;
+      const N = 3;
+      const PADDING = 10;
 
       const columns = [];
       const COL_W = Math.floor((WIDTH - PADDING * (N + 1)) / N);

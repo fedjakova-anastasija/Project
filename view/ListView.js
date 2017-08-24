@@ -17,12 +17,13 @@ class ListView {
 
     moveElement(list, this._element);
 
-    this._close = viewsFactory.createElement("input");
-    this._close.type = "button";
-    this._close.className = "close";
-    this._element.appendChild(this._close);
+    this._delete = viewsFactory.createElement("input");
+    this._delete.type = "button";
+    this._delete.className = "delete";
+    this._delete.value = "x";
+    this._element.appendChild(this._delete);
 
-    this._close.onclick = function () {
+    this._delete.onclick = function () {
       const event = new Event(EventType.DELETE_LIST, list.id);
       event.dispatch(thisPtr._element);
     };
@@ -40,13 +41,13 @@ class ListView {
 
     this._input = viewsFactory.createElement("input");
     this._input.className = "input_place";
-    this._input.placeholder = "You should do...";
+    this._input.placeholder = "Добавить...";
     this._element.appendChild(this._input);
 
     this._button = viewsFactory.createElement("input");
     this._button.className = "add";
     this._button.type = "button";
-    this._button.value = "add";
+    this._button.value = "+";
     this._element.appendChild(this._button);
 
     this._input.onkeyup = function (e) {
@@ -54,7 +55,7 @@ class ListView {
       if (e.keyCode === 13) {
         const value = thisPtr._input.value;
         if (value === '') {
-          alert("Please, write something.");
+          alert("Пожалуйста, введите текст.");
         } else {
           const event = new Event(EventType.CLICK_ADD_LIST_ELEMENT, {list, value});
           event.dispatch(document);
@@ -67,7 +68,7 @@ class ListView {
     this._button.onclick = function () {
       const value = thisPtr._input.value;
       if (value === '') {
-        alert("Please, write something.");
+        alert("Пожалуйста, введите текст.");
       } else {
         const event = new Event(EventType.CLICK_ADD_LIST_ELEMENT, {list, value});
         event.dispatch(document);

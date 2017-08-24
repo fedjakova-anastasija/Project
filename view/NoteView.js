@@ -15,12 +15,13 @@ class NoteView {
 
     moveElement(note, this._element);
 
-    this._close = viewsFactory.createElement("input");
-    this._close.type = "button";
-    this._close.className = "close";
-    this._element.appendChild(this._close);
+    this._delete = viewsFactory.createElement("input");
+    this._delete.type = "button";
+    this._delete.className = "delete";
+    this._delete.value = "x";
+    this._element.appendChild(this._delete);
 
-    this._close.onclick = function () {
+    this._delete.onclick = function () {
       const event = new Event(EventType.DELETE_NOTE, note.id);
       event.dispatch(thisPtr._element);
     };

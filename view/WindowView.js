@@ -48,8 +48,6 @@ class WindowView {
     }
     OpenModal();
     CloseModal();
-
-    //this._element.appendChild(imageView);
   }
 
   get element() {
