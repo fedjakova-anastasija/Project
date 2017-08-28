@@ -1,7 +1,7 @@
 function moveElement(element, elementView) {
   elementView.onmousedown = function (e) {
     const dragElement = e.target;
-	const parentView = dragElement.parentNode;
+    const parentView = dragElement.parentNode;
 
     if (elementView != dragElement && elementView.contains(dragElement)) {
       return;
@@ -24,8 +24,7 @@ function moveElement(element, elementView) {
       shiftX = clientX - dragElement.getBoundingClientRect().left;
       shiftY = clientY - dragElement.getBoundingClientRect().top;
 
-		//dragElement.style.position = 'fixed';
-		dragElement.style.position = 'absolute';
+      dragElement.style.position = 'absolute';
 
       moveAt(clientX, clientY);
     }
@@ -97,7 +96,7 @@ function moveElement(element, elementView) {
       }
 
       const left = parentView.getBoundingClientRect().left;
-      const top = parentView.getBoundingClientRect().top  - parentView.scrollTop;
+      const top = parentView.getBoundingClientRect().top - parentView.scrollTop;
 
       dragElement.style.left = newX - left + 'px';
       dragElement.style.top = newY - top + 'px';

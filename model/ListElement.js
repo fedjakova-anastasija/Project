@@ -8,11 +8,11 @@ class ListElement {
   }
 
   get checked() {
-      return this._checked;
+    return this._checked;
   }
 
   set checked(value) {
-      this._checked = value;
+    this._checked = value;
   }
 
   get text() {

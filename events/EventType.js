@@ -21,5 +21,5 @@ EventType = {
   DELETE_NOTE: "deleteNoteEvent",
   DELETE_IMAGE: "deleteImageEvent",
 
-    CHECKED: "checked",
+  CHECKED: "checked"
 };

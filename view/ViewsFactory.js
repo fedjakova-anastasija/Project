@@ -5,10 +5,6 @@ class ViewsFactory {
   ItemsFactory() {
   }
 
-  getRandomColor() {
-    return "#" + (Math.round(Math.random() * 0XFFFFFF)).toString(16);
-  }
-
   createElement(tag) {
     const element = document.createElement(tag);
     return element;
@@ -27,7 +23,7 @@ class ViewsFactory {
   }
 
   createBoardView(board) {
-    return new BoardView(board, this, this.getRandomColor());
+    return new BoardView(board, this);
   }
 
   createListView(list) {

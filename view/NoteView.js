@@ -18,7 +18,6 @@ class NoteView {
     this._delete = viewsFactory.createElement("input");
     this._delete.type = "button";
     this._delete.className = "delete";
-    this._delete.value = "x";
     this._element.appendChild(this._delete);
 
     this._delete.onclick = function () {
@@ -31,7 +30,6 @@ class NoteView {
     this._header.value = note.title;
     this._element.appendChild(this._header);
 
-    //this._input = viewsFactory.createElement("input");
     this._input = viewsFactory.createElement("textarea");
     this._input.className = "textarea_place";
     this._input.placeholder = "You should do...";

@@ -4,6 +4,10 @@ class NavigationView {
   constructor(modelView, viewsFactory) {
     this._viewsFactory = viewsFactory;
 
+    //this._board = board;
+
+    this._viewId = Math.random();
+
     this._element = viewsFactory.createElement("div");
     this._element.className = "block_menu";
 
@@ -34,8 +38,26 @@ class NavigationView {
     this._ul.appendChild(this._buttonNewList);
 
     this._buttonNewList.onclick = function () {
-      const event = new Event(EventType.CLICK_ADD_LIST);
-      event.dispatch(document);
+      thisPtr._textBoard.style.display = "none";
+      thisPtr._textNote.style.display = "none";
+      thisPtr._textList.style.display = "block";
+      OpenModal();
+      thisPtr._ok.onclick = function () {
+
+        const title = thisPtr._input.value;
+        if (title != '') {
+          const event = new Event(EventType.CLICK_ADD_LIST, {list, title});
+          event.dispatch(document);
+          CloseModal();
+          thisPtr._input.value = "";
+        } else {
+          CloseModal();
+        }
+      };
+      thisPtr._cancel.onclick = function () {
+        CloseModal();
+        thisPtr._input.value = "";
+      }
     };
 
     this._buttonNewNote = viewsFactory.createElement("li");
@@ -44,13 +66,32 @@ class NavigationView {
     this._ul.appendChild(this._buttonNewNote);
 
     this._buttonNewNote.onclick = function () {
-      const event = new Event(EventType.CLICK_ADD_NOTE);
-      event.dispatch(document);
+      thisPtr._textList.style.display = "none";
+      thisPtr._textBoard.style.display = "none";
+      thisPtr._textNote.style.display = "block";
+
+      OpenModal();
+      thisPtr._ok.onclick = function () {
+
+        const title = thisPtr._input.value;
+        if (title != '') {
+          const event = new Event(EventType.CLICK_ADD_NOTE, {note, title});
+          event.dispatch(document);
+          CloseModal();
+          thisPtr._input.value = "";
+        } else {
+          CloseModal();
+        }
+      };
+      thisPtr._cancel.onclick = function () {
+        CloseModal();
+        thisPtr._input.value = "";
+      }
     };
 
     this._buttonNewImage = viewsFactory.createElement("input");
     this._buttonNewImage.className = "new";
-    this._buttonNewImage.id = "new_image";
+    this._buttonNewImage.id = "button_new_image";
     this._buttonNewImage.type = "file";
     this._buttonNewImage.accept = "image/!*";
     this._ul.appendChild(this._buttonNewImage);
@@ -75,12 +116,115 @@ class NavigationView {
     this._buttonNewBoard = viewsFactory.createElement("input");
     this._buttonNewBoard.className = "button_board_new";
     this._buttonNewBoard.type = "button";
-    this._buttonNewBoard.value = "+";
     this._element.appendChild(this._buttonNewBoard);
 
+    this._windowTitle = viewsFactory.createElement("div");
+    this._windowTitle.className = "window";
+    this._windowTitle.id = "modal";
+    this._element.appendChild(this._windowTitle);
+
+    this._title = viewsFactory.createElement("div");
+    this._title.className = "block_title";
+    this._windowTitle.appendChild(this._title);
+
+    this._textBoard = viewsFactory.createElement("div");
+    this._textBoard.className = "text_title";
+    this._textBoard.innerHTML = "Введите заголовок доски, пожалуйста:";
+    this._title.appendChild(this._textBoard);
+
+    this._textList = viewsFactory.createElement("div");
+    this._textList.className = "text_title";
+    this._textList.innerHTML = "Введите заголовок списка, пожалуйста:";
+    this._title.appendChild(this._textList);
+
+    this._textNote = viewsFactory.createElement("div");
+    this._textNote.className = "text_title";
+    this._textNote.innerHTML = "Введите заголовок заметки, пожалуйста:";
+    this._title.appendChild(this._textNote);
+
+    this._input = viewsFactory.createElement("input");
+    this._input.className = "text_input";
+    this._title.appendChild(this._input);
+
+    this._ok = viewsFactory.createElement("div");
+    this._ok.className = "button_ok";
+    this._ok.innerHTML = "OK";
+    this._title.appendChild(this._ok);
+
+    this._cancel = viewsFactory.createElement("div");
+    this._cancel.className = "button_cancel";
+    this._cancel.innerHTML = "Cancel";
+    this._title.appendChild(this._cancel);
+
+    const showModalWindow = this._windowTitle;
+
+    function OpenModal() {
+      event.preventDefault();
+      setTimeout(function () {
+        showModalWindow.classList.add('opacity_visible');
+        thisPtr._title.classList.add("window_empty");
+        thisPtr._windowTitle.style.transition = "1s";
+      }, 500);
+      showModalWindow.classList.add('open_block');
+    }
+
+    function CloseModal() {
+      event.preventDefault();
+      setTimeout(function () {
+        showModalWindow.classList.remove('opacity_visible');
+        thisPtr._title.classList.remove("window_empty");
+        thisPtr._windowTitle.style.transition = "0s";
+      }, 50);
+      setTimeout(function () {
+        showModalWindow.classList.remove('open_block');
+      }, 500);
+    }
+
     this._buttonNewBoard.onclick = function () {
-      const event = new Event(EventType.CLICK_ADD_BOARD);
-      event.dispatch(document);
+      thisPtr._textList.style.display = "none";
+      thisPtr._textNote.style.display = "none";
+      thisPtr._textBoard.style.display = "block";
+      OpenModal();
+      thisPtr._ok.onclick = function () {
+
+        const title = thisPtr._input.value;
+        if (title != '') {
+          const event = new Event(EventType.CLICK_ADD_BOARD, {board, title});
+          event.dispatch(document);
+          CloseModal();
+          thisPtr._input.value = "";
+        } else {
+          CloseModal();
+        }
+      };
+      thisPtr._cancel.onclick = function () {
+        CloseModal();
+        thisPtr._input.value = "";
+      }
+    };
+
+    this._input.onkeyup = function (e) {
+      e = e || window.event;
+      if (e.keyCode === 13) {
+        thisPtr._textList.style.display = "none";
+        thisPtr._textNote.style.display = "none";
+        thisPtr._textBoard.style.display = "block";
+        OpenModal();
+        const title = thisPtr._input.value;
+        if (title != '') {
+          const event = new Event(EventType.CLICK_ADD_BOARD, {board, title});
+          event.dispatch(document);
+          CloseModal();
+          thisPtr._input.value = "";
+        } else {
+          CloseModal();
+        }
+        thisPtr._cancel.onclick = function () {
+          CloseModal();
+          thisPtr._input.value = "";
+        }
+      }
+      return false;
     };
 
     this._buttonPrintAll = viewsFactory.createElement("li");
@@ -90,9 +234,8 @@ class NavigationView {
     this._ul.appendChild(this._buttonPrintAll);
 
     this._buttonPrintAll.onclick = function () {
-		window.open("printed.html", "_blank");
-        window.printedBoards = window.model.boards;
-      //const newWindow = window.print();
+      window.open("printed.html", "_blank");
+      window.printedBoards = window.model.boards;
     };
 
     this._buttonPrint = viewsFactory.createElement("li");
@@ -107,130 +250,172 @@ class NavigationView {
       const id = currentBoardView.id;
       const boards = window.model.boards;
       let curentBoard = null;
-      for (const board of boards)
-      {
-        if (board.id == id)
-        {
-            curentBoard = board;
+      for (const board of boards) {
+        if (board.id == id) {
+          curentBoard = board;
         }
       }
-      if (curentBoard)
-      {
-          window.printedBoards = [curentBoard];
+      if (curentBoard) {
+        window.printedBoards = [curentBoard];
       }
-      //const newWindow = window.print();
     };
 
-  } /*{
-    this._viewsFactory = viewsFactory;
-
-    this._element = viewsFactory.createElement("ul");
-    this._element.id = "model_nav";
-
-    this._about = viewsFactory.createElement("li");
-    this._about.id = "about";
+    this._about = viewsFactory.createElement("div");
+    this._about.textContent = "О себе";
+    this._about.className = "about";
     this._element.appendChild(this._about);
 
-    this._calendar = viewsFactory.createElement("li");
-    this._calendar.id = "calendar";
-    this._element.appendChild(this._calendar);
+    this._window = viewsFactory.createElement("div");
+    this._window.className = "window";
+    this._window.id = "modal";
+    this._element.appendChild(this._window);
 
-    this._navigation = viewsFactory.createElement("li");
-    this._navigation.id = "navigation";
-    this._element.appendChild(this._navigation);
+    this._information = viewsFactory.createElement("div");
+    this._information.className = "information";
+    this._window.appendChild(this._information);
 
-    this._upload = viewsFactory.createElement("li");
-    this._upload.id = "upload";
-    this._element.appendChild(this._upload);
+    this._photo = viewsFactory.createElement("div");
+    this._photo.className = "photo";
+    this._information.appendChild(this._photo);
 
-    /!*this._buttonNewBoard = viewsFactory.createElement("input");
-    this._buttonNewBoard.id = "button_new";
-    this._buttonNewBoard.className = "button_board_new";
-    this._buttonNewBoard.type = "button";
-    this._buttonNewBoard.value = "New board";
-    this._navigation.appendChild(this._buttonNewBoard);
+    this._newImage = viewsFactory.createElement("input");
+    this._newImage.id = "new_image";
+    this._newImage.type = "file";
+    this._newImage.accept = "image/!*";
+    this._photo.appendChild(this._newImage);
 
-    this._buttonNewBoard.onclick = function () {
-      const event = new Event(EventType.CLICK_ADD_BOARD);
-      event.dispatch(document);
-    };*!/
+    let imageView = new Image();
+    // imageView.src = image.path;
 
-    this._buttonNewList = viewsFactory.createElement("input");
-    this._buttonNewList.id = "button_new";
-    this._buttonNewList.className = "button_new_list";
-    this._buttonNewList.type = "button";
-    this._buttonNewList.value = "New list";
-    this._navigation.appendChild(this._buttonNewList);
+    imageView.onload = function () {
+      let width = imageView.getBoundingClientRect().width;
+      let height = imageView.getBoundingClientRect().height;
 
-    this._buttonNewList.onclick = function () {
-      const event = new Event(EventType.CLICK_ADD_LIST);
-      event.dispatch(document);
+      let MAX_WIDTH = 200;
+      let MAX_HEIGHT = 200;
+
+      if (width > height) {
+        if (width > MAX_WIDTH) {
+          height *= MAX_WIDTH / width;
+          width = MAX_WIDTH;
+        }
+      } else {
+        if (height > MAX_HEIGHT) {
+          width *= MAX_HEIGHT / height;
+          height = MAX_HEIGHT;
+        }
+      }
+
+      imageView.width = Math.floor(width);
+      imageView.height = Math.floor(height);
+
+      thisPtr._element.style.width = Math.floor(width) + "px";
+      thisPtr._element.style.height = Math.floor(height) + "px";
     };
 
-    this._buttonNewNote = viewsFactory.createElement("input");
-    this._buttonNewNote.id = "button_new";
-    this._buttonNewNote.className = "button_new_note";
-    this._buttonNewNote.type = "button";
-    this._buttonNewNote.value = "New note";
-    this._navigation.appendChild(this._buttonNewNote);
+    this._photo.appendChild(imageView);
 
-    this._buttonNewNote.onclick = function () {
-      const event = new Event(EventType.CLICK_ADD_NOTE);
-      event.dispatch(document);
-    };
+    this._photoText = viewsFactory.createElement("div");
+    this._photoText.className = "text_photo";
+    this._photoText.innerHTML = "Добавить фотографию";
+    this._photo.appendChild(this._photoText);
 
-    this._buttonNewMap = viewsFactory.createElement("input");
-    this._buttonNewMap.id = "button_new";
-    this._buttonNewMap.className = "button_new_map";
-    this._buttonNewMap.type = "button";
-    this._buttonNewMap.value = "New map";
-    //this._navigation.appendChild(this._buttonNewMap);
-
-    this._buttonNewPicture = viewsFactory.createElement("input");
-    this._buttonNewPicture.id = "button_new";
-    this._buttonNewPicture.className = "button_new_picture";
-    this._buttonNewPicture.value = "New picture";
-    this._buttonNewPicture.type = "file";
-    this._buttonNewPicture.accept = "image/!*";
-    this._navigation.appendChild(this._buttonNewPicture);
-
-    const thisPtr = this;
-    this._buttonNewPicture.onchange = function () {
+    this._newImage.onchange = function () {
       const fileread = new FileReader();
       fileread.onload = function () {
         const dataURL = fileread.result;
-        const event = new Event(EventType.CLICK_ADD_IMAGE, dataURL);
-        event.dispatch(document);
+        /*const event = new Event(EventType.CLICK_ADD_IMAGE, dataURL);
+        event.dispatch(document);*/
       };
-      fileread.readAsDataURL(thisPtr._buttonNewPicture.files[0]);
+      fileread.readAsDataURL(thisPtr._newImage.files[0]);
     };
 
-    /!*this._buttonUpload = viewsFactory.createElement("input");
-     this._buttonUpload.id = "button_new";
-     this._buttonUpload.className = "button_upload";
-     this._buttonUpload.type = "button";
-     this._buttonUpload.value = "Upload this board";
-     this._upload.appendChild(this._buttonUpload);*!/
+    this._nameBlock = viewsFactory.createElement("div");
+    this._nameBlock.className = "name_block";
+    this._nameBlock.innerHTML = "Имя:";
+    this._information.appendChild(this._nameBlock);
 
-    this._buttonPrint = viewsFactory.createElement("input");
-    this._buttonPrint.id = "button_new";
-    this._buttonPrint.className = "button_print";
-    this._buttonPrint.type = "button";
-    this._buttonPrint.value = "Print this board";
-    this._upload.appendChild(this._buttonPrint);
+    this._name = viewsFactory.createElement("input");
+    this._name.className = "name";
+    this._nameBlock.appendChild(this._name);
 
-    this._buttonPrint.onclick = function () {
-      const printedWindow = window.open("printed.html", "_blank");
-      printedWindow.onload = function () {
-        printedWindow.model = window.model;
+    this._lastNameeBlock = viewsFactory.createElement("div");
+    this._lastNameeBlock.className = "last_name_block";
+    this._lastNameeBlock.innerHTML = "Фамилия:";
+    this._information.appendChild(this._lastNameeBlock);
+
+    this._lastName = viewsFactory.createElement("input");
+    this._lastName.className = "last_name";
+    this._lastNameeBlock.appendChild(this._lastName);
+
+    this._mailBlock = viewsFactory.createElement("div");
+    this._mailBlock.className = "mail_block";
+    this._mailBlock.innerHTML = "E-mail:";
+    this._information.appendChild(this._mailBlock);
+
+    this._mail = viewsFactory.createElement("input");
+    this._mail.className = "mail";
+    this._mailBlock.appendChild(this._mail);
+
+    this._messageBlock = viewsFactory.createElement("div");
+    this._messageBlock.className = "message_block";
+    this._messageBlock.innerHTML = "Немного информации о себе:";
+    this._information.appendChild(this._messageBlock);
+
+    this._message = viewsFactory.createElement("input");
+    this._message.className = "message";
+    this._messageBlock.appendChild(this._message);
+
+    this._okInformation = viewsFactory.createElement("div");
+    this._okInformation.className = "button_ok_information";
+    this._okInformation.innerHTML = "OK";
+    this._information.appendChild(this._okInformation);
+
+    this._cancelInformation = viewsFactory.createElement("div");
+    this._cancelInformation.className = "button_cancel_information";
+    this._cancelInformation.innerHTML = "Cancel";
+    this._information.appendChild(this._cancelInformation);
+
+    const showModalWindowInformation = this._window;
+
+    function OpenModalInformation() {
+      event.preventDefault();
+      setTimeout(function () {
+        showModalWindowInformation.classList.add('opacity_visible');
+        thisPtr._information.classList.add("window_empty");
+        thisPtr._window.style.transition = "1s";
+      }, 500);
+      showModalWindowInformation.classList.add('open_block');
+    }
+
+    function CloseModalInformation() {
+      event.preventDefault();
+      setTimeout(function () {
+        showModalWindowInformation.classList.remove('opacity_visible');
+        thisPtr._information.classList.remove("window_empty");
+        thisPtr._window.style.transition = "0s";
+      }, 50);
+      setTimeout(function () {
+        showModalWindowInformation.classList.remove('open_block');
+      }, 500);
+    }
+
+
+    this._about.onclick = function () {
+      OpenModalInformation();
+      thisPtr._okInformation.onclick = function () {
+        CloseModalInformation();
+      };
+
+      thisPtr._cancelInformation.onclick = function () {
+        CloseModalInformation();
+        thisPtr._name.value = "";
+        thisPtr._lastName.value = "";
+        thisPtr._mail.value = "";
+        thisPtr._message.value = "";
       }
-      //const newWindow = window.print();
-    };
+    }
   }
-
-  get element() {
-    return this._element;
-  }*/
 
   get element() {
     return this._element;

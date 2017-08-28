@@ -1,7 +1,7 @@
 'use strict';
 
 class BoardView {
-  constructor(board, viewsFactory/*, color*/) {
+  constructor(board, viewsFactory) {
     this._viewsFactory = viewsFactory;
 
     this._board = board;
@@ -10,7 +10,6 @@ class BoardView {
     this._noteViews = [];
     this._imageViews = [];
 
-    /*this._color = color;*/
     this._id = board.id;
 
     this._element = viewsFactory.createElement("div");
@@ -48,11 +47,6 @@ class BoardView {
       selectedElement.classList.add('selected_border');
     }
 
-    function intersect(a, b) {
-      return Math.max(a.left, b.left) < Math.min(a.right, b.right) &&
-        Math.max(a.top, b.top) < Math.min(a.bottom, b.bottom);
-    }
-
     this.redraw();
   }
 
@@ -88,19 +82,11 @@ class BoardView {
     this._imageViews = [];
 
     this._init(this._board);
-    //this.element.style.backgroundColor = this._color;
   }
 
   addListView(list) {
     const listView = this._viewsFactory.createListView(list);
     this._element.appendChild(listView.element);
-    /*if (this._element.children.length == 1) {
-      listView.element.style.left = list.position.x + 'px';
-    } else {
-      if (this._element.children.length != 0) {
-        listView.element.style.left = list.position.x + 200 + 'px';
-      }
-    }*/
     this._listViews.push(listView);
 
     listView.element.addEventListener(EventType.DELETE_LIST, this._onDeleteList.bind(this));

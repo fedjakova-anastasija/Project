@@ -1,8 +1,20 @@
 function initialize() {
   const boards = window.opener.printedBoards;
+  const contentDiv = document.getElementById("content");
+  const print = document.createElement("DIV");
+
+  print.className = "print";
+  print.innerHTML = "Печать";
+  print.onclick = function () {
+    window.print();
+  };
+
+  contentDiv.appendChild(print);
+
   for (const board of boards) {
     const boardView = createBoardView(board);
-    document.body.appendChild(boardView);
+
+    contentDiv.appendChild(boardView);
   }
 }
 
@@ -38,11 +50,14 @@ function createListView(list) {
 
   const elements = list.elements;
   for (const element of elements) {
-     // if (!element.checked) {
-          const elementView = createListElementView(element);
-          listView.appendChild(elementView);
-          //add class list element.checked
-     // }
+    const elementView = createListElementView(element);
+    if (element.checked) {
+      listView.appendChild(elementView);
+      elementView.classList.add("checked");
+    } else {
+      listView.appendChild(elementView);
+    }
+
   }
   return listView;
 }
@@ -58,6 +73,12 @@ function createNoteView(note) {
   const noteView = document.createElement("DIV");
   noteView.className = "note";
   noteView.innerHTML = note.title;
+
+  const noteText = document.createElement("DIV");
+  noteText.className = "note_text";
+  noteText.innerHTML = note.text;
+  noteView.appendChild(noteText);
+
   return noteView;
 }
 
@@ -65,11 +86,35 @@ function createImageView(image) {
   const imageView = document.createElement("DIV");
   imageView.className = "image";
 
-	let imageV = new Image();
-	imageV.src = image.path;
+  let newImage = new Image();
+  newImage.src = image.path;
 
-	imageV.onload = function () {
-		imageView.appendChild(imageV)
-	}
+  newImage.onload = function () {
+
+    let width = newImage.getBoundingClientRect().width;
+    let height = newImage.getBoundingClientRect().height;
+
+    let MAX_WIDTH = 200;
+    let MAX_HEIGHT = 200;
+
+    if (width > height) {
+      if (width > MAX_WIDTH) {
+        height *= MAX_WIDTH / width;
+        width = MAX_WIDTH;
+      }
+    } else {
+      if (height > MAX_HEIGHT) {
+        width *= MAX_HEIGHT / height;
+        height = MAX_HEIGHT;
+      }
+    }
+
+    newImage.width = width;
+    newImage.height = height;
+
+  };
+
+  imageView.appendChild(newImage);
+
   return imageView;
 }

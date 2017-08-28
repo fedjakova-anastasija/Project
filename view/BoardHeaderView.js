@@ -18,19 +18,14 @@ class BoardHeaderView {
 
     this._delete = viewsFactory.createElement("input");
     this._delete.type = "button";
-    this._delete.value = "x";
     this._delete.className = "delete_board";
     this._element.appendChild(this._delete);
 
     const thisPtr = this;
 
-
     this._delete.onclick = function () {
-      const result = confirm("Вы уверены, что хотите удалить доску?");
-      if (result) {
-        const event = new Event(EventType.DELETE_BOARD, board.id);
-        event.dispatch(thisPtr._element);
-      }
+      const event = new Event(EventType.DELETE_BOARD, board.id);
+      event.dispatch(thisPtr._element);
     };
 
     this._element.onchange = function () {

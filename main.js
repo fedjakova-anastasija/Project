@@ -1,33 +1,26 @@
 function initialize() {
   const contentDiv = document.getElementById("content");
-  const itemsFactory = new ItemsFactory();
   const viewsFactory = new ViewsFactory();
 
   const model = itemsFactory.createModel('Model');
 
   window["model"] = model;
-  const board = itemsFactory.createBoard("Покупки");
-  const board2 = itemsFactory.createBoard("Дела");
-  const board3 = itemsFactory.createBoard("Картинки");
 
-  const list = itemsFactory.createList("Продукты");
   board.lists.push(list);
-  board.lists[0].elements.push(itemsFactory.createListElement("Молоко"));
-  board.lists[0].elements.push(itemsFactory.createListElement("Колбаса"));
-  const note = itemsFactory.createNote("Не забыть", "Позвонить маме");
+  board.lists[0].elements.push(element);
+  board.lists[0].elements.push(element1);
 
   note.position.x = 450;
   board.notes.push(note);
   model.boards.push(board);
+  model.boards.push(board1);
   model.boards.push(board2);
-  model.boards.push(board3);
 
   const modelView = viewsFactory.createModelView(model);
   contentDiv.appendChild(modelView.element);
 
   const navigationView = viewsFactory.createNavigationView(modelView);
   contentDiv.appendChild(navigationView.element);
-
 
   //board
   modelView.element.addEventListener(EventType.ADD_BOARD, function (event) {
@@ -37,9 +30,8 @@ function initialize() {
   }, false);
 
   document.addEventListener(EventType.CLICK_ADD_BOARD, function (event) {
-    let title = prompt("Введите заголовок доски, пожалуйста:", "");
-    if (!title) return;
-    const newBoard = itemsFactory.createBoard(title);
+    const metainfo = event.detail;
+    const newBoard = itemsFactory.createBoard(metainfo.title);
     model.boards.push(newBoard);
 
     const e = new Event(EventType.ADD_BOARD, newBoard);
@@ -53,9 +45,8 @@ function initialize() {
   }, false);
 
   document.addEventListener(EventType.CLICK_ADD_LIST, function (event) {
-    let title = prompt("Введите заголовок списка, пожалуйста:", "");
-    if (!title) return;
-    const newList = itemsFactory.createList(title);
+    const metainfo = event.detail;
+    const newList = itemsFactory.createList(metainfo.title);
     modelView.currentBoardView.board.lists.push(newList);
 
     const e = new Event(EventType.ADD_LIST, newList);
@@ -69,9 +60,8 @@ function initialize() {
   }, false);
 
   document.addEventListener(EventType.CLICK_ADD_NOTE, function (event) {
-    let title = prompt("Введите заголовок заметки, пожалуйста:", "");
-    if (!title) return;
-    const newNote = itemsFactory.createNote(title);
+    const metainfo = event.detail;
+    const newNote = itemsFactory.createNote(metainfo.title);
     //newNote.elements.push(itemsFactory.createNote("3"));
     modelView.currentBoardView.board.notes.push(newNote);
 
@@ -109,5 +99,5 @@ function initialize() {
     const e = new Event(EventType.ADD_IMAGE, newImage);
     e.dispatch(modelView.element);
   }, false);
-
 }
+

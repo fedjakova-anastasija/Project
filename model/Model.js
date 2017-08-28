@@ -5,9 +5,9 @@ class Model {
     this._title = title;
     this._boards = [];
     this._about = {
-      name: "12",
-      lastName: "3432",
-      img: "1.png"
+      name: "",
+      lastName: "",
+      img: ""
     };
   }
 
@@ -17,5 +17,9 @@ class Model {
 
   get boards() {
     return this._boards;
+  }
+
+  get about() {
+    return this._about;
   }
 }

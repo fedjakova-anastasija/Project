@@ -20,7 +20,6 @@ class ListView {
     this._delete = viewsFactory.createElement("input");
     this._delete.type = "button";
     this._delete.className = "delete";
-    this._delete.value = "x";
     this._element.appendChild(this._delete);
 
     this._delete.onclick = function () {
@@ -50,15 +49,61 @@ class ListView {
     this._button = viewsFactory.createElement("input");
     this._button.className = "add";
     this._button.type = "button";
-    this._button.value = "+";
     this._addItemContainer.appendChild(this._button);
+
+    this._window = viewsFactory.createElement("div");
+    this._window.className = "window";
+    this._window.id = "modal";
+    this._element.appendChild(this._window);
+
+    this._empty = viewsFactory.createElement("div");
+    this._empty.className = "empty";
+    this._window.appendChild(this._empty);
+
+    this._text = viewsFactory.createElement("div");
+    this._text.className = "text_empty";
+    this._text.innerHTML = "Пожалуйста, введите текст!";
+    this._empty.appendChild(this._text);
+
+    this._ok = viewsFactory.createElement("div");
+    this._ok.className = "button_ok";
+    this._ok.innerHTML = "OK";
+    this._empty.appendChild(this._ok);
+
+    const showModalWindow = this._window;
+
+    function OpenModal() {
+      event.preventDefault();
+      setTimeout(function () {
+        showModalWindow.classList.add('opacity_visible');
+        thisPtr._empty.classList.add("window_empty");
+        thisPtr._window.style.transition = "1s";
+      }, 500);
+      showModalWindow.classList.add('open_block');
+      thisPtr._ok.style.marginLeft = "160px";
+    }
+
+    function CloseModal() {
+      thisPtr._ok.addEventListener("click", function (event) {
+        event.preventDefault();
+        setTimeout(function () {
+          showModalWindow.classList.remove('opacity_visible');
+          thisPtr._empty.classList.remove("window_empty");
+          thisPtr._window.style.transition = "0s";
+        }, 50);
+        setTimeout(function () {
+          showModalWindow.classList.remove('open_block');
+        }, 500);
+      }, false);
+    }
 
     this._input.onkeyup = function (e) {
       e = e || window.event;
       if (e.keyCode === 13) {
         const value = thisPtr._input.value;
         if (value === '') {
-          alert("Пожалуйста, введите текст.");
+          OpenModal();
+          CloseModal();
         } else {
           const event = new Event(EventType.CLICK_ADD_LIST_ELEMENT, {list, value});
           event.dispatch(document);
@@ -71,7 +116,8 @@ class ListView {
     this._button.onclick = function () {
       const value = thisPtr._input.value;
       if (value === '') {
-        alert("Пожалуйста, введите текст.");
+        OpenModal();
+        CloseModal();
       } else {
         const event = new Event(EventType.CLICK_ADD_LIST_ELEMENT, {list, value});
         event.dispatch(document);
@@ -92,29 +138,27 @@ class ListView {
   }
 
   _onCheckedListElement(event) {
-	  const id = event.detail;
-	  const view = this._getListElementViewById(id);
-	  const listElement = view.listElement;
-	  const index = this._list.elements.indexOf(listElement);
-	  this._list.elements.splice(index, 1);
-	  this._listElementViews.splice(index, 1);
-	  if (listElement.checked)
-      {
-		  this._list.elements.push(view.listElement);
-		  this._listElementViews.push(view);
+    const id = event.detail;
+    const view = this._getListElementViewById(id);
+    const listElement = view.listElement;
+    const index = this._list.elements.indexOf(listElement);
+    this._list.elements.splice(index, 1);
+    this._listElementViews.splice(index, 1);
+    if (listElement.checked) {
+      this._list.elements.push(view.listElement);
+      this._listElementViews.push(view);
 
-		  this._element.appendChild(view.element);
-		  this._element.appendChild(this._addItemContainer);
-      }
-      else
-      {
-		  this._list.elements.splice(0, 0, listElement);
+      this._element.appendChild(view.element);
+      this._element.appendChild(this._addItemContainer);
+    }
+    else {
+      this._list.elements.splice(0, 0, listElement);
 
-		  const firstElement = this._listElementViews[0];
-		  this._element.insertBefore(view.element, firstElement.element);
+      const firstElement = this._listElementViews[0];
+      this._element.insertBefore(view.element, firstElement.element);
 
-		  this._listElementViews.splice(0, 0, view);
-      }
+      this._listElementViews.splice(0, 0, view);
+    }
 
   }
 
@@ -143,17 +187,17 @@ class ListView {
     this._element.insertBefore(listElementView.element, firstCheckedElement);
     this._listElementViews.push(listElementView);
 
-	  listElementView.element.addEventListener(EventType.DELETE_LIST_ELEMENT, this._onDeleteListElement.bind(this))
-	  listElementView.element.addEventListener(EventType.CHECKED, this._onCheckedListElement.bind(this))
+    listElementView.element.addEventListener(EventType.DELETE_LIST_ELEMENT, this._onDeleteListElement.bind(this));
+    listElementView.element.addEventListener(EventType.CHECKED, this._onCheckedListElement.bind(this))
   }
 
   _getFirstCheckedElement() {
-    const elements =  this._list.elements;
+    const elements = this._list.elements;
     for (const element of elements) {
-        if (element.checked) {
-          const view = this._getListElementViewById(element.id)
-          return view ? view.element : this._addItemContainer;
-        }
+      if (element.checked) {
+        const view = this._getListElementViewById(element.id);
+        return view ? view.element : this._addItemContainer;
+      }
     }
     return this._addItemContainer;
   }
