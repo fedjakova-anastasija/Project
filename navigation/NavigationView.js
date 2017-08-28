@@ -203,30 +203,6 @@ class NavigationView {
       }
     };
 
-    this._input.onkeyup = function (e) {
-      e = e || window.event;
-      if (e.keyCode === 13) {
-        thisPtr._textList.style.display = "none";
-        thisPtr._textNote.style.display = "none";
-        thisPtr._textBoard.style.display = "block";
-        OpenModal();
-        const title = thisPtr._input.value;
-        if (title != '') {
-          const event = new Event(EventType.CLICK_ADD_BOARD, {board, title});
-          event.dispatch(document);
-          CloseModal();
-          thisPtr._input.value = "";
-        } else {
-          CloseModal();
-        }
-        thisPtr._cancel.onclick = function () {
-          CloseModal();
-          thisPtr._input.value = "";
-        }
-      }
-      return false;
-    };
-
     this._buttonPrintAll = viewsFactory.createElement("li");
     this._buttonPrintAll.className = "button_print";
     this._buttonPrintAll.type = "button";
@@ -285,6 +261,7 @@ class NavigationView {
     this._photo.appendChild(this._newImage);
 
     let imageView = new Image();
+	imageView.style.opacity = 0;
     // imageView.src = image.path;
 
     imageView.onload = function () {
@@ -295,24 +272,25 @@ class NavigationView {
       let MAX_HEIGHT = 200;
 
       if (width > height) {
-        if (width > MAX_WIDTH) {
-          height *= MAX_WIDTH / width;
-          width = MAX_WIDTH;
-        }
+          if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+          }
       } else {
-        if (height > MAX_HEIGHT) {
-          width *= MAX_HEIGHT / height;
-          height = MAX_HEIGHT;
-        }
+          if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+          }
       }
 
       imageView.width = Math.floor(width);
       imageView.height = Math.floor(height);
 
-      thisPtr._element.style.width = Math.floor(width) + "px";
-      thisPtr._element.style.height = Math.floor(height) + "px";
+      thisPtr._photo.style.width = Math.floor(width) + "px";
+      thisPtr._photo.style.height = Math.floor(height) + "px";
+      imageView.style.opacity = 1;
+      thisPtr._photoText.style.display = "none";
     };
-
     this._photo.appendChild(imageView);
 
     this._photoText = viewsFactory.createElement("div");
@@ -324,11 +302,13 @@ class NavigationView {
       const fileread = new FileReader();
       fileread.onload = function () {
         const dataURL = fileread.result;
-        /*const event = new Event(EventType.CLICK_ADD_IMAGE, dataURL);
-        event.dispatch(document);*/
+        const event = new Event(EventType.ADD_INFO_IMAGE, dataURL);
+        event.dispatch(document);
+        imageView.src = dataURL;
       };
       fileread.readAsDataURL(thisPtr._newImage.files[0]);
     };
+
 
     this._nameBlock = viewsFactory.createElement("div");
     this._nameBlock.className = "name_block";
@@ -384,6 +364,12 @@ class NavigationView {
         showModalWindowInformation.classList.add('opacity_visible');
         thisPtr._information.classList.add("window_empty");
         thisPtr._window.style.transition = "1s";
+
+        //init
+		  thisPtr._name.value = model.about.name;
+		  thisPtr._lastName.value = model.about.lastName;
+		  thisPtr._mail.value = model.about.email;
+		  thisPtr._message.value = model.about.info;
       }, 500);
       showModalWindowInformation.classList.add('open_block');
     }
@@ -404,15 +390,17 @@ class NavigationView {
     this._about.onclick = function () {
       OpenModalInformation();
       thisPtr._okInformation.onclick = function () {
+
+		  model.about.name = thisPtr._name.value;
+		  model.about.lastName = thisPtr._lastName.value;
+		  model.about.email = thisPtr._mail.value;
+		  model.about.info = thisPtr._message.value;
+
         CloseModalInformation();
       };
 
       thisPtr._cancelInformation.onclick = function () {
         CloseModalInformation();
-        thisPtr._name.value = "";
-        thisPtr._lastName.value = "";
-        thisPtr._mail.value = "";
-        thisPtr._message.value = "";
       }
     }
   }

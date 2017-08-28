@@ -159,6 +159,10 @@ class ModelView {
     }, false);
 
     this._init(model);
+
+    window.onresize = function(event) {
+        thisPtr.currentBoardView.drawLines();
+    };
   }
 
   _init(model) {
@@ -182,6 +186,7 @@ class ModelView {
       this._showBoardView(boardView, (boardView.id == id));
     }
     this._headerView.selectHeader(id);
+	 this.currentBoardView.drawLines();
   }
 
   _showBoardView(boardView, show) {

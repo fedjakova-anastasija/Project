@@ -1,3 +1,6 @@
+const COLUMN_COUNT = 3;
+const COLUMN_PADDING = 10;
+
 function initialize() {
   const contentDiv = document.getElementById("content");
   const viewsFactory = new ViewsFactory();

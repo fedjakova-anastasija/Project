@@ -7,7 +7,9 @@ class Model {
     this._about = {
       name: "",
       lastName: "",
-      img: ""
+	  info: "",
+	  email: "",
+	  img: ""
     };
   }
 

@@ -34,16 +34,13 @@ function moveElement(element, elementView) {
       let y = parseInt(dragElement.style.top);
 
       const WIDTH = parentView.getBoundingClientRect().width;
-      const N = 3;
-      const PADDING = 10;
-
       const columns = [];
-      const COL_W = Math.floor((WIDTH - PADDING * (N + 1)) / N);
+      const COL_W = Math.floor((WIDTH - COLUMN_PADDING * (COLUMN_COUNT + 1)) / COLUMN_COUNT);
 
-      let left = PADDING;
-      for (let i = 0; i < N; ++i) {
-        columns.push({left, right: left + COL_W});
-        left += PADDING + COL_W;
+      let left = COLUMN_PADDING;
+      for (let i = 0; i < COLUMN_COUNT; ++i) {
+        columns.push({left: (i == 0) ? COLUMN_PADDING : left + COLUMN_PADDING, right: left + COL_W});
+        left += COLUMN_PADDING + COL_W;
       }
       for (const column of columns) {
         if (x > column.left && x < column.right) {

@@ -12,9 +12,14 @@ class BoardView {
 
     this._id = board.id;
 
+    this._view = viewsFactory.createElement("div");
+    this._view.id = "board" + this._id;
+    this._view.className = "boardView";
+
     this._element = viewsFactory.createElement("div");
-    this._element.id = "board" + this._id;
+
     this._element.className = "board";
+    this._view.appendChild(this._element);
 
     const parent = this._element;
     let lastClickedElement = null;
@@ -48,6 +53,35 @@ class BoardView {
     }
 
     this.redraw();
+
+    const thisPtr = this;
+    setTimeout(function () {
+        thisPtr.drawLines();
+    }, 0);
+  }
+
+  drawLines() {
+    if (this._snapLines)
+    {
+		this._view.removeChild(this._snapLines);
+    }
+	  this._snapLines = this._viewsFactory.createElement("div");
+	  this._snapLines.className = "lines";
+	  this._view.insertBefore(this._snapLines, this._element);
+
+	  const WIDTH = this._view.getBoundingClientRect().width;
+	  const COL_W = Math.floor(WIDTH / COLUMN_COUNT);
+	  let left = 0;
+	  for (let i = 0; i < COLUMN_COUNT - 1; ++i) {
+
+		  const snapLine = this._viewsFactory.createElement("div");
+		  snapLine.className = "snapLine";
+		  this._snapLines.appendChild(snapLine);
+
+		  left = (i + 1)  * COL_W + COLUMN_PADDING;
+		  snapLine.style.left = left + "px";
+	  }
+	  console.log(WIDTH, this._view);
   }
 
   _init(board) {
@@ -163,7 +197,7 @@ class BoardView {
   }
 
   get element() {
-    return this._element;
+    return this._view;
   }
 
   get board() {

@@ -2,7 +2,7 @@
 
 class ViewsFactory {
 
-  ItemsFactory() {
+  ViewsFactory() {
   }
 
   createElement(tag) {
