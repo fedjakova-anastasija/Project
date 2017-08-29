@@ -23,5 +23,5 @@ EventType = {
 
   CHECKED: "checked",
 
-  ADD_INFO_IMAGE: "addInfoImage",
+  ADD_INFO_IMAGE: "addInfoImage"
 };

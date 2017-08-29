@@ -109,7 +109,8 @@ img
     opacity: 0.2;
 }
 
-.snapLine {
+.snapLine
+{
     height: 100%;
     width: 1px;
     position: absolute;
@@ -220,7 +221,6 @@ img
     text-decoration: line-through;
 }
 
-
 .button_board_new
 {
     cursor: pointer;
@@ -280,7 +280,6 @@ img
     background-color: hsl(0, 0%, 50%);
 }
 
-
 .note
 {
     display: table;
@@ -292,7 +291,6 @@ img
     border-radius: 20px;
     box-shadow: 0 0.8em 2em rgba(0, 0, 0, 0.6);
 }
-
 
 .delete_element
 {
@@ -441,7 +439,6 @@ li.checked::before
     border-radius: 27px;
     margin: 3px;
     font-family: 'Poiret One', cursive;
-
 }
 
 .window
@@ -753,14 +750,12 @@ li.checked::before
     background-color: white;
 }
 
-
 .block_title
 {
     width: 400px;
     height: 200px;
     background-color: white;
 }
-
 
 .photo
 {

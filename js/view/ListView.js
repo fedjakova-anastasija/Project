@@ -5,8 +5,6 @@ class ListView {
     this._viewsFactory = viewsFactory;
     this._list = list;
 
-    this._viewId = Math.random();
-
     this._id = list.id;
     this._element = viewsFactory.createElement("div");
 

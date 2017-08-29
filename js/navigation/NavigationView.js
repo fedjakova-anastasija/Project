@@ -4,8 +4,6 @@ class NavigationView {
   constructor(modelView, viewsFactory) {
     this._viewsFactory = viewsFactory;
 
-    this._viewId = Math.random();
-
     this._element = viewsFactory.createElement("div");
     this._element.className = "block_menu";
 

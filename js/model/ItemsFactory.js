@@ -31,14 +31,10 @@ class ItemsFactory {
   }
 
   createModel() {
-    const model =  new Model();
-	const board = this.createBoard("New Board");
-	model.boards.push(board);
+    const model = new Model();
+    const board = this.createBoard("New Board");
+    model.boards.push(board);
     return model;
-  }
-
-  createHeader() {
-    return new Header();
   }
 }
 
