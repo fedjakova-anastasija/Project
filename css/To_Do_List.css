@@ -764,8 +764,6 @@ li.checked::before
 
 .photo
 {
-    /*width: 200px;
-    height: 200px;*/
     position: absolute;
     border: 2px solid #cccccc;
     border-radius: 5px;

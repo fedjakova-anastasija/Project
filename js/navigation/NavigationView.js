@@ -4,8 +4,6 @@ class NavigationView {
   constructor(modelView, viewsFactory) {
     this._viewsFactory = viewsFactory;
 
-    //this._board = board;
-
     this._viewId = Math.random();
 
     this._element = viewsFactory.createElement("div");
@@ -225,7 +223,6 @@ class NavigationView {
       const currentBoardView = modelView.currentBoardView;
       const id = currentBoardView.id;
       const boards = window.model.boards;
-      const model = window.model;
       let curentBoard = null;
       for (const board of boards) {
         if (board.id == id) {

@@ -30,20 +30,7 @@ class ListElementView {
       listElement.text = newText;
     };
 
-    const element = this._element;
-    element.ondblclick = function () {
-      if (listElement.checked) {
-        element.classList.remove("checked");
-        thisPtr._input.classList.remove("line_through");
-      } else {
-        element.classList.add("checked");
-        thisPtr._input.classList.add("line_through");
-      }
-      listElement.checked = !listElement.checked;
-
-      const event = new Event(EventType.CHECKED, listElement.id);
-      event.dispatch(thisPtr._element);
-    };
+	this._element.ondblclick = this._changeCheckedState.bind(this);
 
     this._delete = viewsFactory.createElement("input");
     this._delete.type = "delete";
@@ -55,6 +42,21 @@ class ListElementView {
     };
 
     this._element.appendChild(this._delete);
+    this._changeCheckedState();
+  }
+
+  _changeCheckedState() {
+	  if (this._listElement.checked) {
+		  this._element.classList.remove("checked");
+		  this._input.classList.remove("line_through");
+	  } else {
+		  this._element.classList.add("checked");
+		  this._input.classList.add("line_through");
+	  }
+	  this._listElement.checked = !this._listElement.checked;
+
+	  const event = new Event(EventType.CHECKED, this._listElement.id);
+	  event.dispatch(this._element);
   }
 
   get element() {

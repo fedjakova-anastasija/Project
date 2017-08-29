@@ -30,8 +30,11 @@ class ItemsFactory {
     return new Picture(path, this._imageId++);
   }
 
-  createModel(title) {
-    return new Model(title);
+  createModel() {
+    const model =  new Model();
+	const board = this.createBoard("New Board");
+	model.boards.push(board);
+    return model;
   }
 
   createHeader() {

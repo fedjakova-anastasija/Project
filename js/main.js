@@ -3,21 +3,13 @@ const COLUMN_PADDING = 10;
 
 function initialize() {
   const contentDiv = document.getElementById("content");
+
   const viewsFactory = new ViewsFactory();
+  const itemsFactory = new ItemsFactory();
 
-  const model = itemsFactory.createModel('Model');
-
-  window["model"] = model;
-
-  board.lists.push(list);
-  board.lists[0].elements.push(element);
-  board.lists[0].elements.push(element1);
-
-  note.position.x = 500;
-  board.notes.push(note);
-  model.boards.push(board);
-  model.boards.push(board1);
-  model.boards.push(board2);
+  const model = itemsFactory.createModel();
+  initTestModel(model, itemsFactory);
+  window.model = model;
 
   const modelView = viewsFactory.createModelView(model);
   contentDiv.appendChild(modelView.element);
@@ -65,7 +57,6 @@ function initialize() {
   document.addEventListener(EventType.CLICK_ADD_NOTE, function (event) {
     const metainfo = event.detail;
     const newNote = itemsFactory.createNote(metainfo.title);
-    //newNote.elements.push(itemsFactory.createNote("3"));
     modelView.currentBoardView.board.notes.push(newNote);
 
     const e = new Event(EventType.ADD_NOTE, newNote);
@@ -102,5 +93,25 @@ function initialize() {
     const e = new Event(EventType.ADD_IMAGE, newImage);
     e.dispatch(modelView.element);
   }, false);
+}
+
+function initTestModel(model, itemsFactory) {
+	const board = model.boards[0];
+	board.title = "Покупки";
+	const board1 = itemsFactory.createBoard("Дела");
+	const board2 = itemsFactory.createBoard("Картинки");
+	const list = itemsFactory.createList("Продукты");
+	const note = itemsFactory.createNote("Не забыть", "Позвонить маме");
+	const element = itemsFactory.createListElement("Молоко");
+	const element1 = itemsFactory.createListElement("Колбаса");
+
+	board.lists.push(list);
+	board.lists[0].elements.push(element);
+	board.lists[0].elements.push(element1);
+
+	note.position.y = 250;
+	board.notes.push(note);
+	model.boards.push(board1);
+	model.boards.push(board2);
 }
 

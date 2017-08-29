@@ -27,7 +27,10 @@ class BoardView {
     this._element.onclick = function (event) {
       let target = event.target;
 
-      if (target.tagName != "DIV") return;
+      if (target.tagName != "DIV" || !target.className)
+      {
+        return;
+	  }
 
       selectSingle(target);
 
@@ -80,7 +83,6 @@ class BoardView {
       left = (i + 1) * COL_W + COLUMN_PADDING;
       snapLine.style.left = left + "px";
     }
-    console.log(WIDTH, this._view);
   }
 
   _init(board) {
