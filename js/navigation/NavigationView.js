@@ -42,7 +42,7 @@ class NavigationView {
 
         const title = thisPtr._input.value;
         if (title != '') {
-          const event = new Event(EventType.CLICK_ADD_LIST, {list, title});
+          const event = new Event(EventType.CLICK_ADD_LIST, {title});
           event.dispatch(document);
           CloseModal();
           thisPtr._input.value = "";
@@ -71,7 +71,7 @@ class NavigationView {
 
         const title = thisPtr._input.value;
         if (title != '') {
-          const event = new Event(EventType.CLICK_ADD_NOTE, {note, title});
+          const event = new Event(EventType.CLICK_ADD_NOTE, {title});
           event.dispatch(document);
           CloseModal();
           thisPtr._input.value = "";
@@ -185,7 +185,7 @@ class NavigationView {
 
         const title = thisPtr._input.value;
         if (title != '') {
-          const event = new Event(EventType.CLICK_ADD_BOARD, {board, title});
+          const event = new Event(EventType.CLICK_ADD_BOARD, {title});
           event.dispatch(document);
           CloseModal();
           thisPtr._input.value = "";

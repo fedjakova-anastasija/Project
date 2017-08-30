@@ -42,7 +42,7 @@ class ListElementView {
     };
 
     this._element.appendChild(this._delete);
-    this._changeCheckedState();
+    this._initCheckedState();
   }
 
   _changeCheckedState() {
@@ -57,6 +57,16 @@ class ListElementView {
 
 	  const event = new Event(EventType.CHECKED, this._listElement.id);
 	  event.dispatch(this._element);
+  }
+
+  _initCheckedState() {
+	  if (!this._listElement.checked) {
+		  this._element.classList.remove("checked");
+		  this._input.classList.remove("line_through");
+	  } else {
+		  this._element.classList.add("checked");
+		  this._input.classList.add("line_through");
+	  }
   }
 
   get element() {
